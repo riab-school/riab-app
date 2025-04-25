@@ -6,7 +6,7 @@
         <h5>Psb Config</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('staff.master-psb.add-config.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('staff.master-psb.add-config.update') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
             @csrf
             <div class="row">
                 <div class="col-md-3">

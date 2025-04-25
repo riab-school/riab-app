@@ -62,4 +62,9 @@ class StudentDetail extends Model
     {
         return $this->hasOne(StudentOriginSchool::class, 'user_id', 'user_id');
     }
+
+    public function studentPermissionHistory()
+    {
+        return $this->hasMany(StudentPermissionHistory::class, 'user_id', 'user_id');
+    }
 }

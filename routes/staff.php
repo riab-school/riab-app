@@ -95,6 +95,8 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::get('detail', [PerizinanListController::class, 'showDetailData'])->name('staff.perizinan.detail');
             Route::get('add', [PerizinanListController::class, 'createPagePermission'])->name('staff.perizinan.create');
             Route::post('add', [PerizinanListController::class, 'handleCreatePermission'])->name('staff.perizinan.create');
+            Route::get('search', [PerizinanListController::class, 'searchData'])->name('staff.perizinan.search');
+            Route::post('status', [PerizinanListController::class, 'handleUpdateStatus'])->name('staff.perizinan.status');
         });
     });
 

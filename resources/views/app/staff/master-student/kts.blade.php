@@ -8,7 +8,7 @@
                 <h5>Rekam / Cetak KTS</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('staff.master-student.kts.detail') }}" method="POST">
+                <form action="{{ route('staff.master-student.kts.detail') }}" method="POST" onsubmit="return processData(this)">
                     @csrf
                     <div class="form-group">
                         <label for="search_by">Cari Berdasarkan</label>

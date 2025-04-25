@@ -1,13 +1,175 @@
 @extends('_layouts.app-layouts.index')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <h5>Hello card</h5>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Cari Data Siswa</h5>
+            </div>
+            <div class="card-body">
+                @if (\Session::has('token'))
+                    <div class="alert alert-success mt-2">
+                        <strong>Perizinan Berhasil di buat!</strong>
+                        <br>Token Izin : <b>{{ \Session::get('token') }}</b>
+                    </div>
+                @endif  
+                <form action="{{ route('staff.perizinan.create') }}" method="POST" onsubmit="return processData(this)">
+                    @csrf
+                    <div class="form-group">
+                        <label for="nis">NIS / NISN</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="nis_or_nisn" name="nis_or_nisn" placeholder="Masukkan NIS / NISN" required>
+                            <button type="button" class="btn btn-primary" id="search-button">
+                                <i class="feather icon-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-none" id="input-section">
+                        <input type="hidden" class="form-control" id="user_id" name="user_id" required>
+                        <div class="form-group">
+                            <label for="nama">Nama Siswa</label>
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Siswa" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Alasan atau tujuan</label>
+                            <input type="text" class="form-control" id="reason" name="reason" placeholder="Alasan atau tujuan izin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Di jemput oleh</label>
+                            <input type="text" class="form-control" id="pickup_by" name="pickup_by" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Dari Tanggal</label>
+                            <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="from_date" name="from_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Hingga Tanggal</label>
+                            <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="to_date" name="to_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Permohonan Oleh</label>
+                            <select class="form-control" id="requested_by" name="requested_by" required>
+                                <option value="">Pilih</option>
+                                <option value="siswa">Siswa</option>
+                                <option value="wali">Wali</option>
+                                <option value="orang_tua">Orang Tua</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="feather icon-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <p>Test Content</p>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Riwayat Izin</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-sm" id="dataTable" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Status</th>
+                                <th>Alasan</th>
+                                <th>Di Jemput Oleh</th>
+                                <th>Dari Tanggal</th>
+                                <th>Hingga Tanggal</th>
+                                <th>Keluar Tanggal</th>
+                                <th>Kembali Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#search-button').on('click', function() {
+                var nisOrNisn = $('#nis_or_nisn').val();
+                if (nisOrNisn.length >= 3) {
+                    $.ajax({
+                        url: '{{ route('staff.perizinan.search') }}',
+                        type: 'GET',
+                        data: { nis_or_nisn: nisOrNisn },
+                        success: function(response) {
+                            if (response.status) {
+                                $('#input-section').removeClass('d-none').show();
+                                $('#user_id').val(response.data.user_id);
+                                $('#nama').val(response.data.name);
+
+                                // Populate the table with the user's izin history
+                                var tableBody = $('#dataTable tbody');
+                                tableBody.empty(); // Clear previous data
+                                $.each(response.data.student_permission_history, function(index, izin) {
+                                    var status = '';
+                                    if (izin.status == 'approved') {
+                                        status = '<span class="badge badge-pill bg-success">Disetujui</span>';
+                                    } else if (izin.status == 'rejected') {
+                                        status = '<span class="badge badge-pill bg-danger">Ditolak</span>';
+                                    } else if (izin.status == 'canceled') {
+                                        status = '<span class="badge badge-pill bg-warning">Dibatalkan</span>';
+                                    } else if (izin.status == 'requested') {
+                                        status = '<span class="badge badge-pill bg-secondary">Permohonan</span>';
+                                    } else if (izin.status == 'check_out') {
+                                        status = '<span class="badge badge-pill bg-secondary">Sudah Keluar</span>';
+                                    } else if (izin.status == 'check_in') {
+                                        status = '<span class="badge badge-pill bg-secondary">Sudah Kembali</span>';
+                                    }
+                                    tableBody.append(`
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${status}</td>
+                                            <td>${izin.reason}</td>
+                                            <td>${izin.pickup_by}</td>
+                                            <td>${izin.from_date}</td>
+                                            <td>${izin.to_date}</td>
+                                            <td>${izin.checked_out_at ?? '-'}</td>
+                                            <td>${izin.checked_in_at ?? '-'}</td>
+                                        </tr>
+                                    `);
+                                });
+                                $('#dataTable').DataTable({
+                                    destroy: true,
+                                    paging: true,
+                                    searching: true,
+                                    ordering: true,
+                                    info: true,
+                                    lengthChange: true,
+                                    pageLength: 10,
+                                    drawCallback: function() {
+                                        $('.pagination').addClass('pagination-sm');
+                                    },
+                                });
+                                $('#dataTable').DataTable().draw();
+                                $('#dataTable').DataTable().columns.adjust().responsive.recalc();
+                            }
+                        },
+                        error: function() {
+                            $('#dataTable').DataTable().destroy();
+                            $('#dataTable tbody').empty();
+                            $('#input-section').addClass('d-none').hide();
+                            showSwal('error', 'Terjadi kesalahan saat mencari data, atau data tidak ditemukan.');
+                        }
+                    });
+                } else {
+                    $('#input-section').hide();
+                }
+            });
+        });
+    </script>
+@endpush

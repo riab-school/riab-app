@@ -1,0 +1,11 @@
+{
+  "name": "Ruhul Islam",
+  "short_name": "Ruhul Islam",
+  "start_url": "https://app.ruhulislam.com",
+  "display": "standalone",
+  "background_color": "#100DD1",
+  "theme_color": "#100DD1",
+  "categories": ["app", "kesantrian", "education", "mobile"],
+  "orientation": "portrait",
+  "description": "SIAKAD - Ruhul Islam Anak Bangsa"
+}

@@ -19,10 +19,6 @@
                     @include('_layouts.app-layouts.menu-list.staff')
                 @endif
 
-                @if(auth()->user()->user_level == 'parent')
-                    @include('_layouts.app-layouts.menu-list.parent')
-                @endif
-
                 @if(auth()->user()->user_level == 'student' && auth()->user()->myDetail->status == 'new')
                     @include('_layouts.app-layouts.menu-list.student-new')
                 @endif

@@ -1,6 +1,12 @@
 @extends('_layouts.app-layouts.index')
 
 @section('content')
+@if (\Session::has('token'))
+    <div class="alert alert-success mt-2">
+        <strong>Perizinan Berhasil di setujui !</strong>
+        <br>Token Izin : <b>{{ \Session::get('token') }}</b>
+    </div>
+@endif  
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Permission List</h5>
@@ -13,9 +19,10 @@
                     <tr>
                         <th>Action</th>
                         <th>Status</th>
+                        <th>Nama</th>
                         <th>NIS</th>
                         <th>NISN</th>
-                        <th>Nama</th>
+                        <th>Token Izin</th>
                         <th>Alasan</th>
                         <th>Dari Tanggal</th>
                         <th>Hingga Tanggal</th>
@@ -26,7 +33,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Detail -->
 <div class="modal fade" id="modalDetailContent" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -99,15 +106,21 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label col-form-label-sm">Check Out Oleh</label>
-                            <div class="col-sm-10">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">Check Out Oleh - Jam</label>
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" id="checked_out_by" readonly disabled>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="checked_out_at" readonly disabled>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label col-form-label-sm">Check In Oleh</label>
-                            <div class="col-sm-10">
+                            <label class="col-sm-2 col-form-label col-form-label-sm">Check In Oleh - Jam</label>
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" id="checked_in_by" readonly disabled>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="checked_in_at" readonly disabled>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -131,12 +144,50 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Status</h5>
+            </div>
+            <form action="{{ route('staff.perizinan.status') }}" method="POST" onsubmit="return processData(this)">
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="id" id="id" required>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">Status</label>
+                        <div class="col-sm-10">
+                            <select class="form-select form-select-sm" id="status" name="status" required>
+                                <option value="">Pilih Status</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3 d-none" id="reject_reason_div">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">Alasan</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="reject_reason" name="reject_reason" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
     <script>
 
-        $(document).on('click', '#modalDetail', function() {
+        $(document).on('click', '#btnModalDetail', function() {
             let id = $(this).data('id');
             $.ajax({
                 url: '{{ route('staff.perizinan.detail') }}?id=' + id,
@@ -149,12 +200,14 @@
                     $('#pickup_by').val(res.data.pickup_by);
                     $('#from_date').val(res.data.from_date);
                     $('#to_date').val(res.data.to_date);
-                    $('#to_date').val(res.data.token);
-                    $('#requested_by').val(res.data.requested_by.name);
-                    $('#approved_by').val(res.data.approved_by.name);
-                    $('#checked_out_by').val(res.data.checked_out_by.name);
-                    $('#checked_in_by').val(res.data.checked_in_by.name);
-                    $('#rejected_by').val(res.data.rejected_by.name);
+                    $('#token').val(res.data.token);
+                    $('#requested_by').val(res.data.requested_by);
+                    $('#approved_by').val(res.data.approved_by ? res.data.approved_by.staff_detail.name : '-');
+                    $('#checked_out_by').val(res.data.checked_out_by ? res.data.checked_out_by.staff_detail.name : '-');
+                    $('#checked_out_at').val(res.data.checked_out_at);
+                    $('#checked_in_by').val(res.data.checked_in_by ? res.data.checked_in_by.staff_detail.name : '-');
+                    $('#checked_in_at').val(res.data.checked_in_at);
+                    $('#rejected_by').val(res.data.rejected_by ? res.data.rejected_by.staff_detail.name : '-');
                     $('#reject_reason').val(res.data.reject_reason);
                     $('#modalDetailContent').modal('show');
                 },
@@ -166,6 +219,44 @@
                 }
             });
         });
+
+        $(document).on('click', '#btnModalEdit', function() {
+            let id = $(this).data('id');
+            $.ajax({
+                url: '{{ route('staff.perizinan.detail') }}?id=' + id,
+                type: 'GET',
+                success: function(res) {
+                    $('#id').val(res.data.id);
+                    $('#status').find('option').each(function() {
+                        if ($(this).val() == res.data.status) {
+                            $(this).hide();
+                        }
+                    });
+                    if (res.data.status == 'check_out' || res.data.status == 'check_in') {
+                        $('#status').find('option[value="canceled"]').hide();
+                        $('#status').find('option[value="approved"]').hide();
+                        $('#status').find('option[value="rejected"]').hide();
+                    }
+                    $('#modalEdit').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status === 401) {
+                        window.location.href = '{{ route('login') }}';
+                    }
+                }
+            });
+        });
+
+        $(document).on('change', '#status', function() {
+            if ($(this).val() == 'rejected') {
+                $('#reject_reason_div').removeClass('d-none');
+                $('#reject_reason').attr('required', true);
+            } else {
+                $('#reject_reason_div').addClass('d-none');
+                $('#reject_reason').attr('required', false);
+            }
+        });
+
         $(document).ready(function() {
             $('#dataTable').DataTable({
                 processing: true,
@@ -180,8 +271,8 @@
                         orderable: false,
                         render: function(data, type, row) {
                             return `<div class="btn-group">
-                                        <a href="/?id=${row.id}" class="btn btn-icon btn-outline-info"><i class="fas fa-edit"></i></a>
-                                        <button id="modalDetail" data-id="${row.id}" class="btn btn-icon btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                        <button id="btnModalEdit" data-id="${row.id}" class="btn btn-icon btn-outline-warning"><i class="fas fa-edit"></i></button>
+                                        <button id="btnModalDetail" data-id="${row.id}" class="btn btn-icon btn-outline-primary"><i class="fas fa-eye"></i></button>
                                     </div>`;
                         }
                     },
@@ -209,9 +300,10 @@
                             }
                         }
                     },
+                    {data: 'detail.student_detail.name', name: 'nama'},
                     {data: 'detail.student_detail.nis', name: 'nis'},
                     {data: 'detail.student_detail.nisn', name: 'nisn'},
-                    {data: 'detail.student_detail.name', name: 'nama'},
+                    {data: 'token', name: 'token', className: 'fw-bold'},
                     {data: 'reason', name: 'reason'},
                     {data: 'from_date', name: 'from_date'},
                     {data: 'to_date', name: 'to_date'},
