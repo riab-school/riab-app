@@ -10,7 +10,7 @@ Route::get('/', function () {
         $route = auth()->user()->user_level.".home";
         return redirect()->route($route);
     }
-    return redirect()->route('login');
+    return view('splash');	
 });
 
 Route::middleware(['auth', EnsureUserActive::class])->group(function () {

@@ -65,21 +65,35 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-borderless" id="dataTable" width="100%">
                         <tbody>
+                            @forelse ($checkout_data as $item)
                             <tr>
                                 <td>
-                                    <img class="rounded-circle" style="width:40px;" src="assets/images/user/avatar-1.jpg" alt="activity-user">
+                                    <img class="rounded-circle" style="width:40px;" src="{{ $item->detail->studentDetail->studentDocument ? Storage::disk('s3')->url($item->detail->studentDetail->studentDocument->photo) : 'https://ui-avatars.com/api/?background=19BCBF&color=fff&name='.$item->detail->studentDetail->name }}" alt="activity-user">
                                 </td>
                                 <td>
-                                    <h6 class="mb-1">Nama Santri</h6>
-                                    <p class="m-0">Alasan Izin
-                                        <span class="text-c-green">Lama Hari</span>
+                                    <h6 class="mb-1">{{ $item->detail->studentDetail->name }}</h6>
+                                    <p class="m-0">Alasan : {{ $item->reason }}</p>
+                                        <span class="text-c-green">{{ dateIndo($item->from_date) }}</span>
+                                        s/d
+                                        <span class="text-c-green">{{ dateIndo($item->to_date) }}</span>
                                     </p>
                                 </td>
-                                <td>Approved By</td>
-                                <td><span class="text-c-green"> Status </span>
+                                <td>
+                                    <p class="m-0">
+                                        Izin Ke : {{ $item->approvedBy->staffDetail->name }}
+                                    </p>
+                                    <p>Status : <span class="text-c-green">{{ ucwords($item->status) }}</span></p>
                                 </td>
-                                <td>PKD Check</td>
+                                <td>
+                                </td>
                             </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4">
+                                        <center>Tidak ada data</center>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -95,21 +109,35 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-borderless" id="dataTable" width="100%">
                         <tbody>
+                            @forelse ($checkin_data as $item)
                             <tr>
                                 <td>
-                                    <img class="rounded-circle" style="width:40px;" src="assets/images/user/avatar-1.jpg" alt="activity-user">
+                                    <img class="rounded-circle" style="width:40px;" src="{{ $item->detail->studentDetail->studentDocument ? Storage::disk('s3')->url($item->detail->studentDetail->studentDocument->photo) : 'https://ui-avatars.com/api/?background=19BCBF&color=fff&name='.$item->detail->studentDetail->name }}" alt="activity-user">
                                 </td>
                                 <td>
-                                    <h6 class="mb-1">Nama Santri</h6>
-                                    <p class="m-0">Alasan Izin
-                                        <span class="text-c-green">Lama Hari</span>
+                                    <h6 class="mb-1">{{ $item->detail->studentDetail->name }}</h6>
+                                    <p class="m-0">Alasan : {{ $item->reason }}</p>
+                                        <span class="text-c-green">{{ dateIndo($item->from_date) }}</span>
+                                        s/d
+                                        <span class="text-c-green">{{ dateIndo($item->to_date) }}</span>
                                     </p>
                                 </td>
-                                <td>Approved By</td>
-                                <td><span class="text-c-green"> Status </span>
+                                <td>
+                                    <p class="m-0">
+                                        Izin Ke : {{ $item->approvedBy->staffDetail->name }}
+                                    </p>
+                                    <p>Status : <span class="text-c-green">{{ ucwords($item->status) }}</span></p>
                                 </td>
-                                <td>PKD Check</td>
+                                <td>
+                                </td>
                             </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4">
+                                        <center>Tidak ada data</center>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

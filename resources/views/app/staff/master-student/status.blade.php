@@ -3,7 +3,12 @@
 <div class="col-sm-12">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="pills-naik-kelas-tab" data-bs-toggle="pill"
+            <a class="nav-link active" id="pills-assign-kelas-tab" data-bs-toggle="pill"
+                href="#pills-assign-kelas" role="tab" aria-controls="pills-assign-kelas"
+                aria-selected="false">Assign Kelas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-naik-kelas-tab" data-bs-toggle="pill"
                 href="#pills-naik-kelas" role="tab" aria-controls="pills-naik-kelas"
                 aria-selected="false">Naik Kelas</a>
         </li>
@@ -11,6 +16,11 @@
             <a class="nav-link" id="pills-pindah-kelas-tab" data-bs-toggle="pill"
                 href="#pills-pindah-kelas" role="tab" aria-controls="pills-pindah-kelas"
                 aria-selected="false">Pindah Kelas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-assign-asrama-tab" data-bs-toggle="pill"
+                href="#pills-assign-asrama" role="tab" aria-controls="pills-assign-asrama"
+                aria-selected="false">Assign Asrama</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="pills-pindah-asrama-tab" data-bs-toggle="pill"
@@ -34,119 +44,24 @@
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
-        {{-- Naik Kelas --}}
-        <div class="tab-pane fade show active" id="pills-naik-kelas" role="tabpanel" aria-labelledby="pills-naik-kelas-tab">
-            <h5>Naik Kelas</h5>
-            <hr>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card rounded-0">
-                        <div class="card-header">
-                            <h5>Tahun Ajaran Asal | <span class="text-danger">{{ session()->get('tahun_ajaran_aktif') }}/{{ session()->get('tahun_ajaran_aktif') + 1 }}</span> </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-2">
-                                <div class="col-md-6 mb-3 mb-lg-0">
-                                    <label for="filter_grade_from_1">Tingkat / Grade</label>
-                                    <select name="filter_grade_from_1" id="filter_grade_from_1" class="form-control">
-                                        <option value="">Pilih Tingkat</option>
-                                        <option value="X">X</option>
-                                        <option value="XI">XI</option>
-                                        <option value="XII">XII</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3 mb-lg-0">
-                                    <label for="filter_classroom_from_1">Kelas</label>
-                                    <select name="filter_classroom_from_1" id="filter_classroom_from_1" class="form-control">
-                                        <option value="" disabled>Silahkan Pilih Tingkat Dulu</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table id="dataTableFrom1" class="table table-sm table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>NISN</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card rounded-0">
-                        <div class="card-header">
-                            <h5>Tahun Ajaran Tujuan | <span class="text-danger">{{ session()->get('tahun_ajaran_aktif') + 1 }}/{{ session()->get('tahun_ajaran_aktif') + 2 }}</span> </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-2">
-                                <div class="col-md-6 mb-3 mb-lg-0">
-                                    <label for="filter_grade_to_1">Tingkat / Grade</label>
-                                    <select name="filter_grade_to_1" id="filter_grade_to_1" class="form-control">
-                                        <option value="">Pilih Tingkat</option>
-                                        <option value="X">X</option>
-                                        <option value="XI">XI</option>
-                                        <option value="XII">XII</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3 mb-lg-0">
-                                    <label for="filter_classroom_to_1">Kelas</label>
-                                    <select name="filter_classroom_to_1" id="filter_classroom_to_1" class="form-control">
-                                        <option value="" disabled>Silahkan Pilih Tingkat Dulu</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table id="dataTableTo1" class="table table-sm table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>NISN</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
+        @include('app.staff.master-student.status-tab.assign-kelas')
 
-        {{-- Pindah Kelas --}}
-        <div class="tab-pane fade" id="pills-pindah-kelas" role="tabpanel" aria-labelledby="pills-pindah-kelas-tab">
-            <h5>Pindah Kelas</h5>
-            <hr>
-        </div>
+        @include('app.staff.master-student.status-tab.naik-kelas')
 
-        {{-- Pindah Asrama --}}
-        <div class="tab-pane fade" id="pills-pindah-asrama" role="tabpanel" aria-labelledby="pills-pindah-asrama-tab">
-            <h5>Pindah Asrama</h5>
-            <hr>
-        </div>
+        @include('app.staff.master-student.status-tab.pindah-kelas')
 
-        {{-- Tamat --}}
-        <div class="tab-pane fade" id="pills-tamat" role="tabpanel" aria-labelledby="pills-tamat-tab">
-            <h5>Tamat / Wisuda</h5>
-            <hr>
-        </div>
+        @include('app.staff.master-student.status-tab.assign-asrama')
 
-        {{-- Pindah Sekolah --}}
-        <div class="tab-pane fade" id="pills-pindah-sekolah" role="tabpanel" aria-labelledby="pills-pindah-sekolah-tab">
-            <h5>Pindah Sekolah</h5>
-            <hr>
-        </div>
+        @include('app.staff.master-student.status-tab.pindah-asrama')
 
-        {{-- Drop Out --}}
-        <div class="tab-pane fade" id="pills-drop-out" role="tabpanel" aria-labelledby="pills-drop-out-tab">
-            <h5>Drop Out</h5>
-            <hr>
-        </div>
+        @include('app.staff.master-student.status-tab.tamat-wisuda')
+
+        @include('app.staff.master-student.status-tab.pindah-sekolah')
+
+        @include('app.staff.master-student.status-tab.drop-out')
+
+        
     </div>
 </div>
 

@@ -15,9 +15,10 @@ class DashboardController extends Controller
             'approved_count'    => StudentPermissionHistory::where('status', 'approved')->count(),
             'rejected_count'    => StudentPermissionHistory::where('status', 'rejected')->count(),
             'cancelled_count'   => StudentPermissionHistory::where('status', 'cancelled')->count(),
-            'checkout_data'     => StudentPermissionHistory::where('status', 'checked_iut')->get()->take(5),
-            'checkin_data'      => StudentPermissionHistory::where('status', 'checked_in')->get()->take(5),
+            'checkout_data'     => StudentPermissionHistory::where('status', 'check_out')->get()->take(10),
+            'checkin_data'      => StudentPermissionHistory::where('status', 'check_in')->get()->take(10),
         ];
+
         return view('app.staff.perizinan.dashboard', $data);
     }
 }
