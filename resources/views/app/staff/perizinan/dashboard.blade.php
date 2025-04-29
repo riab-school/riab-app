@@ -58,8 +58,11 @@
 <div class="row">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Sudah Check Out</h5>
+                @if($checkout_count > 5)
+                <div>Dan {{ $checkout_count - 5 }} orang lainnya</div>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -86,7 +89,7 @@
                                         Check Out Oleh  : {{ $item->checkedOutBy->staffDetail->name }}
                                     </p>
                                     <p>
-                                        Status : <span class="text-c-green">{{ ucwords($item->status) }}</span>
+                                        Status : <span class="text-c-red">{{ ucwords($item->status) }}</span>
                                     </p>
                                 </td>
                                 <td>
@@ -107,8 +110,11 @@
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Sudah Check In</h5>
+                @if($checkin_count > 5)
+                <div>Dan {{ $checkin_count - 5 }} orang lainnya</div>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">

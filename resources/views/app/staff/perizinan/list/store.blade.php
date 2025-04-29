@@ -29,32 +29,62 @@
                         <input type="hidden" class="form-control" id="user_id" name="user_id" required>
                         <div class="form-group">
                             <label for="nama">Nama Siswa</label>
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Siswa" readonly>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama Siswa" readonly>
+                            @error('nama')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama">Alasan atau tujuan</label>
-                            <input type="text" class="form-control" id="reason" name="reason" placeholder="Alasan atau tujuan izin" required>
+                            <input type="text" class="form-control @error('reason') is-invalid @enderror" id="reason" name="reason" placeholder="Alasan atau tujuan izin" required>
+                            @error('reason')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama">Di jemput oleh</label>
-                            <input type="text" class="form-control" id="pickup_by" name="pickup_by" required>
+                            <input type="text" class="form-control @error('pickup_by') is-invalid @enderror" id="pickup_by" name="pickup_by" required>
+                            @error('pickup_by')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama">Dari Tanggal</label>
-                            <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="from_date" name="from_date" required>
+                            <input type="date" class="form-control @error('from_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="from_date" name="from_date" required>
+                            @error('from_date')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama">Hingga Tanggal</label>
-                            <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="to_date" name="to_date" required>
+                            <input type="date" class="form-control @error('to_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="to_date" name="to_date" required>
+                            @error('to_date')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama">Permohonan Oleh</label>
-                            <select class="form-control" id="requested_by" name="requested_by" required>
+                            <select class="form-control @error('requested_by') is-invalid @enderror" id="requested_by" name="requested_by" required>
                                 <option value="">Pilih</option>
                                 <option value="siswa">Siswa</option>
                                 <option value="wali">Wali</option>
                                 <option value="orang_tua">Orang Tua</option>
                             </select>
+                            @error('requested_by')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">
                             <i class="feather icon-save"></i> Simpan
@@ -108,6 +138,9 @@
                         data: { nis_or_nisn: nisOrNisn },
                         success: function(response) {
                             if (response.status) {
+                                $('#dataTable').DataTable().destroy();
+                                $('#dataTable tbody').empty();
+                                showSwal('success', 'Data ditemukan');
                                 $('#input-section').removeClass('d-none').show();
                                 $('#user_id').val(response.data.user_id);
                                 $('#nama').val(response.data.name);
