@@ -80,11 +80,12 @@ class ListController extends Controller
                 ->where('to_date', '<=', $request->from_date)
                 ->whereNot('status', 'check_in')
                 ->where('status', 'approved')
+                ->orWhere('status', 'check_out')
                 ->first();
             if ($check) {
                 return redirect()->back()->with([
                     'status'    => 'error',
-                    'message'   => 'Perizinan sudah ada, silahkan cek di list perizinan',
+                    'message'   => 'Perizinan sudah ada atau santri sudah izin, silahkan cek di list perizinan',
                 ]);
             }
             \DB::beginTransaction();
@@ -206,6 +207,16 @@ class ListController extends Controller
                         'checked_in_at'     => null,
                         'checked_out_by'    => null,
                         'checked_out_at'    => null,
+                        'token'             => null,
+                    ]);
+                }
+                if($request->status == 'check_in') {
+                    $data->update([
+                        'status'            => $request->status,
+                        'reject_reason'     => null,
+                        'rejected_by'       => null,
+                        'checked_in_by'     => auth()->user()->id,
+                        'checked_in_at'     => now(),
                         'token'             => null,
                     ]);
                 }

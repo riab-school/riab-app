@@ -22,6 +22,8 @@ use App\Http\Controllers\Staff\Psb\PrintReportController as PsbPrintReportContro
 
 use App\Http\Controllers\Staff\Perizinan\DashboardController as PerizinanDashboardController;
 use App\Http\Controllers\Staff\Perizinan\ListController as PerizinanListController;
+use App\Http\Controllers\Staff\Perizinan\ReportController as PerizinanReportController;
+
 
 use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController;
 
@@ -97,6 +99,10 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::post('add', [PerizinanListController::class, 'handleCreatePermission'])->name('staff.perizinan.create');
             Route::get('search', [PerizinanListController::class, 'searchData'])->name('staff.perizinan.search');
             Route::post('status', [PerizinanListController::class, 'handleUpdateStatus'])->name('staff.perizinan.status');
+        });
+        Route::prefix('laporan')->group(function() {
+            Route::get('/', [PerizinanReportController::class, 'showReportFilterPage'])->name('staff.perizinan.laporan');
+            Route::post('handleCreateReport', [PerizinanReportController::class, 'handleReportPrint'])->name('staff.perizinan.laporan.handle');
         });
     });
 

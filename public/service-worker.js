@@ -1,9 +1,3 @@
-// -----------------------------------------------------------------
-// Template Name: Suha - Multipurpose Ecommerce Mobile HTML Template
-// Template Author: Designing World
-// Template Author URL: https://themeforest.net/user/designing-world
-// -----------------------------------------------------------------
-
 const staticCacheName = 'precache-v3.0.1';
 const dynamicCacheName = 'runtimecache-v3.0.1';
 
@@ -14,7 +8,6 @@ const precacheAssets = [
     'mobile-assets/img/core-img/logo-white.png',
     'mobile-assets/img/bg-img/no-internet.png',
     'mobile-assets/js/theme-switching.js',
-    'offline.html'
 ];
 
 // Install Event
@@ -50,7 +43,7 @@ self.addEventListener('fetch', function (event) {
             });
         }).catch(function() {
             // Fallback Page, When No Internet Connection
-            return caches.match('offline.html');
+            // return caches.match('offline.html');
         })
     );
 });

@@ -116,6 +116,18 @@ if(!function_exists('dateIndo')){
     }
 }
 
+if(!function_exists('dateIndoShort')){
+    function dateIndoShort($date)
+    {
+        $changeDate = gmdate($date, time() + 60 * 60 * 8);
+        $parse = explode("-", $changeDate);
+        $tanggal = $parse[2];
+        $bulan = $parse[1];
+        $tahun = $parse[0];
+        return $tanggal . '-' . $bulan . '-' . $tahun;
+    }
+}
+
 if (!function_exists('rupiah')) {
     function rupiah($angka)
     {

@@ -82,7 +82,12 @@
                                     <p class="m-0">
                                         Izin Ke : {{ $item->approvedBy->staffDetail->name }}
                                     </p>
-                                    <p>Status : <span class="text-c-green">{{ ucwords($item->status) }}</span></p>
+                                    <p class="m-0">
+                                        Check Out Oleh  : {{ $item->checkedOutBy->staffDetail->name }}
+                                    </p>
+                                    <p>
+                                        Status : <span class="text-c-green">{{ ucwords($item->status) }}</span>
+                                    </p>
                                 </td>
                                 <td>
                                 </td>
@@ -126,7 +131,12 @@
                                     <p class="m-0">
                                         Izin Ke : {{ $item->approvedBy->staffDetail->name }}
                                     </p>
-                                    <p>Status : <span class="text-c-green">{{ ucwords($item->status) }}</span></p>
+                                    <p class="m-0">
+                                        Check Out Oleh  : {{ $item->checkedInBy->staffDetail->name }}
+                                    </p>
+                                    <p>
+                                        Status : <span class="text-c-green">{{ ucwords($item->status) }}</span>
+                                    </p>
                                 </td>
                                 <td>
                                 </td>

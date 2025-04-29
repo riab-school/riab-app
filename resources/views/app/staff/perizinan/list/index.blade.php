@@ -164,6 +164,7 @@
                                 <option value="approved">Approved</option>
                                 <option value="rejected">Rejected</option>
                                 <option value="canceled">Canceled</option>
+                                <option value="check_in">Check In</option>
                             </select>
                         </div>
                     </div>
@@ -232,7 +233,13 @@
                             $(this).hide();
                         }
                     });
-                    if (res.data.status == 'check_out' || res.data.status == 'check_in') {
+                    if (res.data.status == 'check_out') {
+                        $('#status').find('option[value="canceled"]').hide();
+                        $('#status').find('option[value="approved"]').hide();
+                        $('#status').find('option[value="rejected"]').hide();
+                    }
+                    if (res.data.status == 'check_in') {
+                        $('#status').find('option[value="check_in"]').hide();
                         $('#status').find('option[value="canceled"]').hide();
                         $('#status').find('option[value="approved"]').hide();
                         $('#status').find('option[value="rejected"]').hide();
@@ -280,22 +287,22 @@
                         render: function(data, type, row) {
                             switch (row.status) {
                                 case 'requested':
-                                    return '<span class="badge badge-light-info">Requested</span>';
+                                    return '<span class="badge badge-light-info">Permohonan Izin</span>';
                                     break;
                                 case 'approved':
-                                    return '<span class="badge badge-light-success">Approved</span>';
+                                    return '<span class="badge badge-light-success">Disetujui</span>';
                                     break;
                                 case 'check_out':
-                                    return '<span class="badge badge-light-primary">Check Out</span>';
+                                    return '<span class="badge badge-light-primary">Sudah Keluar</span>';
                                     break;
                                 case 'check_in':
-                                    return '<span class="badge badge-light-secodary">Check Out</span>';
+                                    return '<span class="badge badge-light-secondary">Sudah Kembali</span>';
                                     break;
                                 case 'rejected':
-                                    return '<span class="badge badge-light-danger">Rejected</span>';
+                                    return '<span class="badge badge-light-danger">Di Tolak</span>';
                                     break;
                                 case 'canceled':
-                                    return '<span class="badge badge-light-warning">Canceled</span>';
+                                    return '<span class="badge badge-light-warning">Di Batalkan</span>';
                                     break;
                             }
                         }
