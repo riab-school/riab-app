@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AdminDetail;
+use App\Models\MasterTahunAjaran;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,5 +28,9 @@ class AdminSeeder extends Seeder
             'user_id' => $admin->id,
             'name'    => 'Admin',
         ]);
+
+        MasterTahunAjaran::where('tahun_ajaran', date('Y'))->first()->update([
+            'is_active' => true,
+        ]);	
     }
 }
