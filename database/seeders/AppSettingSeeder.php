@@ -103,5 +103,10 @@ class AppSettingSeeder extends Seeder
             'value' => 'http://202.10.42.178:3000',
         ]);
 
+        AppSettings::create([
+            'key' => 'SCHOOL_WEBSITE',
+            'value' => 'https://ruhulislam.com',
+        ]);
+
     }
 }

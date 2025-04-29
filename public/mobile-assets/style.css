@@ -133,7 +133,7 @@ textarea:invalid {
     max-width: 650px;
   }
 }
-@media only screen and (min-width:992px) and (max-width:1199px) {
+/* @media only screen and (min-width:992px) and (max-width:1199px) {
   .container {
     max-width: 600px;
   }
@@ -152,7 +152,7 @@ textarea:invalid {
   .container {
     max-width: 400px;
   }
-}
+} */
 
 /* Preloader CSS */
 #preloader {
