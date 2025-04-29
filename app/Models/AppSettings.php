@@ -12,6 +12,7 @@ class AppSettings extends Model
     protected $fillable = [
         'key',
         'value',
+        'default_value',
         'is_file'
     ];
 }

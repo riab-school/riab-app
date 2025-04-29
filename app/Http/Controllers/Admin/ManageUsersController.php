@@ -84,6 +84,7 @@ class ManageUsersController extends Controller
                 StaffDetail::create([
                     'user_id' => $user->id,
                     'name'    => $request->name,
+                    'status'    => 'active'
                 ]);
                 case 'parent':
                 ParentDetail::create([

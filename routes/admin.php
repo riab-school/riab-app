@@ -68,6 +68,7 @@ Route::prefix('app-configs')->group(function() {
     Route::get('/', [AppConfigsController::class, 'showPageConfigs'])->name('admin.app-configs');
     Route::get('detail', [AppConfigsController::class, 'detailConfigs'])->name('admin.app-configs.detail');
     Route::post('update', [AppConfigsController::class, 'handleUpdateConfigs'])->name('admin.app-configs.update');
+    Route::post('reset', [AppConfigsController::class, 'handleResetDefault'])->name('admin.app-configs.reset');
 });
 
 Route::prefix('app-logs')->group(function() {

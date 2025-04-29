@@ -6,11 +6,16 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Update Config</h5>
-                <a href="{{ route('admin.app-configs') }}" class="btn btn-outline-danger btn-sm m-0">
-                    <i class="feather icon-chevron-left"></i>
-                    Back
-                </a>
-                <div class="card-header-right">
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.app-configs') }}" class="btn btn-outline-danger btn-sm m-0">
+                        <i class="feather icon-chevron-left"></i>
+                        Back
+                    </a>
+                    <form action="{{ route('admin.app-configs.reset') }}" method="POST" onsubmit="return processWithQuestion(event, this);">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $id }}">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm m-0"">Reset Default</button>
+                    </form>
                 </div>
             </div>
             <div class="card-body">

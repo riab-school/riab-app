@@ -13,40 +13,6 @@ class TahunAjaranSeeder extends Seeder
      */
     public function run(): void
     {
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2017',
-            'is_active'     => false
-        ]);
-
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2018',
-            'is_active'     => false
-        ]);
-
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2019',
-            'is_active'     => false
-        ]);
-
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2020',
-            'is_active'     => false
-        ]);
-
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2021',
-            'is_active'     => false
-        ]);
-
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2022',
-            'is_active'     => false
-        ]);
-
-        MasterTahunAjaran::create([
-            'tahun_ajaran'  => '2023',
-            'is_active'     => false
-        ]);
 
         MasterTahunAjaran::create([
             'tahun_ajaran'  => '2024',

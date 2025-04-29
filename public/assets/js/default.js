@@ -55,3 +55,24 @@ function processData(form) {
     btn.innerHTML = 'Processing...';
     return true;
 }
+
+function processWithQuestion(e, form) {
+    e.preventDefault();
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data yang sudah dirubah atau hapus tidak dapat dikembalikan lagi.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Batalkan',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerHTML = 'Processing...';
+            form.submit();
+        }
+    });
+
+    return false;
+}

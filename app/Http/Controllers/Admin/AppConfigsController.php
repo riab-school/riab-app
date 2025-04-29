@@ -38,7 +38,6 @@ class AppConfigsController extends Controller
 
     public function handleUpdateConfigs(Request $request)
     {
-        
         try {
             if($request->hasFile('value')){
                 $request->validate([
@@ -65,6 +64,33 @@ class AppConfigsController extends Controller
             ]);
         } catch (\Throwable $th) {
             appLog(auth()->user()->id, 'error', 'Gagal Update Config');
+            return redirect()->back()->with([
+                'status'    => 'error',
+                'message'   => 'Config gagal di rubah',
+            ]);
+        }
+    }
+
+    public function handleResetDefault(Request $request)
+    {
+        try {
+            $settings = AppSettings::where('id', $request->id)->first();
+            if($settings->is_file){
+                $file = public_path($settings->value);
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+            $settings->update([
+                'value' => $settings->default_value,
+            ]);
+            appLog(auth()->user()->id, 'success', 'Berhasil Update Config ke default');
+            return redirect()->route('admin.app-configs')->with([
+                'status'    => 'success',
+                'message'   => 'Config berhasil di rubah',
+            ]);
+        } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal Update Config ke default');
             return redirect()->back()->with([
                 'status'    => 'error',
                 'message'   => 'Config gagal di rubah',
