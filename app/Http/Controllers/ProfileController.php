@@ -60,7 +60,7 @@ class ProfileController extends Controller
             auth()->user()->is_need_to_update_profile = false;
             auth()->user()->myDetail->save();
             auth()->user()->save();
-            appLog(auth()->user()->id, 'success', 'Update Profile data');
+            appLog(auth()->user()->id, 'success', 'Berhasil update data profile');
             return redirect()->back()->with([
                 'status'    => 'success',
                 'message'   => 'Profil berhasil diperbarui',
@@ -76,7 +76,7 @@ class ProfileController extends Controller
             }
             auth()->user()->password = bcrypt($request->new_password);
             auth()->user()->save();
-            appLog(auth()->user()->id, 'success', 'Update Password');
+            appLog(auth()->user()->id, 'success', 'Berhasil merubah password');
             return redirect()->back()->with([
                 'status'    => 'success',
                 'message'   => 'Password berhasil diperbarui',

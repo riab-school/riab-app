@@ -25,7 +25,7 @@ class LoginController extends Controller
         ]);
         
         if (Auth::attempt($request->only('username', 'password'), true)) {
-            appLog(auth()->user()->id, 'success', 'Success login to system');
+            appLog(auth()->user()->id, 'success', 'Berhasil masuk ke aplikasi');
             switch (auth()->user()->user_level) {
                 case 'admin':
                     return redirect()->route('admin.home');

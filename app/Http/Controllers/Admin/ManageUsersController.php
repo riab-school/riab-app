@@ -92,12 +92,13 @@ class ManageUsersController extends Controller
                 ]);
                 break;
             }
-            appLog(auth()->user()->id, 'success', 'Create a new user : '.$request->username);
+            appLog(auth()->user()->id, 'success', 'Berhasil menambah user baru : '.$request->username);
             return redirect()->route('admin.manage-users')->with([
                 'status'    => 'success',
                 'message'   => 'User berhasil dibuat',
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal menambah user baru : '.$request->username);
             return redirect()->back()->withInput()->withErrors([
                 'status'    => 'error',
                 'message'   => 'User gagal dibuat',
@@ -164,12 +165,13 @@ class ManageUsersController extends Controller
                     $id->studentDetail->save();
                     break;
             }
-            appLog(auth()->user()->id, 'success', 'Update a user detail : '.$request->username);
+            appLog(auth()->user()->id, 'success', 'Berhasil memperbarui detail : '.$request->username);
             return redirect()->route('admin.manage-users')->with([
                 'status'    => 'success',
                 'message'   => 'User berhasil diperbarui',
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal memperbarui detail : '.$request->username);
             return redirect()->back()->with([
                 'status'    => 'error',
                 'message'   => 'User gagal diperbarui',
@@ -186,7 +188,7 @@ class ManageUsersController extends Controller
             $id->is_active = true;
         }
         $id->save();
-        appLog(auth()->user()->id, 'success', "Change user status : $id->username to $id->is_active");
+        appLog(auth()->user()->id, 'success', "Berhasil merubah status user : $id->username to $id->is_active");
         return response()->json([
             'status'    => 'success',
             'message'   => 'Status berhasil diperbarui',
@@ -205,7 +207,7 @@ class ManageUsersController extends Controller
         // Login to user only with id
         if (Auth::loginUsingId($request->id)) {
             $request->session()->regenerate();
-            appLog($oldId, 'success', 'Login as ' . auth()->user()->user_level . ' with username : ' . auth()->user()->username);
+            appLog($oldId, 'success', 'Berhasil Masuk sebagai ' . auth()->user()->user_level . ' dengan username : ' . auth()->user()->username);
             switch (auth()->user()->user_level) {
                 case 'admin':
                     return redirect()->route('admin.home')->with([

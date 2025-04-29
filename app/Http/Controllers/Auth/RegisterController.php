@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 ]);
                 $psbConfig->increment('jumlah_pendaftar_reguler');
             }
-            appLog($studentNew->id, 'success', 'New student account is success register to system');
+            appLog($studentNew->id, 'success', 'Berhasil mendaftarkan akun sebagai siswa baru');
             DB::commit();
             return redirect()->route('login')->with([
                 'status'    => 'success',
@@ -123,7 +123,7 @@ class RegisterController extends Controller
                 'photo'   => 'default.png',
                 'phone'   => indoNumber($request->whatsapp),
             ]);
-            appLog($parentNew->id, 'success', 'New parent account is success register to system');
+            appLog($parentNew->id, 'success', 'Berhasil mendaftar akun sebagai orang tua');
             DB::commit();
             return redirect()->route('login')->with([
                 'status'    => 'success',

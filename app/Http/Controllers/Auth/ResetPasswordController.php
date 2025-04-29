@@ -27,7 +27,7 @@ class ResetPasswordController extends Controller
         $user->password = bcrypt($request->password);
         $user->reset_pass_token = null;
         $user->save();
-        appLog($user->id, 'success', 'Reset password berhasil.');
+        appLog($user->id, 'success', 'Berhasil reset password.');
         return redirect()->route('login')->with([
             'status'    => 'success',
             'message'   => 'Password berhasil direset.'

@@ -30,12 +30,13 @@ class WhatsappInstanceController extends Controller
     {
         try {
             WhatsappChatHistory::truncate();
-            appLog(auth()->user()->id, 'success', 'Delete all whatsapp chat history');
+            appLog(auth()->user()->id, 'success', 'Berhasil menghapus semua riwayat whatsapp');
             return redirect()->back()->with([
                 'status'    => 'success',
                 'message'   => 'Log whatsapp berhasil di hapus',
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal menghapus semua riwayat whatsapp');
             return redirect()->back()->with([
                 'status'    => 'error',
                 'message'   => 'Log whatsapp gagal di hapus',

@@ -58,13 +58,13 @@ class AppConfigsController extends Controller
                     'value' => $request->value,
                 ]);
             }
-            appLog(auth()->user()->id, 'success', 'Update Config');
+            appLog(auth()->user()->id, 'success', 'Berhasil Update Config');
             return redirect()->route('admin.app-configs')->with([
                 'status'    => 'success',
                 'message'   => 'Config berhasil di rubah',
             ]);
         } catch (\Throwable $th) {
-            appLog(auth()->user()->id, 'error', 'Update Config');
+            appLog(auth()->user()->id, 'error', 'Gagal Update Config');
             return redirect()->back()->with([
                 'status'    => 'error',
                 'message'   => 'Config gagal di rubah',

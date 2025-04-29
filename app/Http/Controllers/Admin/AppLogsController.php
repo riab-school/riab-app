@@ -27,12 +27,13 @@ class AppLogsController extends Controller
     {
         try {
             AppLog::truncate();
-            appLog(auth()->user()->id, 'success', 'Delete all logs');
+            appLog(auth()->user()->id, 'success', 'Berhasil menghapus semua log');
             return redirect()->back()->with([
                 'status'    => 'success',
                 'message'   => 'Log berhasil di hapus',
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal menghapus semua log');
             return redirect()->back()->with([
                 'status'    => 'error',
                 'message'   => 'Log gagal di hapus',

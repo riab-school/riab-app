@@ -125,13 +125,14 @@ class ListController extends Controller
                 ];
                 sendText($payload, true);
             }
-            appLog(auth()->user()->id, 'success', 'Create new permission out for student : '.$request->nama);
+            appLog(auth()->user()->id, 'success', 'Berhasil memberikan izin keluar sekolah untuk : '.$request->nama);
             return redirect()->back()->with([
                 'status'    => 'success',
                 'message'   => 'Perizinan berhasil dibuat',
                 'token'     => $token,
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal memberikan izin keluar sekolah untuk : '.$request->nama);
             \DB::rollBack();
             return redirect()->back()->with([
                 'status'    => 'error',
@@ -222,13 +223,14 @@ class ListController extends Controller
                 }
             }
             \DB::commit();
-            appLog(auth()->user()->id, 'success', 'Update Status for : '.$data->detail->studentDetail->name. 'successfully');
+            appLog(auth()->user()->id, 'success', 'Berhasil merubah status izin untuk : '. $data->detail->studentDetail->name);
             return redirect()->back()->with([
                 'status'    => 'success',
                 'message'   => 'Perizinan berhasil dirubah',
                 'token'     => $data->token ?? null,
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal merubah status izin untuk : '. $data->detail->studentDetail->name);
             \DB::rollBack();
             return redirect()->back()->with([
                 'status'    => 'error',

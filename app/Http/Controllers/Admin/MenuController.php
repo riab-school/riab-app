@@ -53,12 +53,13 @@ class MenuController extends Controller
                 'level'     => $request->level,
                 'is_active' => 1
             ]);
-            appLog(auth()->user()->id, 'success', 'Create or Update Menu '.$request->title);
+            appLog(auth()->user()->id, 'success', 'Berhasil menambah atau merubah menu : '.$request->title);
             return redirect()->route('admin.manage-menu')->with([
                 'status'    => 'success',
                 'message'   => 'Menu has been saved'
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal menambah atau merubah menu : '.$request->title);
             return redirect()->back()->withInput()->with([
                 'status'    => 'error',
                 'message'   => 'Menu failed to save'
@@ -76,7 +77,7 @@ class MenuController extends Controller
                 $menu->is_active = true;
             }
             $menu->save();
-            appLog(auth()->user()->id, 'success', "Update Menu status : $menu->title to $menu->is_active");
+            appLog(auth()->user()->id, 'success', "Berhasil memperbarui status menu : $menu->title menjadi $menu->is_active");
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Menu status has been updated'
@@ -89,7 +90,7 @@ class MenuController extends Controller
         if($request->ajax()){
             $menu = MasterMenu::findOrFail($request->id);
             $menu->delete();
-            appLog(auth()->user()->id, 'success', 'Delete Menu '.$menu->title);
+            appLog(auth()->user()->id, 'success', 'Berhasil menghapus menu : '.$menu->title);
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Menu status has been deleted'
@@ -129,12 +130,13 @@ class MenuController extends Controller
                 'order'     => $request->order,
                 'is_active' => 1
             ]);
-            appLog(auth()->user()->id, 'success', 'Create or Update Child Menu '.$request->title);
+            appLog(auth()->user()->id, 'success', 'Berhasil menambah atau merubah anak menu : '.$request->title);
             return redirect()->route('admin.manage-menu')->with([
                 'status'    => 'success',
                 'message'   => 'Child Menu has been saved'
             ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal menambah atau merubah anak menu : '.$request->title);
             return redirect()->back()->withInput()->with([
                 'status'    => 'error',
                 'message'   => 'Child Menu failed to save'
@@ -152,7 +154,7 @@ class MenuController extends Controller
                 $menu->is_active = true;
             }
             $menu->save();
-            appLog(auth()->user()->id, 'success', "Update Chil Menu status : $menu->title to $menu->is_active");
+            appLog(auth()->user()->id, 'success', "Berhasil memperbarui status anak menu : $menu->title menjadi $menu->is_active");
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Child Menu status has been updated'
@@ -246,12 +248,13 @@ class MenuController extends Controller
                     ]);
                 }
             }
-            appLog(auth()->user()->id, 'success', 'Set a menu permission to User '.$request->user_id);
-                return redirect()->back()->with([
-                    'status'    => 'success',
-                    'message'   => 'Permission has been saved'
-                ]);
+            appLog(auth()->user()->id, 'success', 'Berhasil menambahkan izin menu ke user : '.$request->user_id);
+            return redirect()->back()->with([
+                'status'    => 'success',
+                'message'   => 'Permission has been saved'
+            ]);
         } catch (\Throwable $th) {
+            appLog(auth()->user()->id, 'error', 'Gagal menambahkan izin menu ke user : '.$request->user_id);
             return redirect()->back()->with([
                 'status'    => 'error',
                 'message'   => 'Permission failed to save'
@@ -264,7 +267,7 @@ class MenuController extends Controller
         if($request->ajax()){
             $menu = UserHasMenuPermission::findOrFail($request->id);
             $menu->delete();
-            appLog(auth()->user()->id, 'success', 'Delete a menu permission to User '.$menu->user_id);
+            appLog(auth()->user()->id, 'success', 'Berhasil menghapus izin menu untuk user : '.$menu->user_id);
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Permission to user has been deleted'
