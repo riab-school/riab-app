@@ -244,6 +244,11 @@
                         $('#status').find('option[value="approved"]').hide();
                         $('#status').find('option[value="rejected"]').hide();
                     }
+                    if (res.data.status == 'rejected') {
+                        $('#status').find('option[value="check_in"]').hide();
+                        $('#status').find('option[value="canceled"]').hide();
+                        $('#status').find('option[value="approved"]').hide();
+                    }
                     $('#modalEdit').modal('show');
                 },
                 error: function(xhr, status, error) {
@@ -310,12 +315,41 @@
                     {data: 'detail.student_detail.name', name: 'nama'},
                     {data: 'detail.student_detail.nis', name: 'nis'},
                     {data: 'detail.student_detail.nisn', name: 'nisn'},
-                    {data: 'token', name: 'token', className: 'fw-bold'},
+                    {
+                        data: 'token',
+                        name: 'token',
+                        className: 'fw-bold',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return '-'; // atau bisa dikosongkan dengan return '' jika kamu mau
+                            }
+
+                            return `
+                                <span class="token-mask" data-token="${data}">******</span>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-1 toggle-token" title="Lihat Token">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            `;
+                        }
+                    },
                     {data: 'reason', name: 'reason'},
                     {data: 'from_date', name: 'from_date'},
                     {data: 'to_date', name: 'to_date'},
                 ]
             })
         })
+        $('#dataTable').on('click', '.toggle-token', function() {
+            const $span = $(this).closest('td').find('.token-mask');
+            const isHidden = $span.text() === '******';
+            if (isHidden) {
+                $span.text($span.data('token'));
+                $(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                $span.text('******');
+                $(this).find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
     </script>
 @endpush
