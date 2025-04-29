@@ -28,6 +28,23 @@
                         </div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="nama">Berdasarkan Status</label>
+                        <select class="form-control @error('status') is-invalid @enderror" id="status" name="status" required>
+                            <option value="all" selected>Semua Status</option>
+                            <option value="approved">Di setujui</option>
+                            <option value="rejected">Di tolak</option>
+                            <option value="canceled">Di batalkan</option>
+                            <option value="check_in">Sudah Kembali</option>
+                            <option value="check_out">Sudah Keluar</option>
+                            <option value="requested">Dalam Permohonan</option>
+                        </select>
+                        @error('status')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary" type="submit">Tampilkan</button>

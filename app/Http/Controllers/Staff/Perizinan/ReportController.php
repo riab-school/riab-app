@@ -18,13 +18,20 @@ class ReportController extends Controller
         $request->validate([
             'from_date' => 'required|date',
             'to_date' => 'required|date',
+            
         ]);
 
         try {
-            $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
+            if($request->status == 'all'){
+                $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
+            } else {
+                $data['permissions'] = StudentPermissionHistory::where('status', $request->status)
+                    ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                    ->get();
+            }
             $data['from_date'] = dateIndo($request->from_date);
             $data['to_date'] = dateIndo($request->to_date);
-
+            $data['status'] = $request->status;
             return view('app.staff.perizinan.report.print-report', $data);
         } catch (\Throwable $th) {
             return redirect()->back()->with([

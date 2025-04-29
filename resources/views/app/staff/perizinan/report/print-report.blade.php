@@ -85,7 +85,7 @@
         </table>
         <hr class="garis1"/>
         <p style="text-align: center; font-size: 12pt; font-weight: bold;">
-            {{ $from_date }} s/d {{ $to_date }}
+            {{ $from_date }} s/d {{ $to_date }} | {{ $status == 'all' ? 'Semua Status' : ucfirst($status) }}
         </p>
         <table width="100%" class="custom-bordered">
             <thead>
