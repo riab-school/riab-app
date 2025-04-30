@@ -12419,6 +12419,13 @@ table.dataTable tbody > tr > .selected td {
   z-index: 5;
 }
 
+@media screen and (max-width: 767px) {
+  .auth-wrapper .auth-content {
+    margin: 0 0 auto;
+  }
+  
+}
+
 @media only screen and (max-width: 767px) {
   .auth-wrapper .card .card-body {
     padding: 30px 15px;
