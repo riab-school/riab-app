@@ -16745,7 +16745,29 @@ table.table>tbody>tr>td {
 }
 
 .img-fit {
-  height: 90%; /* Menyesuaikan tinggi gambar dengan container */
-  object-fit: cover; /* Memastikan gambar akan "cover" area container */
-  border-radius: 0.2rem; /* Menambahkan rounded sesuai container */
+    height: 90%; /* Menyesuaikan tinggi gambar dengan container */
+    object-fit: cover; /* Memastikan gambar akan "cover" area container */
+    border-radius: 0.2rem; /* Menambahkan rounded sesuai container */
+}
+
+/* Hilangkan backdrop */
+.modal.no-backdrop .modal-backdrop {
+    display: none !important;
+}
+
+body.modal-open {
+    padding-right: 0 !important; /* kadang ada padding extra dari bootstrap */
+}
+
+/* Hilangkan background hitam dan border dari modal */
+.modal.no-backdrop .modal-content {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+#previewImage {
+    width: 80vw;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }

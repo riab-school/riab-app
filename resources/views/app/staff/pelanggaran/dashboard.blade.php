@@ -117,6 +117,7 @@
 @push('scripts')
     <script src="{{ asset('assets/plugins/chart-chartjs/js/Chart.min.js') }}"></script>
     <script>
+
         $(document).ready(function() {
             $.ajax({
                 url: "{{ url()->current() }}",
@@ -151,7 +152,7 @@
                 html += `
                     <tr>
                         <td>
-                            <img class="rounded-circle" style="width:40px;" src="${photoUrl}" alt="activity-user">
+                            <img class="img-preview" style="width:40px; cursor:pointer;" src="${photoUrl}" data-src="${photoUrl}" alt="activity-user">
                         </td>
                         <td>
                             <h6 class="mb-1">${student.name}</h6>

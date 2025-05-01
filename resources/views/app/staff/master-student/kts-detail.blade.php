@@ -40,13 +40,24 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 p-1">
                 <div class="text-center">
                     <div>
-                        <img src="{{ $detail->studentDetail->studentDocument && $detail->studentDetail->studentDocument->photo !== NULL ? Storage::disk('s3')->url($detail->studentDetail->studentDocument->photo)."?".rand(1,32000) : asset('assets/images/blank_person.jpg') }}" class="img-fluid img-thumbnail mb-1" alt="User-Profile-Image" width="180px">
+                        
+                        <img 
+                            src="{{ $detail->studentDetail->studentDocument && $detail->studentDetail->studentDocument->photo !== NULL ? Storage::disk('s3')->url($detail->studentDetail->studentDocument->photo)."?".rand(1,32000) : asset('assets/images/blank_person.jpg') }}" 
+                            data-src="{{ $detail->studentDetail->studentDocument && $detail->studentDetail->studentDocument->photo !== NULL ? Storage::disk('s3')->url($detail->studentDetail->studentDocument->photo)."?".rand(1,32000) : asset('assets/images/blank_person.jpg') }}" 
+                            class="img-fluid img-thumbnail mb-1 img-preview" 
+                            alt="User-Profile-Image" 
+                            width="180px"
+                            style="cursor: pointer;">
                     </div>
                     <div>
-                        <img src="{{ $detail->studentDetail->studentDocument && $detail->studentDetail->studentDocument->signature !== NULL ? Storage::disk('s3')->url($detail->studentDetail->studentDocument->signature)."?".rand(1,32000) : asset('assets/images/blank.png') }}" class="img-fluid img-thumbnail" alt="User-Signature" width="180px">
+                        <img 
+                        src="{{ $detail->studentDetail->studentDocument && $detail->studentDetail->studentDocument->signature !== NULL ? Storage::disk('s3')->url($detail->studentDetail->studentDocument->signature)."?".rand(1,32000) : asset('assets/images/blank.png') }}" 
+                        class="img-fluid img-thumbnail" 
+                        alt="User-Signature" 
+                        width="180px">
                     </div>
                 </div>
             </div>
@@ -234,7 +245,6 @@
     function setWebcamConfig4_3() {
         Webcam.set({
             width: 460,
-            height: 345,
             dest_width: 460,
             dest_height: 345,
             crop_width: 259,

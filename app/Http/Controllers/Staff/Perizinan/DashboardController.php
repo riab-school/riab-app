@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff\Perizinan;
 use App\Http\Controllers\Controller;
 use App\Models\StudentPermissionHistory;
 use Illuminate\Http\Request;
+use Storage;
 
 class DashboardController extends Controller
 {

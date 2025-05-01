@@ -157,7 +157,7 @@
                 html += `
                     <tr>
                         <td>
-                            <img class="rounded-circle" style="width:40px;" src="${photoUrl}" alt="activity-user">
+                            <img class="img-preview" style="width:40px; cursor:pointer;" src="${photoUrl}" data-src="${photoUrl}" alt="activity-user">
                         </td>
                         <td>
                             <h6 class="mb-1">${student.name}</h6>
@@ -194,7 +194,7 @@
                 html += `
                     <tr>
                         <td>
-                            <img class="rounded-circle" style="width:40px;" src="${photoUrl}" alt="activity-user">
+                            <img class="img-preview" style="width:40px; cursor:pointer;" src="${photoUrl}" data-src="${photoUrl}" alt="activity-user">
                         </td>
                         <td>
                             <h6 class="mb-1">${student.name}</h6>
