@@ -109,7 +109,7 @@
                 <div class="horizontal-product-card bg-light rounded-2 shadow-sm">
                     <div class="d-flex align-items-center">
                         <div class="product-thumbnail-side">
-                            <a class="product-thumbnail shadow-sm d-block" href="#"><img src="{{ asset('mobile-assets') }}/img/product/18.png" alt=""></a>
+                            <a class="product-thumbnail shadow-sm d-block" href="#"><img src="https://ui-avatars.com/api/?background=19BCBF&color=fff&name=Ryan Syah" alt=""></a>
                         </div>
                         <div class="product-description">
                             <a class="product-title d-block" href="#">Ryan Achdiadsyah</a>
