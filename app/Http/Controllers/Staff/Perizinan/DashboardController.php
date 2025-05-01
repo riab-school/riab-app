@@ -34,6 +34,12 @@ class DashboardController extends Controller
                         : null;
                     return $item;
             });
+            $chartData = StudentPermissionHistory::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+                        ->whereYear('created_at', now()->year)
+                        ->groupBy('year', 'month')
+                        ->orderBy('year')
+                        ->orderBy('month')
+                        ->get();
             $data = [
                 'requested_count'   => StudentPermissionHistory::where('status', 'requested')->count(),
                 'approved_count'    => StudentPermissionHistory::where('status', 'approved')->count(),
@@ -43,6 +49,7 @@ class DashboardController extends Controller
                 'checkout_count'    => StudentPermissionHistory::where('status', 'check_out')->count(),
                 'checkin_data'      => $checkinData,
                 'checkin_count'     => StudentPermissionHistory::where('status', 'check_in')->count(),
+                'chart_data'        => $chartData,
             ];
             return response()->json([
                 'status' => 'success',

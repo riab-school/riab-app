@@ -181,6 +181,7 @@
                 renderChartAchievement(response.studentAchievement);
                 renderChartByGender(response.byGender);
                 renderChartByClassroom(response.byClassroom);
+                renderChartPermission(response.byPermission);
             },
             error: function (xhr, status, error) {
                 console.error('Error fetching data:', error);
@@ -374,7 +375,62 @@
     }
 
     function renderChartPermission(res){
-        
+        const violations = res;
+
+        // Buat daftar semua bulan dalam rentang tahun
+        const allMonths = [];
+        const currentYear = new Date().getFullYear(); // Tahun saat ini
+        for (let i = 0; i < 12; i++) {
+            allMonths.push({
+                year: currentYear,
+                month: i + 1, // Januari = 1
+                total: 0 // Default total = 0
+            });
+        }
+
+        // Warna untuk setiap bulan (sesuaikan warna sesuai kebutuhan)
+        const backgroundColors = [
+            '#FF6384', '#36A2EB', '#FFCE56', // Januari, Februari, Maret
+            '#4BC0C0', '#FF9F40', '#F7464A', // April, Mei, Juni
+            '#46BFBD', '#FDB45C', '#949FB1', // Juli, Agustus, September
+            '#4D5360', '#BDBDBD', '#19BCBF'  // Oktober, November, Desember
+        ];
+
+        // Gabungkan data yang diterima dengan daftar semua bulan
+        const mergedData = allMonths.map(monthData => {
+            const match = violations.find(v => v.year === monthData.year && v.month === monthData.month);
+            return match || monthData;
+        });
+
+        // Pisahkan bulan dan total setelah data digabungkan
+        const months = mergedData.map(v => 
+            new Date(v.year, v.month - 1).toLocaleString('default', { month: 'long' })
+        );
+        const totals = mergedData.map(v => Math.round(v.total)); // Hapus desimal dengan Math.round
+
+        // Render Chart.js
+        const ctx = document.getElementById('chart-bar-4').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Perizinan',
+                    data: totals,
+                    backgroundColor: mergedData.map((v, i) => backgroundColors[i % backgroundColors.length]),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     }
     </script>
 @endpush

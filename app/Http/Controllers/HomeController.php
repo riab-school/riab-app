@@ -9,6 +9,7 @@ use App\Models\MasterTahunAjaran;
 use App\Models\StaffDetail;
 use App\Models\StudentClassroomHistory;
 use App\Models\StudentDetail;
+use App\Models\StudentPermissionHistory;
 use App\Models\StudentsAchievement;
 use App\Models\StudentsViolation;
 use App\Models\User;
@@ -73,6 +74,12 @@ class HomeController extends Controller
 
             // Get Grafik data for Dashboard
             if($request->has('for') && $request->for == 'grafik'){
+                $chartPermission = StudentPermissionHistory::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+                        ->whereYear('created_at', $activeYear)
+                        ->groupBy('year', 'month')
+                        ->orderBy('year')
+                        ->orderBy('month')
+                        ->get();
                 $data = [
                     'studentViolation'      => StudentsViolation::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
                                                             ->whereYear('created_at', $activeYear)
@@ -109,7 +116,7 @@ class HomeController extends Controller
                                                             ->orderBy('master_classrooms.grade') // Urutkan berdasarkan grade
                                                             ->get(),
                     
-                    'byPermission'          => '', // Todo
+                    'byPermission'          => $chartPermission,
                     'byMemorization'        => '', // Todo
 
                 ];

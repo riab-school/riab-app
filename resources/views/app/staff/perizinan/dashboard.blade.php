@@ -106,11 +106,22 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Grafik Perizinan Per Bulan</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="chart-bar-1" style="width: 100%; height: 350px"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('assets/plugins/chart-chartjs/js/Chart.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -124,6 +135,7 @@
                     $('#cancelled_count').html(res.data.cancelled_count);
                     renderTableOut(res.data.checkout_data, '#checkout_data', res.data.checkout_count);
                     renderTableIn(res.data.checkin_data, '#checkin_data', res.data.checkin_count);
+                    renderChartPermission(res.data.chart_data);
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching data:", error);
@@ -205,7 +217,63 @@
             }
         }
 
+        function renderChartPermission(res){
+            const violations = res;
 
+            // Buat daftar semua bulan dalam rentang tahun
+            const allMonths = [];
+            const currentYear = new Date().getFullYear(); // Tahun saat ini
+            for (let i = 0; i < 12; i++) {
+                allMonths.push({
+                    year: currentYear,
+                    month: i + 1, // Januari = 1
+                    total: 0 // Default total = 0
+                });
+            }
 
+            // Warna untuk setiap bulan (sesuaikan warna sesuai kebutuhan)
+            const backgroundColors = [
+                '#FF6384', '#36A2EB', '#FFCE56', // Januari, Februari, Maret
+                '#4BC0C0', '#FF9F40', '#F7464A', // April, Mei, Juni
+                '#46BFBD', '#FDB45C', '#949FB1', // Juli, Agustus, September
+                '#4D5360', '#BDBDBD', '#19BCBF'  // Oktober, November, Desember
+            ];
+
+            // Gabungkan data yang diterima dengan daftar semua bulan
+            const mergedData = allMonths.map(monthData => {
+                const match = violations.find(v => v.year === monthData.year && v.month === monthData.month);
+                return match || monthData;
+            });
+
+            // Pisahkan bulan dan total setelah data digabungkan
+            const months = mergedData.map(v => 
+                new Date(v.year, v.month - 1).toLocaleString('default', { month: 'long' })
+            );
+            const totals = mergedData.map(v => Math.round(v.total)); // Hapus desimal dengan Math.round
+
+            // Render Chart.js
+            const ctx = document.getElementById('chart-bar-1').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Perizinan Per Bulan',
+                        data: totals,
+                        backgroundColor: mergedData.map((v, i) => backgroundColors[i % backgroundColors.length]),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     </script>
 @endpush

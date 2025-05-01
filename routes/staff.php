@@ -24,6 +24,9 @@ use App\Http\Controllers\Staff\Perizinan\DashboardController as PerizinanDashboa
 use App\Http\Controllers\Staff\Perizinan\ListController as PerizinanListController;
 use App\Http\Controllers\Staff\Perizinan\ReportController as PerizinanReportController;
 
+use App\Http\Controllers\Staff\Pelanggaran\DashboardController as PelanggaranDashboardController;
+
+
 
 use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController;
 
@@ -107,7 +110,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('pelanggaran')->group(function() {
-    
+        Route::get('dashboard', [PelanggaranDashboardController::class, 'showDashboard'])->name('staff.pelanggaran.dashboard');
     });
 
     Route::prefix('prestasi')->group(function() {
