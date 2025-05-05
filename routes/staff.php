@@ -28,6 +28,10 @@ use App\Http\Controllers\Staff\Pelanggaran\DashboardController as PelanggaranDas
 use App\Http\Controllers\Staff\Pelanggaran\ListController as PelanggaranListController;
 use App\Http\Controllers\Staff\Pelanggaran\ReportController as PelanggaranReportController;
 
+use App\Http\Controllers\Staff\Prestasi\DashboardController as PrestasiDashboardController;
+use App\Http\Controllers\Staff\Prestasi\ListController as PrestasiListController;
+use App\Http\Controllers\Staff\Prestasi\ReportController as PrestasiReportController;
+
 
 
 use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController;
@@ -127,7 +131,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('prestasi')->group(function() {
-    
+        Route::get('dashboard', [PrestasiDashboardController::class, 'showDashboard'])->name('staff.prestasi.dashboard');
     });
 
     Route::prefix('hafalan-tahfidz')->group(function() {

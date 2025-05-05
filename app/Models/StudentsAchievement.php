@@ -7,5 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentsAchievement extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuid;
+
+    protected $fillable = [
+        'user_id',
+        'detail',
+        'evidence',
+        'action_taked',
+        'process_by',
+    ];
+
+    public function userDetail()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function processBy()
+    {
+        return $this->belongsTo(User::class, 'process_by', 'id');
+    }
 }
