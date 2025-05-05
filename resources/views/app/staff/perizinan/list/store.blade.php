@@ -14,7 +14,7 @@
                         <br>Token Izin : <b>{{ \Session::get('token') }}</b>
                     </div>
                 @endif  
-                <form action="{{ route('staff.perizinan.create') }}" method="POST" onsubmit="return processData(this)">
+                <form action="{{ route('staff.perizinan.handle.create') }}" method="POST" onsubmit="return processData(this)">
                     @csrf
                     <div class="form-group">
                         <label for="nis">NIS / NISN</label>
@@ -37,7 +37,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="nama">Alasan atau tujuan</label>
+                            <label for="reason">Alasan atau tujuan</label>
                             <input type="text" class="form-control @error('reason') is-invalid @enderror" id="reason" name="reason" placeholder="Alasan atau tujuan izin" required>
                             @error('reason')
                             <div class="invalid-feedback">
@@ -46,7 +46,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="nama">Di jemput oleh</label>
+                            <label for="pickup_by">Di jemput oleh</label>
                             <input type="text" class="form-control @error('pickup_by') is-invalid @enderror" id="pickup_by" name="pickup_by" required>
                             @error('pickup_by')
                             <div class="invalid-feedback">
@@ -55,7 +55,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="nama">Dari Tanggal</label>
+                            <label for="from_date">Dari Tanggal</label>
                             <input type="date" class="form-control @error('from_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="from_date" name="from_date" required>
                             @error('from_date')
                             <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="nama">Hingga Tanggal</label>
+                            <label for="to_date">Hingga Tanggal</label>
                             <input type="date" class="form-control @error('to_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="to_date" name="to_date" required>
                             @error('to_date')
                             <div class="invalid-feedback">
@@ -73,7 +73,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="nama">Permohonan Oleh</label>
+                            <label for="requested_by">Permohonan Oleh</label>
                             <select class="form-control @error('requested_by') is-invalid @enderror" id="requested_by" name="requested_by" required>
                                 <option value="">Pilih</option>
                                 <option value="siswa">Siswa</option>
@@ -200,6 +200,7 @@
                         }
                     });
                 } else {
+                    showSwal('error', 'Jumlah NIS / NISN yang ada masukkan tidak cukup.');
                     $('#input-section').hide();
                 }
             });

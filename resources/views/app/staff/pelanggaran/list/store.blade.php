@@ -1,0 +1,162 @@
+@extends('_layouts.app-layouts.index')
+
+@section('content')
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Cari Data Siswa</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('staff.pelanggaran.handle.create') }}" method="POST" onsubmit="return processData(this)" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="nis">NIS / NISN</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="nis_or_nisn" name="nis_or_nisn" placeholder="Masukkan NIS / NISN" required>
+                            <button type="button" class="btn btn-primary" id="search-button">
+                                <i class="feather icon-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-none" id="input-section">
+                        <input type="hidden" class="form-control" id="user_id" name="user_id" required>
+                        <div class="form-group">
+                            <label for="nama">Nama Siswa</label>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama Siswa" readonly>
+                            @error('nama')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="detail">Keterangan Pelanggaran</label>
+                            <textarea class="form-control @error('detail') is-invalid @enderror" id="detail" name="detail" rows="3" placeholder="Keterangan Pelanggaran" required></textarea>
+                            @error('detail')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="action_taked">Tindakan</label>
+                            <textarea class="form-control @error('action_taked') is-invalid @enderror" id="action_taked" name="action_taked" rows="3" placeholder="Tindakan" required></textarea>
+                            @error('action_taked')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="evidence">Bukti <span class="text-danger">(Tidak Wajib)</span></label>
+                            <input type="file" class="form-control @error('evidence') is-invalid @enderror" id="evidence" name="evidence" accept="image/*">
+                            @error('evidence')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="feather icon-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Riwayat Pelanggaran</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-sm" id="dataTable" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Keterangan</th>
+                                <th>Bukti</th>
+                                <th>Tindakan</th>
+                                <th>Proses Oleh</th>
+                                <th>Tanggal Kejadian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#search-button').on('click', function() {
+                var nisOrNisn = $('#nis_or_nisn').val();
+                if (nisOrNisn.length >= 3) {
+                    $.ajax({
+                        url: '{{ route('staff.pelanggaran.search') }}',
+                        type: 'GET',
+                        data: { nis_or_nisn: nisOrNisn },
+                        success: function(response) {
+                            if (response.status) {
+                                $('#dataTable').DataTable().destroy();
+                                $('#dataTable tbody').empty();
+                                showSwal('success', 'Data ditemukan');
+                                $('#input-section').removeClass('d-none').show();
+                                $('#user_id').val(response.data.user_id);
+                                $('#nama').val(response.data.name);
+
+                                // Populate the table with the user's izin history
+                                var tableBody = $('#dataTable tbody');
+                                tableBody.empty(); // Clear previous data
+                                $.each(response.data.student_violation_history, function(index, item) {
+                                    tableBody.append(`
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${item.detail}</td>
+                                            <td>${item.evidence}</td>
+                                            <td>${item.action_taked}</td>
+                                            <td>${item.process_by.staff_detail.name}</td>
+                                            <td>${item.created_date}</td>
+                                        </tr>
+                                    `);
+                                });
+                                $('#dataTable').DataTable({
+                                    destroy: true,
+                                    paging: true,
+                                    searching: true,
+                                    ordering: true,
+                                    info: true,
+                                    lengthChange: true,
+                                    pageLength: 10,
+                                    drawCallback: function() {
+                                        $('.pagination').addClass('pagination-sm');
+                                    },
+                                });
+                                $('#dataTable').DataTable().draw();
+                                $('#dataTable').DataTable().columns.adjust().responsive.recalc();
+                            }
+                        },
+                        error: function() {
+                            $('#dataTable').DataTable().destroy();
+                            $('#dataTable tbody').empty();
+                            $('#input-section').addClass('d-none').hide();
+                            showSwal('error', 'Terjadi kesalahan saat mencari data, atau data tidak ditemukan.');
+                        }
+                    });
+                } else {
+                    showSwal('error', 'Jumlah NIS / NISN yang ada masukkan tidak cukup.');
+                    $('#input-section').hide();
+                }
+            });
+        });
+    </script>
+@endpush

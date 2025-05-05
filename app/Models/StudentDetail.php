@@ -67,4 +67,9 @@ class StudentDetail extends Model
     {
         return $this->hasMany(StudentPermissionHistory::class, 'user_id', 'user_id');
     }
+
+    public function studentViolationHistory()
+    {
+        return $this->hasMany(StudentsViolation::class, 'user_id', 'user_id');
+    }
 }

@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Pelanggaran List</h5>
-        <a href="{{ route('staff.perizinan.create') }}" class="btn btn-primary btn-sm">Tambah Pelanggaran</a>
+        <a href="{{ route('staff.pelanggaran.create') }}" class="btn btn-primary btn-sm">Tambah Pelanggaran</a>
     </div>
     <div class="card-body">
         <div class="table-responsive">

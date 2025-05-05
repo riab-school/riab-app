@@ -100,7 +100,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::get('/', [PerizinanListController::class, 'showListPerizinanPage'])->name('staff.perizinan.list');
             Route::get('detail', [PerizinanListController::class, 'showDetailData'])->name('staff.perizinan.detail');
             Route::get('add', [PerizinanListController::class, 'createPagePermission'])->name('staff.perizinan.create');
-            Route::post('add', [PerizinanListController::class, 'handleCreatePermission'])->name('staff.perizinan.create');
+            Route::post('add', [PerizinanListController::class, 'handleCreatePermission'])->name('staff.perizinan.handle.create');
             Route::get('search', [PerizinanListController::class, 'searchData'])->name('staff.perizinan.search');
             Route::post('status', [PerizinanListController::class, 'handleUpdateStatus'])->name('staff.perizinan.status');
         });
@@ -115,6 +115,9 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
         Route::prefix('list')->group(function() {
             Route::get('/', [PelanggaranListController::class, 'showListPelanggaranPage'])->name('staff.pelanggaran.list');
             Route::get('detail', [PelanggaranListController::class, 'showDetailData'])->name('staff.pelanggaran.detail');
+            Route::get('create', [PelanggaranListController::class, 'storeViolationPage'])->name('staff.pelanggaran.create');
+            Route::post('create', [PelanggaranListController::class, 'storeViolation'])->name('staff.pelanggaran.handle.create');
+            Route::get('search', [PelanggaranListController::class, 'searchData'])->name('staff.pelanggaran.search');
         });
     });
 

@@ -12,7 +12,7 @@ class StudentsViolation extends Model
     protected $fillable = [
         'user_id',
         'detail',
-        'evidance',
+        'evidence',
         'action_taked',
         'process_by',
     ];
