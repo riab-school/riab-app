@@ -17,7 +17,7 @@ class StudentsViolation extends Model
         'process_by',
     ];
 
-    public function detail()
+    public function userDetail()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

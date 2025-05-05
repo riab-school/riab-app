@@ -102,8 +102,17 @@
     </div>
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">
-                <h5>Grafik Pelanggaran Per Bulan</h5>
+            <div class="card-header row justify-content-between align-items-center">
+                <div class="col-10">
+                    <h5>Grafik Pelanggaran Per Bulan</h5>
+                </div>
+                <div class="col-2">
+                    <select id="chart_years" class="form-select" onchange="getData(this.value)">
+                        @foreach (App\Models\MasterTahunAjaran::get()->sortBy('tahun_ajaran') as $item)
+                        <option value="{{ $item->tahun_ajaran }}" @if($item->tahun_ajaran == now()->year) selected @endif>{{ $item->tahun_ajaran}}</option>    
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="card-body">
                 <canvas id="chart-bar-1" style="width: 100%; height: 350px"></canvas>
@@ -119,10 +128,17 @@
     <script>
 
         $(document).ready(function() {
+            getData();
+        });
+
+        function getData(chartYears){
             $.ajax({
                 url: "{{ url()->current() }}",
                 type: "GET",
                 dataType: "json",
+                data: {
+                    chart_years: chartYears
+                },
                 success: function(res) {
                     $('#total_violation_count').html(res.data.total_violation_count);
                     $('#month_violation_count').html(res.data.month_violation_count);
@@ -136,7 +152,7 @@
                     console.error("Error fetching data:", error);
                 }
             });
-        });
+        }
 
         function renderTable(data, id) {
             let html = '';
@@ -144,11 +160,8 @@
                 html = `<tr><td colspan="3" class="text-center">Tidak ada data</td></tr>`;
             }
             data.forEach(function(item) {
-                const student = item.detail.student_detail;
-                const photoUrl = student.photo_url 
-                    ? student.photo_url 
-                    : `https://ui-avatars.com/api/?background=19BCBF&color=fff&name=${encodeURIComponent(student.name)}`;
-                
+                const student = item.user_detail.student_detail;
+                const photoUrl = student.photo_url;
                 html += `
                     <tr>
                         <td>

@@ -12,31 +12,45 @@ class DashboardController extends Controller
     public function showDashboard(Request $request)
     {
         if($request->ajax()){
-            $topViolation = StudentsViolation::select('user_id', \DB::raw('count(*) as total'))->groupBy('user_id')->with('detail.studentDetail')->orderBy('total', 'desc')
+            $topViolation = StudentsViolation::select('user_id', \DB::raw('count(*) as total'))->groupBy('user_id')->with('userDetail.studentDetail')->orderBy('total', 'desc')
                 ->get()
                 ->take(10)
                 ->map(function ($item) {
-                    $document = $item->detail->studentDetail->studentDocument ?? null;
-                    $item->detail->studentDetail->photo_url = $document && $document->photo
+                    $document = $item->userDetail->studentDetail->studentDocument ?? null;
+                    $item->userDetail->studentDetail->photo_url = $document && $document->photo
                         ? Storage::disk('s3')->url($document->photo)
-                        : null;
+                        : asset('assets/images/blank_person.jpg');
                     return $item;
             });
 
             $topMonthViolation = StudentsViolation::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])
                 ->select('user_id', \DB::raw('count(*) as total'))
                 ->groupBy('user_id')
-                ->with('detail.studentDetail')
+                ->with('userDetail.studentDetail')
                 ->orderBy('total', 'desc')
                 ->limit(10)
                 ->get()
                 ->map(function ($item) {
-                    $document = $item->detail->studentDetail->studentDocument ?? null;
-                    $item->detail->studentDetail->photo_url = $document && $document->photo
+                    $document = $item->userDetail->studentDetail->studentDocument ?? null;
+                    $item->userDetail->studentDetail->photo_url = $document && $document->photo
                         ? Storage::disk('s3')->url($document->photo)
-                        : null;
+                        : asset('assets/images/blank_person.jpg');
                     return $item;
             });
+
+            if($request->has('chart_years')) {
+                $years = $request->input('chart_years');
+            }
+            else {
+                $years = now()->year;
+            }
+
+            $chartViolation = StudentsViolation::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+                            ->whereYear('created_at', $years)
+                            ->groupBy('year', 'month')
+                            ->orderBy('year')
+                            ->orderBy('month')
+                            ->get();
 
             $data = [
                 'total_violation_count' => StudentsViolation::count(),
@@ -45,12 +59,7 @@ class DashboardController extends Controller
                 'day_violation_count'   => StudentsViolation::where('created_at', '>=', now()->startOfDay())->where('created_at', '<=', now()->endOfDay())->count(),
                 'top_violation_count'   => $topViolation,
                 'top_month_violation'   => $topMonthViolation,
-                'chart_violation'       => StudentsViolation::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
-                                            ->whereYear('created_at', now()->year)
-                                            ->groupBy('year', 'month')
-                                            ->orderBy('year')
-                                            ->orderBy('month')
-                                            ->get(),
+                'chart_violation'       => $chartViolation,
             ];
             return response()->json([
                 'status' => 'success',
