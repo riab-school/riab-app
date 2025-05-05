@@ -132,6 +132,17 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
 
     Route::prefix('prestasi')->group(function() {
         Route::get('dashboard', [PrestasiDashboardController::class, 'showDashboard'])->name('staff.prestasi.dashboard');
+        Route::prefix('list')->group(function() {
+            Route::get('/', [PrestasiListController::class, 'showListPrestasiPage'])->name('staff.prestasi.list');
+            Route::get('detail', [PrestasiListController::class, 'showDetailData'])->name('staff.prestasi.detail');
+            Route::get('create', [PrestasiListController::class, 'storeAchievementPage'])->name('staff.prestasi.create');
+            Route::post('create', [PrestasiListController::class, 'storeAchievement'])->name('staff.prestasi.handle.create');
+            Route::get('search', [PrestasiListController::class, 'searchData'])->name('staff.prestasi.search');
+        });
+        Route::prefix('laporan')->group(function() {
+            Route::get('/', [PrestasiReportController::class, 'showReportFilterPage'])->name('staff.prestasi.laporan');
+            Route::post('handleCreateReport', [PrestasiReportController::class, 'handleReportPrint'])->name('staff.prestasi.laporan.handle');
+        });
     });
 
     Route::prefix('hafalan-tahfidz')->group(function() {

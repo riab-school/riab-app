@@ -28,9 +28,9 @@ class ReportController extends Controller
 
             if($request->report_by == 'date'){
                 if($request->status == 'all'){
-                    $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
+                    $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date.' 00:00:00', $request->to_date.' 23:59:59'])->get();
                 } else {
-                    $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])
+                    $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date.' 00:00:00', $request->to_date.' 23:59:59'])
                         ->where('status', $request->status)
                         ->get();
                 }
@@ -42,7 +42,7 @@ class ReportController extends Controller
             } elseif($request->report_by == 'nis_nisn'){
                 $data['permissions'] = StudentPermissionHistory::where(function ($query) use ($request) {
                     if(!empty($request->from_date2) && !empty($request->to_date2)){
-                        $query->whereBetween('created_at', [$request->from_date2, $request->to_date2]);
+                        $query->whereBetween('created_at', [$request->from_date2.' 00:00:00', $request->to_date2.' 23:59:59']);
                     }
                     $query->whereRelation('detail.studentDetail', 'nis', $request->id_siswa)->orWhereRelation('detail.studentDetail', 'nisn', $request->id_siswa);
                 })->get();

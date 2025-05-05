@@ -26,7 +26,7 @@ class ReportController extends Controller
         try {
 
             if($request->report_by == 'date'){
-                $data['violations'] = StudentsViolation::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
+                $data['violations'] = StudentsViolation::whereBetween('created_at', [$request->from_date.' 00:00:00', $request->to_date.' 23:59:59'])->get();
                 $data['from_date'] = dateIndo($request->from_date);
                 $data['to_date'] = dateIndo($request->to_date);
                 $data['report_by'] = 'date';
@@ -34,7 +34,7 @@ class ReportController extends Controller
             } elseif($request->report_by == 'nis_nisn'){
                 $data['violations'] = StudentsViolation::where(function ($query) use ($request) {
                     if(!empty($request->from_date2) && !empty($request->to_date2)){
-                        $query->whereBetween('created_at', [$request->from_date2, $request->to_date2]);
+                        $query->whereBetween('created_at', [$request->from_date2.' 00:00:00', $request->to_date2.' 23:59:59']);
                     }
                     $query->whereRelation('userDetail.studentDetail', 'nis', $request->id_siswa)
                         ->orWhereRelation('userDetail.studentDetail', 'nisn', $request->id_siswa);

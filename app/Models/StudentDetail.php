@@ -53,9 +53,9 @@ class StudentDetail extends Model
         return $this->hasOne(StudentsDocument::class, 'user_id', 'user_id');
     }
 
-    public function studentAchievement()
+    public function studentAchievementHistory()
     {
-        return $this->hasMany(StudentAchievement::class, 'user_id', 'user_id');
+        return $this->hasMany(StudentsAchievement::class, 'user_id', 'user_id');
     }
 
     public function studentOriginDetail()

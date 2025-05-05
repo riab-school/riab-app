@@ -6,7 +6,7 @@
         <div class="card table-card widget-primary-card bg-c-blue">
             <div class="row-table">
                 <div class="col-4 card-body-big">
-                    <h4 id="total_achievment_count">
+                    <h4 id="total_achievement_count">
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -22,7 +22,7 @@
         <div class="card table-card widget-primary-card bg-c-green">
             <div class="row-table">
                 <div class="col-4 card-body-big">
-                    <h4 id="month_achievment_count">
+                    <h4 id="month_achievement_count">
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -38,7 +38,7 @@
         <div class="card table-card widget-primary-card bg-c-red">
             <div class="row-table">
                 <div class="col-4 card-body-big">
-                    <h4 id="week_achievment_count">
+                    <h4 id="week_achievement_count">
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -54,7 +54,7 @@
         <div class="card table-card widget-primary-card bg-c-yellow">
             <div class="row-table">
                 <div class="col-4 card-body-big">
-                    <h4 id="day_achievment_count">
+                    <h4 id="day_achievement_count">
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -76,7 +76,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-borderless" id="dataTable" width="100%">
-                        <tbody id="top_achievment_data">
+                        <tbody id="top_achievement_data">
                             
                         </tbody>
                     </table>
@@ -92,7 +92,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover table-sm table-borderless" id="dataTable" width="100%">
-                        <tbody id="top_month_achievment_data">
+                        <tbody id="top_month_achievement_data">
                             
                         </tbody>
                     </table>
@@ -140,13 +140,13 @@
                     chart_years: chartYears
                 },
                 success: function(res) {
-                    $('#total_achievment_count').html(res.data.total_achievment_count);
-                    $('#month_achievment_count').html(res.data.month_achievment_count);
-                    $('#week_achievment_count').html(res.data.week_achievment_count);
-                    $('#day_achievment_count').html(res.data.day_achievment_count);
-                    renderTable(res.data.top_achievment_count, '#top_achievment_data');
-                    renderTable(res.data.top_month_achievment, '#top_month_achievment_data');
-                    renderChartAchievment(res.data.chart_achievment);
+                    $('#total_achievement_count').html(res.data.total_achievement_count);
+                    $('#month_achievement_count').html(res.data.month_achievement_count);
+                    $('#week_achievement_count').html(res.data.week_achievement_count);
+                    $('#day_achievement_count').html(res.data.day_achievement_count);
+                    renderTable(res.data.top_achievement_count, '#top_achievement_data');
+                    renderTable(res.data.top_month_achievement, '#top_month_achievement_data');
+                    renderChartAchievement(res.data.chart_achievement);
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching data:", error);
@@ -181,8 +181,8 @@
             $(id).html(html);
         }
 
-        function renderChartAchievment(res){
-            const achievments = res;
+        function renderChartAchievement(res){
+            const achievements = res;
 
             // Buat daftar semua bulan dalam rentang tahun
             const allMonths = [];
@@ -205,7 +205,7 @@
 
             // Gabungkan data yang diterima dengan daftar semua bulan
             const mergedData = allMonths.map(monthData => {
-                const match = achievments.find(v => v.year === monthData.year && v.month === monthData.month);
+                const match = achievements.find(v => v.year === monthData.year && v.month === monthData.month);
                 return match || monthData;
             });
 

@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function showDashboard(Request $request)
     {
         if($request->ajax()){
-            $topAchievment = StudentsAchievement::select('user_id', \DB::raw('count(*) as total'))->groupBy('user_id')->with('userDetail.studentDetail')->orderBy('total', 'desc')
+            $topAchievement = StudentsAchievement::select('user_id', \DB::raw('count(*) as total'))->groupBy('user_id')->with('userDetail.studentDetail')->orderBy('total', 'desc')
                 ->get()
                 ->take(10)
                 ->map(function ($item) {
@@ -23,7 +23,7 @@ class DashboardController extends Controller
                     return $item;
             });
 
-            $topMonthAchievment = StudentsAchievement::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])
+            $topMonthAchievement = StudentsAchievement::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])
                 ->select('user_id', \DB::raw('count(*) as total'))
                 ->groupBy('user_id')
                 ->with('userDetail.studentDetail')
@@ -45,7 +45,7 @@ class DashboardController extends Controller
                 $years = now()->year;
             }
 
-            $chartAchievment = StudentsAchievement::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+            $chartAchievement = StudentsAchievement::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
                             ->whereYear('created_at', $years)
                             ->groupBy('year', 'month')
                             ->orderBy('year')
@@ -53,13 +53,13 @@ class DashboardController extends Controller
                             ->get();
 
             $data = [
-                'total_achievment_count' => StudentsAchievement::count(),
-                'month_achievment_count' => StudentsAchievement::where('created_at', '>=', now()->startOfMonth())->where('created_at', '<=', now()->endOfMonth())->count(),
-                'week_achievment_count'  => StudentsAchievement::where('created_at', '>=', now()->startOfWeek())->where('created_at', '<=', now()->endOfWeek())->count(),
-                'day_achievment_count'   => StudentsAchievement::where('created_at', '>=', now()->startOfDay())->where('created_at', '<=', now()->endOfDay())->count(),
-                'top_achievment_count'   => $topAchievment,
-                'top_month_achievment'   => $topMonthAchievment,
-                'chart_achievment'       => $chartAchievment,
+                'total_achievement_count' => StudentsAchievement::count(),
+                'month_achievement_count' => StudentsAchievement::where('created_at', '>=', now()->startOfMonth())->where('created_at', '<=', now()->endOfMonth())->count(),
+                'week_achievement_count'  => StudentsAchievement::where('created_at', '>=', now()->startOfWeek())->where('created_at', '<=', now()->endOfWeek())->count(),
+                'day_achievement_count'   => StudentsAchievement::where('created_at', '>=', now()->startOfDay())->where('created_at', '<=', now()->endOfDay())->count(),
+                'top_achievement_count'   => $topAchievement,
+                'top_month_achievement'   => $topMonthAchievement,
+                'chart_achievement'       => $chartAchievement,
             ];
             return response()->json([
                 'status' => 'success',
