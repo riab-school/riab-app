@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff\Perizinan;
 
 use App\Http\Controllers\Controller;
+use App\Models\StudentDetail;
 use App\Models\StudentPermissionHistory;
 use Illuminate\Http\Request;
 
@@ -16,23 +17,43 @@ class ReportController extends Controller
     public function handleReportPrint(Request $request)
     {
         $request->validate([
-            'from_date' => 'required|date',
-            'to_date' => 'required|date',
-            
+            'report_by' => 'required|in:date,nis_nisn',
+            'from_date' => 'required_if:report_by,date|date|nullable',
+            'to_date'   => 'required_if:report_by,date|date|nullable',
+            'id_siswa' => 'required_if:report_by,nis_nisn|nullable',
         ]);
 
         try {
-            if($request->status == 'all'){
-                $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
-            } else {
-                $data['permissions'] = StudentPermissionHistory::where('status', $request->status)
-                    ->whereBetween('created_at', [$request->from_date, $request->to_date])
-                    ->get();
+
+            if($request->report_by == 'date'){
+                if($request->status == 'all'){
+                    $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
+                } else {
+                    $data['permissions'] = StudentPermissionHistory::where('status', $request->status)
+                        ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                        ->get();
+                }
+                $data['from_date'] = dateIndo($request->from_date);
+                $data['to_date'] = dateIndo($request->to_date);
+                $data['status'] = $request->status;
+                $data['report_by'] = 'date';
+                return view('app.staff.perizinan.report.print-report', $data);
+            } elseif($request->report_by == 'nis_nisn'){
+                $data['permissions'] = StudentPermissionHistory::where(function ($query) use ($request) {
+                    $query->whereRelation('detail.studentDetail', 'nis', $request->id_siswa)
+                        ->orWhereRelation('detail.studentDetail', 'nisn', $request->id_siswa);
+                })->get();
+                $data['from_date'] = null;
+                $data['to_date'] = null;
+                $data['status'] = 'all';
+                $data['report_by'] = 'nis_nisn';
+                $data['studentData'] = StudentDetail::where(function ($query) use ($request) {
+                    $query->where('nis', $request->id_siswa)
+                        ->orWhere('nisn', $request->id_siswa);
+                })->first();
+                return view('app.staff.perizinan.report.print-report', $data);
+                
             }
-            $data['from_date'] = dateIndo($request->from_date);
-            $data['to_date'] = dateIndo($request->to_date);
-            $data['status'] = $request->status;
-            return view('app.staff.perizinan.report.print-report', $data);
         } catch (\Throwable $th) {
             return redirect()->back()->with([
                 'status'    => 'error',

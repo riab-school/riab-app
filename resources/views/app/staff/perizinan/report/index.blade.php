@@ -11,39 +11,60 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="from_date">Tanggal Awal</label>
-                        <input type="date" class="form-control @error('from_date') is-invalid @enderror" id="from_date" name="from_date" required>
-                        @error('from_date')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="to_date">Tanggal Akhir</label>
-                        <input type="date" class="form-control @error('to_date') is-invalid @enderror" id="to_date" name="to_date" required>
-                        @error('to_date')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="nama">Berdasarkan Status</label>
-                        <select class="form-control @error('status') is-invalid @enderror" id="status" name="status" required>
-                            <option value="all" selected>Semua Status</option>
-                            <option value="approved">Di setujui</option>
-                            <option value="rejected">Di tolak</option>
-                            <option value="canceled">Di batalkan</option>
-                            <option value="check_in">Sudah Kembali</option>
-                            <option value="check_out">Sudah Keluar</option>
-                            <option value="requested">Dalam Permohonan</option>
+                        <label for="nama">Filter Data</label>
+                        <select class="form-control" id="report_by" name="report_by" required>
+                            <option value="">Silahkan Pilih</option>
+                            <option value="date">Berdasarkan Tanggal</option>
+                            <option value="nis_nisn">Berdasarkan NIS / NISN</option>
                         </select>
-                        @error('status')
-                        <div class="invalid-feedback">
-                            {{ $message }}
+                    </div>
+                    <div class="d-none" id="by_date">
+                        <div class="form-group">
+                            <label for="from_date">Tanggal Awal</label>
+                            <input type="date" class="form-control @error('from_date') is-invalid @enderror" id="from_date" name="from_date">
+                            @error('from_date')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
-                        @enderror
+                        <div class="form-group">
+                            <label for="to_date">Tanggal Akhir</label>
+                            <input type="date" class="form-control @error('to_date') is-invalid @enderror" id="to_date" name="to_date">
+                            @error('to_date')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Berdasarkan Status</label>
+                            <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                                <option value="all" selected>Semua Status</option>
+                                <option value="approved">Di setujui</option>
+                                <option value="rejected">Di tolak</option>
+                                <option value="canceled">Di batalkan</option>
+                                <option value="check_in">Sudah Kembali</option>
+                                <option value="check_out">Sudah Keluar</option>
+                                <option value="requested">Dalam Permohonan</option>
+                            </select>
+                            @error('status')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="d-none" id="by_nis_nisn">
+                        <div class="form-group">
+                            <label for="id_siswa">NIS / NISN</label>
+                            <input type="text" class="form-control @error('id_siswa') is-invalid @enderror" id="id_siswa" name="id_siswa">
+                            @error('id_siswa')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -55,3 +76,22 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#report_by').change(function() {
+                if ($(this).val() == 'date') {
+                    $('#by_date').removeClass('d-none');
+                    $('#by_nis_nisn').addClass('d-none');
+                } else if ($(this).val() == 'nis_nisn') {
+                    $('#by_date').addClass('d-none');
+                    $('#by_nis_nisn').removeClass('d-none');
+                } else {
+                    $('#by_date').addClass('d-none');
+                    $('#by_nis_nisn').addClass('d-none');
+                }
+            });
+        });
+    </script>
+@endpush
