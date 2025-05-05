@@ -2,7 +2,6 @@
 
 use App\Http\Middleware\EnsureActiveStudentAccess;
 use App\Http\Middleware\EnsureAdminAccess;
-use App\Http\Middleware\EnsureCanAccessMenu;
 use App\Http\Middleware\EnsureNewStudentAccess;
 use App\Http\Middleware\EnsureParentAccess;
 use App\Http\Middleware\EnsureStaffAccess;

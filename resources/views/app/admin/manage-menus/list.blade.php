@@ -37,7 +37,7 @@
                         </td>
                         <td>
                             <h5><i class="{{ $item->icon }}"></i> {{ $item->title }}</h5>
-                            <div>For Level : {{ $item->level }}</div>
+                            <div>Level : {{ $item->level }}</div>
                             <div>{!! $item->is_active ? '<span class="badge badge-light-success">Aktif</span>' : '<span class="badge badge-light-danger">Tidak Aktif</span>' !!}</div>
                         </td>
                         <td>
@@ -59,6 +59,7 @@
                                             <th>Menu Child Name</th>
                                             <th>Has Access</td>
                                             <th>Route</td>
+                                            <th>Status</th>    
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,14 +76,16 @@
                                                 <td>{{ $child->order }}</td>
                                                 <td>
                                                     <div class="fw-bold">{{ $child->title }}</div>
-                                                    <div>{!! $child->is_active ? '<span class="badge badge-light-success">Aktif</span>' : '<span class="badge badge-light-danger">Tidak Aktif</span>' !!}</div>
                                                 </td>
                                                 <td>{{ $child->hasAccess->count() }} User</td>
                                                 <td class="w-25">{{ $child->route }}</td>
+                                                <td>
+                                                    <div>{!! $child->is_active ? '<span class="badge badge-light-success">Aktif</span>' : '<span class="badge badge-light-danger">Tidak Aktif</span>' !!}</div>
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="4" class="text-center">No Child Menu Found</td>
+                                                <td colspan="5" class="text-center">No Child Menu Found</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

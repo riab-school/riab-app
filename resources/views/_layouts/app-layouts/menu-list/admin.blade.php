@@ -1,7 +1,3 @@
-<li class="nav-item pcoded-menu-caption">
-    <label>Admin Level</label>
-</li>
-
 <li data-username="animations" class="nav-item">
     <a href="{{ route('admin.home') }}" class="nav-link">
         <span class="pcoded-micon">
@@ -11,56 +7,34 @@
     </a>
 </li>
 
-<li data-username="animations" class="nav-item">
-    <a href="{{ route('admin.manage-users') }}" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="feather icon-user"></i>
-        </span>
-        <span class="pcoded-mtext">Manage Users</span>
-    </a>
-</li>
+@php
+    $menu = App\Models\MasterMenu::where(['is_active' => true])->get();
+@endphp
 
-<li data-username="animations" class="nav-item">
-    <a href="{{ route('admin.manage-menu') }}" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="feather icon-align-justify"></i>
-        </span>
-        <span class="pcoded-mtext">Manage Menu & Permission</span>
-    </a>
-</li>
+@forelse ($menu->sortBy('order') as $item)
+    @php
+        $filteredChildren = $item->children->filter(function ($child) {
+            return auth()->user()->menuAccess->contains(function ($permission) use ($child) {
+                return $permission->menu_children_id == $child->id;
+            });
+        });
+    @endphp
 
-<li data-username="animations" class="nav-item">
-    <a href="{{ route('admin.whatsapp-intance') }}" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="fab fa-whatsapp"></i>
-        </span>
-        <span class="pcoded-mtext">Whatsapp Instance</span>
-    </a>
-</li>
-
-<li data-username="animations" class="nav-item">
-    <a href="{{ route('admin.app-configs') }}" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="feather icon-settings"></i>
-        </span>
-        <span class="pcoded-mtext">App Config</span>
-    </a>
-</li>
-
-<li data-username="animations" class="nav-item">
-    <a href="{{ route('admin.app-logs') }}" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="feather icon-list"></i>
-        </span>
-        <span class="pcoded-mtext">App Log</span>
-    </a>
-</li>
-
-<li data-username="animations" class="nav-item">
-    <a href="{{ route('admin.import') }}" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="fas fa-upload"></i>
-        </span>
-        <span class="pcoded-mtext">Import Data</span>
-    </a>
-</li>
+    @if ($filteredChildren->isNotEmpty())
+    <li class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
+            <span class="pcoded-micon">
+                <i class="{{ $item->icon }}"></i>
+            </span>
+            <span class="pcoded-mtext">{{ $item->title }}</span>
+        </a>
+        <ul class="pcoded-submenu">
+            @foreach ($filteredChildren->where('is_active', true)->sortBy('order') as $child)
+                <li class=""><a href="{{ url($child->route) }}" class="">{{ $child->title }}</a></li>
+            @endforeach
+        </ul>
+    </li>
+    @endif
+@empty
+    <p class="text-center">No menu available</p>
+@endforelse

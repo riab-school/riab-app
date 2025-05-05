@@ -371,7 +371,7 @@
     }
 
     function renderChartMemorization(res){
-
+        
     }
 
     function renderChartPermission(res){

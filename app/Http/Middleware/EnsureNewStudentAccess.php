@@ -33,7 +33,7 @@ class EnsureNewStudentAccess
 
         // Validasi keberadaan data siswa
         if (!$history) {
-            abort(403, 'Data siswa tidak ditemukan di database');
+            abort(404, 'Data siswa tidak ditemukan di database');
         }
 
         // Tentukan metode pendaftaran berdasarkan history

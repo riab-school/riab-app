@@ -181,7 +181,7 @@ class MenuController extends Controller
             $data = [
                 'permissions' => UserHasMenuPermission::where('menu_children_id', $request->child_id)->with(['childMenuDetail', 'userDetail'])->get(),
                 'childMenu'   => MasterMenuChildren::findOrFail($request->child_id),
-                'userList'    => User::where('user_level', 'staff')->get()
+                'userList'    => User::where('user_level', 'staff')->orWhere('user_level', 'admin')->get()
             ];
             return view('app.admin.manage-menus.store-permission-per-child', $data);
         } elseif($request->has('menu_id')){
@@ -190,13 +190,13 @@ class MenuController extends Controller
                     $q->where('menu_id', $request->menu_id);
                 })->with(['childMenuDetail', 'userDetail'])->get(),
                 'menu'        => MasterMenu::findOrFail($request->menu_id),
-                'userList'    => User::where('user_level', 'staff')->get()
+                'userList'    => User::where('user_level', 'staff')->orWhere('user_level', 'admin')->get()
             ];
             return view('app.admin.manage-menus.store-permission-per-menu', $data);
         } else {
             $data = [
                 'permissions' => UserHasMenuPermission::whereHas('childMenuDetail')->with(['childMenuDetail', 'userDetail'])->get(),
-                'userList'    => User::where('user_level', 'staff')->get()
+                'userList'    => User::where('user_level', 'staff')->orWhere('user_level', 'admin')->get()
             ];
             return view('app.admin.manage-menus.store-permission-all', $data);
 

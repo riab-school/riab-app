@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\AdminDetail;
+use App\Models\MasterMenu;
+use App\Models\MasterMenuChildren;
 use App\Models\MasterTahunAjaran;
 use App\Models\User;
+use App\Models\UserHasMenuPermission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -31,6 +34,19 @@ class AdminSeeder extends Seeder
 
         MasterTahunAjaran::where('tahun_ajaran', date('Y'))->first()->update([
             'is_active' => true,
-        ]);	
+        ]);
+
+        $allChildMenu = MasterMenu::where('level', 'admin')->get();
+        foreach ($allChildMenu as $menu) {
+            $childMenu = MasterMenuChildren::where('menu_id', $menu->id)->get();
+            foreach ($childMenu as $child) {
+                UserHasMenuPermission::create([
+                    'user_id' => $admin->id,
+                    'menu_children_id' => $child->id,
+                    'assigned_at' => now(),
+                    'is_permanent_access' => true,
+                ]);
+            }
+        }
     }
 }
