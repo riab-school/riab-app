@@ -20,7 +20,8 @@ class ReportController extends Controller
             'report_by' => 'required|in:date,nis_nisn',
             'from_date' => 'required_if:report_by,date|date|nullable',
             'to_date'   => 'required_if:report_by,date|date|nullable',
-            'id_siswa' => 'required_if:report_by,nis_nisn|nullable',
+            'status'    => 'required_if:report_by,date|nullable',
+            'id_siswa'  => 'required_if:report_by,nis_nisn|nullable',
         ]);
 
         try {
@@ -29,8 +30,8 @@ class ReportController extends Controller
                 if($request->status == 'all'){
                     $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])->get();
                 } else {
-                    $data['permissions'] = StudentPermissionHistory::where('status', $request->status)
-                        ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                    $data['permissions'] = StudentPermissionHistory::whereBetween('created_at', [$request->from_date, $request->to_date])
+                        ->where('status', $request->status)
                         ->get();
                 }
                 $data['from_date'] = dateIndo($request->from_date);
@@ -40,11 +41,13 @@ class ReportController extends Controller
                 return view('app.staff.perizinan.report.print-report', $data);
             } elseif($request->report_by == 'nis_nisn'){
                 $data['permissions'] = StudentPermissionHistory::where(function ($query) use ($request) {
-                    $query->whereRelation('detail.studentDetail', 'nis', $request->id_siswa)
-                        ->orWhereRelation('detail.studentDetail', 'nisn', $request->id_siswa);
+                    if(!empty($request->from_date2) && !empty($request->to_date2)){
+                        $query->whereBetween('created_at', [$request->from_date2, $request->to_date2]);
+                    }
+                    $query->whereRelation('detail.studentDetail', 'nis', $request->id_siswa)->orWhereRelation('detail.studentDetail', 'nisn', $request->id_siswa);
                 })->get();
-                $data['from_date'] = null;
-                $data['to_date'] = null;
+                $data['from_date2'] = $request->from_date2 ? dateIndo($request->from_date2) : null;
+                $data['to_date2'] = $request->to_date2 ? dateIndo($request->to_date2) : null;
                 $data['status'] = 'all';
                 $data['report_by'] = 'nis_nisn';
                 $data['studentData'] = StudentDetail::where(function ($query) use ($request) {

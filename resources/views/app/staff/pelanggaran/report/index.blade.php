@@ -48,6 +48,24 @@
                             </div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="from_date2">Tanggal Awal <span class="text-danger">(Optional)</span></label>
+                            <input type="date" class="form-control @error('from_date2') is-invalid @enderror" id="from_date2" name="from_date2">
+                            @error('from_date2')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="to_date2">Tanggal Akhir <span class="text-danger">(Optional)</span></label>
+                            <input type="date" class="form-control @error('to_date2') is-invalid @enderror" id="to_date2" name="to_date2">
+                            @error('to_date2')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">

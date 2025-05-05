@@ -33,6 +33,9 @@ class ReportController extends Controller
                 return view('app.staff.pelanggaran.report.print-report', $data);
             } elseif($request->report_by == 'nis_nisn'){
                 $data['violations'] = StudentsViolation::where(function ($query) use ($request) {
+                    if(!empty($request->from_date2) && !empty($request->to_date2)){
+                        $query->whereBetween('created_at', [$request->from_date2, $request->to_date2]);
+                    }
                     $query->whereRelation('userDetail.studentDetail', 'nis', $request->id_siswa)
                         ->orWhereRelation('userDetail.studentDetail', 'nisn', $request->id_siswa);
                 })->get();
