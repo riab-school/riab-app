@@ -26,6 +26,7 @@ use App\Http\Controllers\Staff\Perizinan\ReportController as PerizinanReportCont
 
 use App\Http\Controllers\Staff\Pelanggaran\DashboardController as PelanggaranDashboardController;
 use App\Http\Controllers\Staff\Pelanggaran\ListController as PelanggaranListController;
+use App\Http\Controllers\Staff\Pelanggaran\ReportController as PelanggaranReportController;
 
 
 
@@ -118,6 +119,10 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::get('create', [PelanggaranListController::class, 'storeViolationPage'])->name('staff.pelanggaran.create');
             Route::post('create', [PelanggaranListController::class, 'storeViolation'])->name('staff.pelanggaran.handle.create');
             Route::get('search', [PelanggaranListController::class, 'searchData'])->name('staff.pelanggaran.search');
+        });
+        Route::prefix('laporan')->group(function() {
+            Route::get('/', [PelanggaranReportController::class, 'showReportFilterPage'])->name('staff.pelanggaran.laporan');
+            Route::post('handleCreateReport', [PelanggaranReportController::class, 'handleReportPrint'])->name('staff.pelanggaran.laporan.handle');
         });
     });
 
