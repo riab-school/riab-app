@@ -67,8 +67,15 @@
     </div>
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Riwayat Pelanggaran</h5>
+                <form action="{{ route('staff.pelanggaran.laporan.handle') }}" method="POST" onsubmit="processData(this);" id="form-report" class="d-none">
+                    @csrf
+                    <input type="hidden" class="form-control" id="report_by" name="report_by" value="nis_nisn" required>
+                    <input type="hidden" class="form-control" id="id_siswa" name="id_siswa" value="" required>
+                    <input type="hidden" class="form-control" id="id_izin" name="id_izin" value="" required>
+                    <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-print"></i> Cetak Laporan</button>
+                </form>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -114,6 +121,10 @@
                                 $('#user_id').val(response.data.user_id);
                                 $('#nama').val(response.data.name);
 
+                                $('#id_siswa').val(response.data.nis);
+                                $('#report_by').val('nis_nisn');
+                                $('#form-report').removeClass('d-none').show();
+
                                 // Populate the table with the user's izin history
                                 var tableBody = $('#dataTable tbody');
                                 tableBody.empty(); // Clear previous data
@@ -146,6 +157,7 @@
                             }
                         },
                         error: function() {
+                            $('#form-report').addClass('d-none').hide();
                             $('#dataTable').DataTable().destroy();
                             $('#dataTable tbody').empty();
                             $('#input-section').addClass('d-none').hide();
@@ -153,8 +165,9 @@
                         }
                     });
                 } else {
-                    showSwal('error', 'Jumlah NIS / NISN yang ada masukkan tidak cukup.');
+                    $('#form-report').addClass('d-none').hide();
                     $('#input-section').hide();
+                    showSwal('error', 'Jumlah NIS / NISN yang ada masukkan tidak cukup.');
                 }
             });
         });
