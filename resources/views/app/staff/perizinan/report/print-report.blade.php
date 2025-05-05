@@ -37,7 +37,7 @@
 
         @page {
             size: A4 landscape;
-            margin: 8mm;
+            margin: 5mm;
         }
         
         @media print {
@@ -48,7 +48,7 @@
             }
             .content {
                 padding: 5mm;
-                margin: 10px auto;
+                margin: 5px auto;
                 
             }
             .btn {
@@ -77,7 +77,7 @@
                             <b>{{ appSet('SCHOOL_ADDRESS') }}</b>
                         </div>
                         <div style="font-size: 10pt;">
-                            <b>{{ appSet('SCHOOL_NSM') }} - {{ appSet('SCHOOL_NPSN') }}</b>
+                            <b>NSM : {{ appSet('SCHOOL_NSM') }} <br>NPSN : {{ appSet('SCHOOL_NPSN') }}</b>
                         </div>
                     </td>
                 </tr>

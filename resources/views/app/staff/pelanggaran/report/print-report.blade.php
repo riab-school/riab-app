@@ -37,7 +37,7 @@
 
         @page {
             size: A4 landscape;
-            margin: 8mm;
+            margin: 5mm;
         }
         
         @media print {
@@ -48,7 +48,7 @@
             }
             .content {
                 padding: 5mm;
-                margin: 10px auto;
+                margin: 5px auto;
                 
             }
             .btn {
@@ -77,7 +77,7 @@
                             <b>{{ appSet('SCHOOL_ADDRESS') }}</b>
                         </div>
                         <div style="font-size: 10pt;">
-                            <b>{{ appSet('SCHOOL_NSM') }} - {{ appSet('SCHOOL_NPSN') }}</b>
+                            <b>NSM : {{ appSet('SCHOOL_NSM') }} <br>NPSN : {{ appSet('SCHOOL_NPSN') }}</b>
                         </div>
                     </td>
                 </tr>
@@ -104,10 +104,10 @@
                     <th style="padding: 5px; font-size: 12pt;">NIS & NISN</th>
                     <th style="padding: 5px; font-size: 12pt;">Nama</th>
                     @endif
+                    <th style="padding: 5px; font-size: 12pt;">Tanggal</th>
                     <th style="padding: 5px; font-size: 12pt;">Keterangan</th>
                     <th style="padding: 5px; font-size: 12pt;">Tindakan</th>
                     <th style="padding: 5px; font-size: 12pt;">Proses Oleh</th>
-                    <th style="padding: 5px; font-size: 12pt;">Tanggal</th>
                     <th style="padding: 5px; font-size: 12pt;">Bukti Pelanggaran</th>
                 </tr>
             </thead>
@@ -123,10 +123,10 @@
                         <td style="padding: 5px; text-align: center;">{{ $item->userDetail->studentDetail->nis }} - {{ $item->userDetail->studentDetail->nisn }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->userDetail->studentDetail->name }}</td>
                         @endif
+                        <td style="padding: 5px; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->detail }}</td>   
                         <td style="padding: 5px; text-align: center;">{{ $item->action_taked }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->processBy->staffDetail->name }}</td>
-                        <td style="padding: 5px; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
                         <td style="padding: 5px; text-align: center;">{!! $item->evidence ? '<img style="max-width: 150px;" src="'.Storage::disk('s3')->url($item->evidence).'"/>' : '-' !!}</td>
                     </tr>
                 @php
