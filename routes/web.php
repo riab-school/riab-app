@@ -11,7 +11,7 @@ Route::get('/', function () {
         return redirect()->route($route);
     }
     return view('splash');	
-});
+})->name('splash');
 
 Route::middleware(['auth', EnsureUserActive::class])->group(function () {
     Route::get('profile', [ProfileController::class, 'showProfilePage'])->name('profile');

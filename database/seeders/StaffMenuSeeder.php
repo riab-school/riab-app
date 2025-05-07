@@ -57,7 +57,7 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu2->id,
-            'title'     => 'Dashboard',
+            'title'     => 'Dashboard Psb',
             'route'     => 'staff/psb/dashboard',
             'order'     => 2,
             'is_active' => true
@@ -295,17 +295,9 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu8->id,
-            'title'     => 'Setoran Hafalan & Tahfidz',
-            'route'     => 'staff/hafalan-tahfidz/setoran',
-            'order'     => 3,
-            'is_active' => true
-        ]);
-
-        MasterMenuChildren::create([
-            'menu_id'   => $menu8->id,
             'title'     => 'Laporan Hafalan & Tahfidz',
             'route'     => 'staff/hafalan-tahfidz/laporan',
-            'order'     => 4,
+            'order'     => 3,
             'is_active' => true
         ]);
 

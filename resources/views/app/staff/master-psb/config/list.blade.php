@@ -15,10 +15,9 @@
                         <th rowspan="2">Tahun Ajaran</th>
                         <th rowspan="2">Ketua Panitia</th>
                         <th rowspan="2">Kode Undangan</th>
-                        <th rowspan="2">Biaya Psb Reguler</th>
+                        <th rowspan="2">Status</th>
                         <th colspan="4" class="text-center">Jalur Undangan</th>
                         <th colspan="3" class="text-center">Jalur Reguler</th>
-                        <th rowspan="2">Status</th>
                     </tr>
                     <tr>
                         <th>Total</th>
@@ -36,13 +35,17 @@
                         <td>
                             <div class="btn-group">
                                 <a href="{{ route('staff.master-psb.edit-config') }}?id={{ $item->id }}" class="btn btn-icon btn-outline-info"><i class="fas fa-edit"></i></a>
-                                <a href="" class="btn btn-icon btn-outline-info"><i class="feather icon-power"></i></a>
+                                @if($item->is_active)
+                                <a href="" class="btn btn-icon btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Switch to Off"><i class="feather icon-power"></i></a>
+                                @else
+                                <a href="" class="btn btn-icon btn-outline-success" data-toggle="tooltip" data-placement="top" title="Switch to On"><i class="feather icon-power"></i></a>
+                                @endif
                             </div>
                         </td>
                         <td>{{ $item->tahun_ajaran }}</td>
                         <td>{{ $item->ketua_panitia }}</td>
                         <td>{{ $item->kode_undangan }}</td>
-                        <td>{{ rupiah($item->biaya_psb) }}</td>
+                        <td>{!! $item->is_active ? '<span class="badge badge-light-primary">Aktif</span>' : '<span class="badge badge-light-danger">Tidak Aktif</span>' !!}</td>
                         <td>{{ $item->jumlah_pendaftar_undangan }}</td>
                         <td>{{ $item->jumlah_pendaftar_undangan_lulus }}</td>
                         <td>{{ $item->jumlah_pendaftar_undangan_tidak_lulus }}</td>
@@ -50,7 +53,6 @@
                         <td>{{ $item->jumlah_pendaftar_reguler }}</td>
                         <td>{{ $item->jumlah_pendaftar_reguler_lulus }}</td>
                         <td>{{ $item->jumlah_pendaftar_reguler_tidak_lulus }}</td>
-                        <td>{!! $item->is_active ? '<span class="badge badge-light-primary">Aktif</span>' : '<span class="badge badge-light-danger">Tidak Aktif</span>' !!}</td>
                     </tr>
                     @endforeach
                 </tbody>

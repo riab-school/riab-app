@@ -98,8 +98,9 @@
 <div class="row">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
-                <h5>Berdasarkan Jenis Kelamin</h5>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>Grafik Jenis Kelamin</h5>
+                <h6>{{ $activeYear."/".$activeYear+1 }}</h6>
             </div>
             <div class="card-body">
                 <canvas id="chart-pie-1" style="width: 100%; height: 300px"></canvas>
@@ -108,8 +109,9 @@
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
-                <h5>Berdasarkan Kelas</h5>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>Grafik Kelas</h5>
+                <h6>{{ $activeYear."/".$activeYear+1 }}</h6>
             </div>
             <div class="card-body">
                 <canvas id="chart-pie-2" style="width: 100%; height: 300px"></canvas>
@@ -118,8 +120,9 @@
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Grafik Pelanggaran</h5>
+                <h6>{{ $activeYear."/".$activeYear+1 }}</h6>
             </div>
             <div class="card-body">
                 <canvas id="chart-bar-1" style="width: 100%; height: 300px"></canvas>
@@ -128,8 +131,9 @@
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Grafik Prestasi</h5>
+                <h6>{{ $activeYear."/".$activeYear+1 }}</h6>
             </div>
             <div class="card-body">
                 <canvas id="chart-bar-2" style="width: 100%; height: 300px"></canvas>
@@ -139,8 +143,9 @@
 
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Grafik Hafalan & Tahfidz</h5>
+                <h6>{{ $activeYear."/".$activeYear+1 }}</h6>
             </div>
             <div class="card-body">
                 <canvas id="chart-bar-3" style="width: 100%; height: 300px"></canvas>
@@ -150,8 +155,9 @@
 
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Grafik Perizinan</h5>
+                <h6>{{ $activeYear."/".$activeYear+1 }}</h6>
             </div>
             <div class="card-body">
                 <canvas id="chart-bar-4" style="width: 100%; height: 300px"></canvas>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h5>Psb Config</h5>
+        <h5>Edit Psb Config</h5>
     </div>
     <div class="card-body">
         <form action="{{ route('staff.master-psb.add-config.update') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
@@ -16,13 +16,13 @@
                         <select name="tahun_ajaran" id="tahun_ajaran" class="form-control" required>
                             <option value="">-- Pilih Tahun Ajaran --</option>
                             @foreach ($tahunAjaran as $item)
-                            <option value="{{ $item->tahun_ajaran }}">{{ $item->tahun_ajaran }}</option>
+                            <option value="{{ $item->tahun_ajaran }}" @if($item->tahun_ajaran == $dataConfig->tahun_ajaran) selected @endif>{{ $item->tahun_ajaran }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="ketua_panitia">Ketua Panitia</label>
-                        <input type="text" class="form-control" name="ketua_panitia" id="ketua_panitia" required>
+                        <input type="text" class="form-control" name="ketua_panitia" id="ketua_panitia" value="{{ $dataConfig->ketua_panitia }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tanda_tangan_ketua_panitia">Tanda Tangan Ketua Panitia</label>
@@ -44,11 +44,11 @@
                     <p class="lead">B. Informasi Biaya Dan Rekening</p>
                     <div class="form-group">
                         <label for="no_rekening_psb">Nomor Rekening PSB</label>
-                        <input type="text" class="form-control" name="no_rekening_psb" id="no_rekening_psb" required>
+                        <input type="text" class="form-control" name="no_rekening_psb" id="no_rekening_psb" value="{{ $dataConfig->no_rekening_psb }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nama_rekening_psb">Nama Rekening PSB</label>
-                        <input type="text" class="form-control" name="nama_rekening_psb" id="nama_rekening_psb" required>
+                        <input type="text" class="form-control" name="nama_rekening_psb" id="nama_rekening_psb" value="{{ $dataConfig->nama_rekening_psb }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nama_bank_rekening_psb">Nama Bank Rekening PSB</label>
@@ -66,162 +66,162 @@
                     </div>
                     <div class="form-group">
                         <label for="biaya_psb">Biaya PSB</label>
-                        <input type="number" class="form-control" name="biaya_psb" id="biaya_psb" required>
+                        <input type="number" class="form-control" name="biaya_psb" id="biaya_psb" value="{{ $dataConfig->biaya_psb }}" required>
                     </div>
                     <hr>
                     <p class="lead">C. Informasi Contact Person</p>
                     <div class="form-group">
                         <label for="nama_cp_1">Nama Contact Person 1</label>
-                        <input type="text" class="form-control" name="nama_cp_1" id="nama_cp_1" required>
+                        <input type="text" class="form-control" name="nama_cp_1" id="nama_cp_1" value="{{ $dataConfig->nama_cp_1 }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nomor_cp_1">Nomor Contact Person 1</label>
-                        <input type="text" class="form-control" name="nomor_cp_1" id="nomor_cp_1" required>
+                        <input type="text" class="form-control" name="nomor_cp_1" id="nomor_cp_1" value="{{ $dataConfig->nomor_cp_1 }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nama_cp_2">Nama Contact Person 2</label>
-                        <input type="text" class="form-control" name="nama_cp_2" id="nama_cp_2" required>
+                        <input type="text" class="form-control" name="nama_cp_2" id="nama_cp_2" value="{{ $dataConfig->nama_cp_2 }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nomor_cp_2">Nomor Contact Person 2</label>
-                        <input type="text" class="form-control" name="nomor_cp_2" id="nomor_cp_2" required>
+                        <input type="text" class="form-control" name="nomor_cp_2" id="nomor_cp_2" value="{{ $dataConfig->nomor_cp_2 }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nama_cp_3">Nama Contact Person 3</label>
-                        <input type="text" class="form-control" name="nama_cp_3" id="nama_cp_3" required>
+                        <input type="text" class="form-control" name="nama_cp_3" id="nama_cp_3" value="{{ $dataConfig->nama_cp_3 }}" required>
                     </div>
                     <div class="form-group">
                         <label for="nomor_cp_3">Nomor Contact Person 3</label>
-                        <input type="text" class="form-control" name="nomor_cp_3" id="nomor_cp_3" required>
+                        <input type="text" class="form-control" name="nomor_cp_3" id="nomor_cp_3" value="{{ $dataConfig->nomor_cp_3 }}" required>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <p class="lead">D. Konfigurasi Undangan</p>
                     <div class="form-group">
                         <label for="kode_undangan">Kode Undangan</label>
-                        <input type="text" class="form-control" name="kode_undangan" id="kode_undangan" required>
+                        <input type="text" class="form-control" name="kode_undangan" id="kode_undangan" value="{{ $dataConfig->kode_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="target_undangan">Target Undangan</label>
-                        <input type="text" class="form-control" name="target_undangan" id="target_undangan" required>
+                        <input type="text" class="form-control" name="target_undangan" id="target_undangan" value="{{ $dataConfig->target_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_daftar_undangan">Buka Pendaftaran Undangan</label>
-                        <input type="date" class="form-control" name="buka_daftar_undangan" id="buka_daftar_undangan" required>
+                        <input type="date" class="form-control" name="buka_daftar_undangan" id="buka_daftar_undangan" value="{{ $dataConfig->buka_daftar_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_daftar_undangan">Tutup Pendaftaran Undangan</label>
-                        <input type="date" class="form-control" name="tutup_daftar_undangan" id="tutup_daftar_undangan" required>
+                        <input type="date" class="form-control" name="tutup_daftar_undangan" id="tutup_daftar_undangan" value="{{ $dataConfig->tutup_daftar_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="pengumuman_administrasi_undangan">Pengumuman Seleksi ADM Undangan</label>
-                        <input type="date" class="form-control" name="pengumuman_administrasi_undangan" id="pengumuman_administrasi_undangan" required>
+                        <input type="date" class="form-control" name="pengumuman_administrasi_undangan" id="pengumuman_administrasi_undangan" value="{{ $dataConfig->pengumuman_administrasi_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_tes_undangan">Buka Tes Undangan</label>
-                        <input type="date" class="form-control" name="buka_tes_undangan" id="buka_tes_undangan" required>
+                        <input type="date" class="form-control" name="buka_tes_undangan" id="buka_tes_undangan" value="{{ $dataConfig->buka_tes_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_tes_undangan">Tutup Tes Undangan</label>
-                        <input type="date" class="form-control" name="tutup_tes_undangan" id="tutup_tes_undangan" required>
+                        <input type="date" class="form-control" name="tutup_tes_undangan" id="tutup_tes_undangan" value="{{ $dataConfig->tutup_tes_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="pengumuman_undangan">Pengumuman Kelulusan Undangan</label>
-                        <input type="date" class="form-control" name="pengumuman_undangan" id="pengumuman_undangan" required>
+                        <input type="date" class="form-control" name="pengumuman_undangan" id="pengumuman_undangan" value="{{ $dataConfig->pengumuman_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_daftar_ulang_undangan">Buka Daftar Ulang Undangan</label>
-                        <input type="date" class="form-control" name="buka_daftar_ulang_undangan" id="buka_daftar_ulang_undangan" required>
+                        <input type="date" class="form-control" name="buka_daftar_ulang_undangan" id="buka_daftar_ulang_undangan" value="{{ $dataConfig->buka_daftar_ulang_undangan }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_daftar_ulang_undangan">Tutup Daftar Ulang Undangan</label>
-                        <input type="date" class="form-control" name="tutup_daftar_ulang_undangan" id="tutup_daftar_ulang_undangan" required>
+                        <input type="date" class="form-control" name="tutup_daftar_ulang_undangan" id="tutup_daftar_ulang_undangan" value="{{ $dataConfig->tutup_daftar_ulang_undangan }}" required>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <p class="lead">E. Konfigurasi Reguler</p>
                     <div class="form-group">
                         <label for="target_reguler">Target Reguler</label>
-                        <input type="text" class="form-control" name="target_reguler" id="target_reguler" required>
+                        <input type="text" class="form-control" name="target_reguler" id="target_reguler" value="{{ $dataConfig->target_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_daftar_reguler">Buka Pendaftaran Reguler</label>
-                        <input type="date" class="form-control" name="buka_daftar_reguler" id="buka_daftar_reguler" required>
+                        <input type="date" class="form-control" name="buka_daftar_reguler" id="buka_daftar_reguler" value="{{ $dataConfig->buka_daftar_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_daftar_reguler">Tutup Pendaftaran Reguler</label>
-                        <input type="date" class="form-control" name="tutup_daftar_reguler" id="tutup_daftar_reguler" required>
+                        <input type="date" class="form-control" name="tutup_daftar_reguler" id="tutup_daftar_reguler" value="{{ $dataConfig->tutup_daftar_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_cetak_berkas">Buka Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="buka_cetak_berkas" id="buka_cetak_berkas" required>
+                        <input type="date" class="form-control" name="buka_cetak_berkas" id="buka_cetak_berkas" value="{{ $dataConfig->buka_cetak_berkas }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_cetak_berkas">Tutup Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="tutup_cetak_berkas" id="tutup_cetak_berkas" required>
+                        <input type="date" class="form-control" name="tutup_cetak_berkas" id="tutup_cetak_berkas" value="{{ $dataConfig->tutup_cetak_berkas }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_tes_reguler">Buka Tes Reguler</label>
-                        <input type="date" class="form-control" name="buka_tes_reguler" id="buka_tes_reguler" required>
+                        <input type="date" class="form-control" name="buka_tes_reguler" id="buka_tes_reguler" value="{{ $dataConfig->buka_tes_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_tes_reguler">Tutup Tes Reguler</label>
-                        <input type="date" class="form-control" name="tutup_tes_reguler" id="tutup_tes_reguler" required>
+                        <input type="date" class="form-control" name="tutup_tes_reguler" id="tutup_tes_reguler" value="{{ $dataConfig->tutup_tes_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="pengumuman_reguler">Pengumuman Kelulusan Reguler</label>
-                        <input type="date" class="form-control" name="pengumuman_reguler" id="pengumuman_reguler" required>
+                        <input type="date" class="form-control" name="pengumuman_reguler" id="pengumuman_reguler" value="{{ $dataConfig->pengumuman_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_daftar_ulang_reguler">Buka Daftar Ulang Reguler</label>
-                        <input type="date" class="form-control" name="buka_daftar_ulang_reguler" id="buka_daftar_ulang_reguler" required>
+                        <input type="date" class="form-control" name="buka_daftar_ulang_reguler" id="buka_daftar_ulang_reguler" value="{{ $dataConfig->buka_daftar_ulang_reguler }}" required>
                     </div>
                     <div class="form-group">
                         <label for="tutup_daftar_ulang_reguler">Tutup Daftar Ulang Reguler</label>
-                        <input type="date" class="form-control" name="tutup_daftar_ulang_reguler" id="tutup_daftar_ulang_reguler" required>
+                        <input type="date" class="form-control" name="tutup_daftar_ulang_reguler" id="tutup_daftar_ulang_reguler" value="{{ $dataConfig->tutup_daftar_ulang_reguler }}" required>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <p class="lead">F. Konfigurasi Ruangan</p>
                     <div class="form-group">
                         <label for="jumlah_sesi_sehari">Jumlah Sesi dalam Sehari</label>
-                        <input type="number" class="form-control" name="jumlah_sesi_sehari" id="jumlah_sesi_sehari" required>
+                        <input type="number" class="form-control" name="jumlah_sesi_sehari" id="jumlah_sesi_sehari" value="{{ $dataConfig->jumlah_sesi_sehari }}" required>
                     </div>
                     <div class="form-group">
                         <label for="jumlah_ruang_cat">Jumlah Ruangan CAT</label>
-                        <input type="number" class="form-control" name="jumlah_ruang_cat" id="jumlah_ruang_cat" required>
+                        <input type="number" class="form-control" name="jumlah_ruang_cat" id="jumlah_ruang_cat" value="{{ $dataConfig->jumlah_ruang_cat }}" required>
                     </div>
                     <div class="form-group">
                         <label for="prefix_ruang_cat">Prefix Ruangan CAT</label>
-                        <input type="text" class="form-control" name="prefix_ruang_cat" id="prefix_ruang_cat" required>
+                        <input type="text" class="form-control" name="prefix_ruang_cat" id="prefix_ruang_cat" value="{{ $dataConfig->prefix_ruang_cat }}" required>
                     </div>
                     <div class="form-group">
                         <label for="kapasitas_ruang_cat">Kapasitas Peserta Per Ruangan CAT</label>
-                        <input type="number" class="form-control" name="kapasitas_ruang_cat" id="kapasitas_ruang_cat" required>
+                        <input type="number" class="form-control" name="kapasitas_ruang_cat" id="kapasitas_ruang_cat" value="{{ $dataConfig->kapasitas_ruang_cat }}" required>
                     </div>
                     <div class="form-group">
                         <label for="jumlah_ruang_interview">Jumlah Ruangan Interview</label>
-                        <input type="number" class="form-control" name="jumlah_ruang_interview" id="jumlah_ruang_interview" required>
+                        <input type="number" class="form-control" name="jumlah_ruang_interview" id="jumlah_ruang_interview" value="{{ $dataConfig->jumlah_ruang_interview }}" required>
                     </div>
                     <div class="form-group">
                         <label for="prefix_ruang_interview">Prefix Ruangan Interview</label>
-                        <input type="text" class="form-control" name="prefix_ruang_interview" id="prefix_ruang_interview" required>
+                        <input type="text" class="form-control" name="prefix_ruang_interview" id="prefix_ruang_interview" value="{{ $dataConfig->prefix_ruang_interview }}" required>
                     </div>
                     <div class="form-group">
                         <label for="kapasitas_ruang_interview">Kapasitas Peserta Per Ruangan Interview</label>
-                        <input type="number" class="form-control" name="kapasitas_ruang_interview" id="kapasitas_ruang_interview" required>
+                        <input type="number" class="form-control" name="kapasitas_ruang_interview" id="kapasitas_ruang_interview" value="{{ $dataConfig->kapasitas_ruang_interview }}" required>
                     </div>
                     <div class="form-group">
                         <label for="jumlah_ruang_interview_orangtua">Jumlah Ruangan Interview Wali</label>
-                        <input type="number" class="form-control" name="jumlah_ruang_interview_orangtua" id="jumlah_ruang_interview_orangtua" required>
+                        <input type="number" class="form-control" name="jumlah_ruang_interview_orangtua" id="jumlah_ruang_interview_orangtua" value="{{ $dataConfig->jumlah_ruang_interview_orangtua }}" required>
                     </div>
                     <div class="form-group">
                         <label for="prefix_ruang_interview_orangtua">Prefix Ruangan Interview Wali</label>
-                        <input type="text" class="form-control" name="prefix_ruang_interview_orangtua" id="prefix_ruang_interview_orangtua" required>
+                        <input type="text" class="form-control" name="prefix_ruang_interview_orangtua" id="prefix_ruang_interview_orangtua" value="{{ $dataConfig->prefix_ruang_interview_orangtua }}" required>
                     </div>
                     <div class="form-group">
                         <label for="kapasitas_ruang_interview_orangtua">Kapasitas Peserta Per Ruangan Interview Wali</label>
-                        <input type="number" class="form-control" name="kapasitas_ruang_interview_orangtua" id="kapasitas_ruang_interview_orangtua" required>
+                        <input type="number" class="form-control" name="kapasitas_ruang_interview_orangtua" id="kapasitas_ruang_interview_orangtua" value="{{ $dataConfig->kapasitas_ruang_interview_orangtua }}" required>
                     </div>
                 </div>
                 <div class="col-12">

@@ -23,7 +23,7 @@ class ConfigController extends Controller
         $data = [
             'tahunAjaran'   => MasterTahunAjaran::all(),
         ];
-        return view('app.staff.master-psb.config.add-update', $data);
+        return view('app.staff.master-psb.config.add', $data);
     }
 
     public function editConfigPage(Request $request)
@@ -33,7 +33,7 @@ class ConfigController extends Controller
                 'tahunAjaran'   => MasterTahunAjaran::all(),
                 'dataConfig' => PsbConfig::findOrFail($request->id),
             ];
-            return view('app.staff.master-psb.config.add-update', $data);
+            return view('app.staff.master-psb.config.update', $data);
         }
     }
 

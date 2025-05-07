@@ -47,6 +47,9 @@ class HomeController extends Controller
     {
 
         $activeYearId = Session::get('tahun_ajaran_aktif_id');
+        if(!$activeYearId){
+            return redirect()->route('logout');
+        }
         $activeYear = MasterTahunAjaran::where('id', $activeYearId)->first()->tahun_ajaran;
 
         if($request->ajax()){

@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login');
+        return redirect()->route('splash');
     })->name('logout');
 });
 

@@ -1,7 +1,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no">
-    <meta name="description" content="Suha - Multipurpose Ecommerce Mobile HTML Template">
+    <meta name="description" content="Aplikasi {{ appSet('APP_NAME') }} {{ appSet('SCHOOL_CATEGORY')." ".appSet('SCHOOL_NAME') }}" />
+    <meta name="keywords" content="SIAKAD, Aplikasi, Sistem Informasi, SisAkademik, Siakad, Sisfo, Kesantrian, Pesantren Digital">
+    <meta name="author" content="Achdiadsyah" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#19BCBF">
     <meta name="apple-mobile-web-app-capable" content="yes">

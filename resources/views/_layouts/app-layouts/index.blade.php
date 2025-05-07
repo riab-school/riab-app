@@ -45,7 +45,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow-none bg-transparent">
                     <div class="modal-body text-center p-0">
-                        <img id="previewImage" src="" class="img-fluid" alt="Preview">
+                        <img id="previewImage" src="{{ asset('assets/images/loading-load.gif') }}" class="img-fluid" alt="Preview">
                     </div>
                 </div>
             </div>
