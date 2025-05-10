@@ -123,7 +123,7 @@
                         <td style="padding: 5px; text-align: center;">{{ $item->userDetail->studentDetail->nis }} - {{ $item->userDetail->studentDetail->nisn }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->userDetail->studentDetail->name }}</td>
                         @endif
-                        <td style="padding: 5px; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ $item->created_at->format('d-m-Y H:i:s') }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->detail }}</td>   
                         <td style="padding: 5px; text-align: center;">{{ $item->action_taked }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->processBy->staffDetail->name }}</td>

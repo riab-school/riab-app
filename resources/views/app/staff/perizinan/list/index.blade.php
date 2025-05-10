@@ -237,6 +237,16 @@
                             <textarea class="form-control" id="reject_reason" name="reject_reason" rows="3"></textarea>
                         </div>
                     </div>
+                    <div class="row mb-3 d-none" id="date_div">
+                        <div class="form-group">
+                            <label for="from_date">Dari Tanggal</label>
+                            <input type="date" class="form-control @error('from_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="from_date" name="from_date">
+                        </div>
+                        <div class="form-group">
+                            <label for="to_date">Hingga Tanggal</label>
+                            <input type="date" class="form-control @error('to_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="to_date" name="to_date">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -313,6 +323,9 @@
                         $('#status').find('option[value="canceled"]').hide();
                         $('#status').find('option[value="approved"]').hide();
                     }
+                    if (res.data.status == 'requested') {
+                        $('#status').find('option[value="check_in"]').hide();
+                    }
                     $('#modalEdit').modal('show');
                 },
                 error: function(xhr, status, error) {
@@ -327,7 +340,15 @@
             if ($(this).val() == 'rejected') {
                 $('#reject_reason_div').removeClass('d-none');
                 $('#reject_reason').attr('required', true);
+            } else if ($(this).val() == 'approved') {
+                $('#date_div').removeClass('d-none');
+                $('#from_date').attr('required', true);
+                $('#to_date').attr('required', true);
+                $('#reject_reason_div').addClass('d-none');
             } else {
+                $('#date_div').addClass('d-none');
+                $('#from_date').attr('required', false);
+                $('#to_date').attr('required', false);
                 $('#reject_reason_div').addClass('d-none');
                 $('#reject_reason').attr('required', false);
             }

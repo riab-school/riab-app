@@ -72,4 +72,9 @@ class StudentDetail extends Model
     {
         return $this->hasMany(StudentsViolation::class, 'user_id', 'user_id');
     }
+
+    public function studentMedicalCheckHistory()
+    {
+        return $this->hasMany(StudentMedicalCheckHistory::class, 'user_id', 'user_id');
+    }
 }

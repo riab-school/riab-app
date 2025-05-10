@@ -110,7 +110,6 @@
                     @csrf
                     <input type="hidden" class="form-control" id="report_by" name="report_by" value="nis_nisn" required>
                     <input type="hidden" class="form-control" id="id_siswa" name="id_siswa" value="" required>
-                    <input type="hidden" class="form-control" id="id_izin" name="id_izin" value="" required>
                     <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-print"></i> Cetak Laporan</button>
                 </form>
             </div>

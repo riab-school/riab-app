@@ -7,7 +7,7 @@
             <div class="card-header">
                 <h5>Filter Laporan</h5>
             </div>
-            <form action="{{ route('staff.pelanggaran.laporan.handle') }}" method="POST" onsubmit="processData(this);">
+            <form action="{{ route('staff.kesehatan.laporan.handle') }}" method="POST" onsubmit="processData(this);">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">

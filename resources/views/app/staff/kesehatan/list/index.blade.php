@@ -3,8 +3,8 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Pelanggaran List</h5>
-        <a href="{{ route('staff.pelanggaran.create') }}" class="btn btn-primary btn-sm">Tambah Pelanggaran</a>
+        <h5>Kesehatan List</h5>
+        <a href="{{ route('staff.kesehatan.create') }}" class="btn btn-primary btn-sm">Tambah Catatan</a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -15,10 +15,14 @@
                         <th>Nama</th>
                         <th>NIS</th>
                         <th>NISN</th>
-                        <th>Keterangan</th>
-                        <th>Bukti</th>
+                        <th>Diagnosa</th>
                         <th>Tindakan</th>
-                        <th>Proses Oleh</th>
+                        <th>Obat diberikan</th>
+                        <th>Catatan</th>
+                        <th>Izin Pulang</th>
+                        <th>Bukti</th>
+                        <th>Dignosa Oleh</th>
+                        <th>Notifikasi Orang Tua</th>
                         <th>Tanggal Kejadian</th>
                     </tr>
                 </thead>
@@ -32,7 +36,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detail Pelanggaran</h5>
+                <h5 class="modal-title">Detail Keluhan Kesehatan</h5>
             </div>
             <div class="modal-body">
                 
@@ -51,7 +55,7 @@
         $(document).on('click', '#btnModalEdit', function() {
             let id = $(this).data('id');
             $.ajax({
-                url: '{{ route('staff.pelanggaran.detail') }}?id=' + id,
+                url: '{{ route('staff.kesehatan.detail') }}?id=' + id,
                 type: 'GET',
                 success: function(res) {
                     $('#id').val(res.data.id);
@@ -86,10 +90,14 @@
                     {data: 'user_detail.student_detail.name', name: 'nama'},
                     {data: 'user_detail.student_detail.nis', name: 'nis'},
                     {data: 'user_detail.student_detail.nisn', name: 'nisn'},
-                    {data: 'detail', name: 'detail'},
+                    {data: 'diagnose', name: 'diagnose'},
+                    {data: 'treatment', name: 'treatment'},
+                    {data: 'drug_given', name: 'drug_given'},
+                    {data: 'note', name: 'note'},
+                    {data: 'is_allow_home', name: 'is_allow_home'},
                     {data: 'evidence', name: 'evidence', orderable: false, searchable: false, className: 'text-center'},
-                    {data: 'action_taked', name: 'action_taked'},
-                    {data: 'process_by', name: 'process_by'},
+                    {data: 'diagnoze_by', name: 'diagnoze_by'},
+                    {data: 'is_notify_parent', name: 'is_notify_parent'},
                     {data: 'created_at', name: 'created_at'},
                 ]
             })

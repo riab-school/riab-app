@@ -90,11 +90,11 @@ class ListController extends Controller
                     $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
                     // Send Whatsapp Notification
                     $message = "Assalamualaikum Bapak/Ibu,.\n\n";
-                    $message .= "Ananda : *".$data->userDetail->studentDetail->name."*\n\nTelah mendapatkan sebuah prestasi\n\n";
-                    $message .= "Ket :  ".$request->detail."\n";
-                    $message .= "Tindakan :  ".$request->action_taked."\n";
+                    $message .= "*Ananda :*\n*".$data->userDetail->studentDetail->name."*\n\nTelah mendapatkan sebuah prestasi membanggakan\n\n";
+                    $message .= "*Ket :*\n".$request->detail."\n\n";
+                    $message .= "*Tindakan :*\n".$request->action_taked."\n\n";
                     $message .= "------------------\n";
-                    $message .= "Di Catat oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
+                    $message .= "*Di Catat oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
                     $message .= "Terima kasih. Wassalamualaikum.";
                     
                     if($request->has('evidence')) {

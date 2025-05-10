@@ -68,7 +68,7 @@
                     </td>
                     <td style="text-align: center;">
                         <div style="font-size: 15pt; font-weight: bold;">
-                            Laporan Pelanggaran
+                            Laporan Kesehatan Santri
                         </div>
                         <div style="font-size: 12pt;">
                             <b>{{ appSet('SCHOOL_NAME') }}</b>
@@ -91,7 +91,7 @@
         @else
         <div style="text-align: center; font-weight: bold;">
             <h4>
-                Laporan Pelanggaran <br>
+                Laporan Rekam Kesehatan Santri<br>
                 <u>{{ $studentData->name }}</u>
             </h4>
         </div>
@@ -104,11 +104,14 @@
                     <th style="padding: 5px; font-size: 12pt;">NIS & NISN</th>
                     <th style="padding: 5px; font-size: 12pt;">Nama</th>
                     @endif
-                    <th style="padding: 5px; font-size: 12pt;">Tanggal</th>
-                    <th style="padding: 5px; font-size: 12pt;">Keterangan</th>
-                    <th style="padding: 5px; font-size: 12pt;">Tindakan</th>
-                    <th style="padding: 5px; font-size: 12pt;">Proses Oleh</th>
-                    <th style="padding: 5px; font-size: 12pt;">Bukti Pelanggaran</th>
+                    <th style="padding: 5px; font-size: 12pt;">Tanggal & Jam</th>
+                    <th style="padding: 5px; font-size: 12pt;">Diagnosa</th>
+                    <th style="padding: 5px; font-size: 12pt;">Treatment</th>
+                    <th style="padding: 5px; font-size: 12pt;">Obat Diberikan</th>
+                    <th style="padding: 5px; font-size: 12pt;">Catatan Dokter</th>
+                    <th style="padding: 5px; font-size: 12pt;">Izin Pulang</th>
+                    <th style="padding: 5px; font-size: 12pt;">Diperiksa Oleh</th>
+                    <th style="padding: 5px; font-size: 12pt;">Bukti Kunjungan</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,17 +119,20 @@
                     $i = 1;
                 @endphp
                 
-                @foreach ($violations as $item)
+                @foreach ($medical_history as $item)
                     <tr>
                         <td style="text-align: center;">{{ $i }}</td>
                         @if($report_by == 'date')
                         <td style="padding: 5px; text-align: center;">{{ $item->userDetail->studentDetail->nis }} - {{ $item->userDetail->studentDetail->nisn }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->userDetail->studentDetail->name }}</td>
                         @endif
-                        <td style="padding: 5px; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
-                        <td style="padding: 5px; text-align: center;">{{ $item->detail }}</td>   
-                        <td style="padding: 5px; text-align: center;">{{ $item->action_taked }}</td>
-                        <td style="padding: 5px; text-align: center;">{{ $item->processBy->staffDetail->name }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ $item->created_at->format('d-m-Y H:i:s') }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ $item->diagnose }}</td>   
+                        <td style="padding: 5px; text-align: center;">{{ $item->treatment }}</td>   
+                        <td style="padding: 5px; text-align: center;">{{ $item->drug_given }}</td>   
+                        <td style="padding: 5px; text-align: center;">{{ $item->note }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ $item->is_allow_home ? "Ya" : "Tidak" }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ $item->diagnozedBy->staffDetail->name }}</td>
                         <td style="padding: 5px; text-align: center;">{!! $item->evidence ? '<img style="max-width: 150px;" src="'.Storage::disk('s3')->url($item->evidence).'"/>' : '-' !!}</td>
                     </tr>
                 @php

@@ -118,14 +118,14 @@ class ListController extends Controller
                     $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
                     // Send Whatsapp Notification
                     $message = "Assalamualaikum Bapak/Ibu.\n\n";
-                    $message .= "Ananda : *".$request->nama."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
-                    $message .= "Tujuan :  ".$request->reason."\n";
-                    $message .= "Di jemput oleh :  *".$request->pickup_by."*\n";
-                    $message .= "Dari Tgl  :  *".dateIndo($request->from_date)."*\n";
-                    $message .= "Hingga Tgl  :  *".dateIndo($request->to_date)."*\n\n";
+                    $message .= "*Ananda :*\n*".$request->nama."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
+                    $message .= "*Tujuan/Alasan :*\n".$request->reason."\n\n";
+                    $message .= "*Di jemput oleh :*\n".$request->pickup_by."\n\n";
+                    $message .= "*Dari Tgl  :*\n".dateIndo($request->from_date)."\n\n";
+                    $message .= "*Hingga Tgl  :*\n".dateIndo($request->to_date)."\n\n";
                     $message .= "----------------\n";
-                    $message .= "Di setujui oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
-                    $message .= "Token Izin :\n*".$token."*\n";
+                    $message .= "*Di setujui oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n\n";
+                    $message .= "*Token Izin :*\n".$token."\n\n";
                     $message .= "Terima kasih. \nWassalamualaikum.";
                 
                     $payloadText = [
@@ -157,11 +157,15 @@ class ListController extends Controller
 
     public function handleUpdateStatus(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'id'       => 'required|exists:student_permission_histories,id',
+            'id'            => 'required|exists:student_permission_histories,id',
             'status'        => 'required|string',
-            'reject_reason' => 'required_if:status,rejected'
+            'reject_reason' => 'nullable|required_if:status,rejected',
+            'from_date'     => 'nullable|required_if:status,approved',
+            'to_date'       => 'nullable|required_if:status,approved',
         ]);
+
         try {
             \DB::beginTransaction();
             $data = StudentPermissionHistory::find($request->id);
@@ -174,16 +178,16 @@ class ListController extends Controller
                         $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
                         // Send Whatsapp Notification
                         $message = "Assalamualaikum Bapak/Ibu.\n\n";
-                        $message .= "Ananda : *".$request->nama."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
-                        $message .= "Tujuan :  ".$request->reason."\n";
-                        $message .= "Di jemput oleh :  *".$request->pickup_by."*\n";
-                        $message .= "Dari Tgl  :  *".dateIndo($request->from_date)."*\n";
-                        $message .= "Hingga Tgl  :  *".dateIndo($request->to_date)."*\n\n";
+                        $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
+                        $message .= "*Tujuan/Alasan :*\n".$data->reason."\n\n";
+                        $message .= "*Di jemput oleh :*\n".$data->pickup_by."\n\n";
+                        $message .= "*Dari Tgl  :*\n".dateIndo($request->from_date)."\n\n";
+                        $message .= "*Hingga Tgl  :*\n".dateIndo($request->to_date)."\n\n";
                         $message .= "----------------\n";
-                        $message .= "Di setujui oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
-                        $message .= "Token Izin :\n*".$token."*\n";
+                        $message .= "*Di setujui oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n\n";
+                        $message .= "*Token Izin :*\n".$token."\n\n";
                         $message .= "Terima kasih. \nWassalamualaikum.";
-                    
+
                         $payloadText = [
                             'sessionId' => appSet('WHATSAPP_SESSION_ID'),
                             'type'      => 'text',
@@ -199,12 +203,15 @@ class ListController extends Controller
                         'status'            => $request->status,
                         'approved_by'       => auth()->user()->id,
                         'token'             => $token,
+                        'from_date'         => $request->from_date,
+                        'to_date'           => $request->to_date,
                         'reject_reason'     => null,
                         'rejected_by'       => null,
                         'checked_in_by'     => null,
                         'checked_in_at'     => null,
                         'checked_out_by'    => null,
                         'checked_out_at'    => null,
+                        'is_notify_parent'  => $studentParent ? 1 : 0,
                     ]);
                 }
                 if($request->status == 'rejected') {
@@ -214,10 +221,10 @@ class ListController extends Controller
                         $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
                         // Send Whatsapp Notification
                         $message = "Assalamualaikum Bapak/Ibu,.\n\n";
-                        $message .= "Ananda : *".$data->detail->studentDetail->name."*\n\nPermohanan izin ananda telah *Di Tolak*.\n\n";
-                        $message .= "Alasan Penolakan :  ".$request->reject_reason."\n";
+                        $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\nPermohanan izin ananda telah *Di Tolak*.\n\n";
+                        $message .= "*Alasan Penolakan :*\n".$request->reject_reason."\n";
                         $message .= "------------------\n";
-                        $message .= "Di Tolak oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
+                        $message .= "*Di Tolak oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
                         $message .= "Terima kasih. Wassalamualaikum.";
                     
                         $payloadText = [
@@ -249,9 +256,9 @@ class ListController extends Controller
                         $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
                         // Send Whatsapp Notification
                         $message = "Assalamualaikum Bapak/Ibu,.\n\n";
-                        $message .= "Ananda : *".$data->detail->studentDetail->name."*\n\nPermohanan izin ananda telah *Di Batalkan*.\n\n";
+                        $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\nPermohanan izin ananda telah *Di Batalkan*.\n\n";
                         $message .= "------------------\n";
-                        $message .= "Di Batalkan oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
+                        $message .= "*Di Batalkan oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
                         $message .= "Terima kasih. Wassalamualaikum.";
                     
                         $payloadText = [
@@ -282,10 +289,10 @@ class ListController extends Controller
                         $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
                         // Send Whatsapp Notification
                         $message = "Assalamualaikum Bapak/Ibu,.\n\n";
-                        $message .= "Ananda : *".$data->detail->studentDetail->name."*\n\nTelah kembali ke Dayah/Sekolah.\n\n";
-                        $message .= "Check In Pada :  ".dateIndo(date('Y-m-d'))."\n";
+                        $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\nTelah kembali ke Dayah/Sekolah.\n\n";
+                        $message .= "*Check In Pada :*\n".dateIndo(date('Y-m-d'))."\n\n";
                         $message .= "------------------\n";
-                        $message .= "Di Terima oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
+                        $message .= "*Di Terima oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
                         $message .= "Terima kasih. Wassalamualaikum.";
                     
                         $payloadText = [

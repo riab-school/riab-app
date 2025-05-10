@@ -20,7 +20,7 @@ class DashboardController extends Controller
                     $document = $item->detail->studentDetail->studentDocument ?? null;
                     $item->detail->studentDetail->photo_url = $document && $document->photo
                         ? Storage::disk('s3')->url($document->photo)
-                        : null;
+                        : asset('assets/images/blank_person.jpg');
                     return $item;
             });
 

@@ -20,4 +20,14 @@ class StudentMedicalCheckHistory extends Model
         'diagnozed_by',
         'is_notify_parent'
     ];
+
+    public function userDetail()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function diagnozedBy()
+    {
+        return $this->belongsTo(User::class, 'diagnozed_by', 'id');
+    }
 }
