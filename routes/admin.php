@@ -54,21 +54,10 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::get('/', [WhatsappInstanceController::class, 'showPageWhatsappInstace'])->name('admin.whatsapp-intance');
             Route::post('delete-history', [WhatsappInstanceController::class, 'deleteAllHistory'])->name('admin.whatsapp-intance.delete-history');
 
-            Route::get('connect', function (){
-                return connect();
-            })->name('admin.whatsapp-intance.connect');
-
-            Route::get('disconnect', function(){
-                return disconnect();
-            })->name('admin.whatsapp-intance.disconnect');
-
             Route::get('status', function(){
                 return waStatus();
             })->name('admin.whatsapp-intance.status');
 
-            Route::get('getqr', function(){
-                return waQr();
-            })->name('admin.whatsapp-intance.getqr');
         });
     });
 

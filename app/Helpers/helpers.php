@@ -60,6 +60,13 @@ if(!function_exists('indoNumber')) {
     }
 }
 
+if(!function_exists('whatsappNumber')) {
+    function whatsappNumber($number)
+    {
+        return indoNumber($number)."@s.whatsapp.net";
+    }
+}
+
 if (!function_exists('bulan')) {
     function bulan($bulan)
     {
@@ -231,118 +238,12 @@ if(!function_exists('isWaServerOnline')) {
     }
 }
 
-if(!function_exists('isOnWhatsapp')) {
-    function isOnWhatsapp($data)
-    {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/user/check',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN'),
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $response = json_decode($response, true);
-        return $response;
-    }
-}
-
-if(!function_exists('waQr')) {
-    function waQr(){
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/session/qr',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN')
-            ),
-        ));
-    
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($response);
-    }
-}
-
-if(!function_exists('connect')){
-    function connect()
-    {
-        $payload = [
-            'Subscribe' => [
-                'ReadReceipt'
-            ],
-            'Immediate' => true
-        ];
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/session/connect',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($payload),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN')
-            ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($response);
-    }
-}
-
-if(!function_exists('disconnect')){
-    function disconnect()
-    {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/session/logout',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN')
-            ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($response);
-    }
-}
-
 if(!function_exists('waStatus')){
     function waStatus()
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/session/status',
+            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/api/sessions/'.appSet('WHATSAPP_SESSION_ID'),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -352,39 +253,9 @@ if(!function_exists('waStatus')){
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN')
+                'Authorization: Bearer ' . appSet('WHATSAPP_API_KEY')
             ),
         ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($response);
-    }
-}
-
-if(!function_exists('sendPresence')) {
-    function sendPresence($phone)
-    {
-        $presenceData = [
-            'Phone' => indoNumber($phone),
-            'State' => 'composing'
-        ];
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/chat/presence',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($presenceData),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN'),
-            ),
-        ));
-
         $response = curl_exec($curl);
         curl_close($curl);
         return json_decode($response);
@@ -392,38 +263,12 @@ if(!function_exists('sendPresence')) {
 }
 
 if(!function_exists('sendText')) {
-    function sendText($payload, $compose = false)
+    function sendText($payload)
     {
-
-        // Check is On Whatsapp
-        $check = isOnWhatsapp(['Phone' => [indoNumber($payload['Phone'])]]);
-        if(!$check['data']['Users'][0]['IsInWhatsapp']){
-            WhatsappChatHistory::create([
-                'type'              => 'text',
-                'category'          => $payload['Category'] ?? NULL,
-                'name'              => NULL,
-                'phone'             => $payload['Phone'],
-                'message'           => $payload['Body'],
-                'response_id'       => NULL,
-                'response_status'   => 0,
-                'response_message'  => "Gagal, nomor tidak terdaftar di whatsapp.",
-                'process_status'    => 'failed',
-                'created_at'        => now(),
-                'updated_at'        => now(),
-            ]);
-            return false;
-        }
-
-        // Do typing.. if true
-        if($compose){
-            sendPresence($payload['Phone']);
-            sleep(5);
-        }
-        
         // Do curl to send text
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/chat/send/text',
+            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/api/messages/text',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -434,35 +279,87 @@ if(!function_exists('sendText')) {
             CURLOPT_POSTFIELDS => json_encode($payload),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'token: ' . appSet('WHATSAPP_TOKEN'),
+                'Authorization: Bearer ' . appSet('WHATSAPP_API_KEY')
             ),
         ));
+
         $response = curl_exec($curl);
+        // Ambil HTTP response code
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
         curl_close($curl);
 
         // Store to DB
         WhatsappChatHistory::create([
-            'type'              => 'text',
-            'category'          => $payload['Category'] ?? NULL,
-            'name'              => $payload['Name'] ?? NULL,
-            'phone'             => $payload['Phone'],
-            'message'           => $payload['Body'],
-            'response_id'       => json_decode($response)->data->Id ?? NULL,
-            'response_status'   => json_decode($response)->success ?? 0,
-            'response_message'  => json_decode($response)->success ? "Berhasil" : "Gagal",
-            'process_status'    => json_decode($response)->success ? 'success' : 'failed',
+            'type'              => $payload['type'],
+            'category'          => $payload['category'] ?? NULL,
+            'name'              => $payload['name'] ?? NULL,
+            'phone'             => $payload['jid'],
+            'message'           => $payload['text'],
+            'response_id'       => json_decode($response)->data->id ?? NULL,
+            'response_status'   => $httpCode,
+            'response_message'  => json_decode($response)->message ?? NULL,
+            'process_status'    => $httpCode == 200 ? 'success' : 'failed',
             'created_at'        => now(),
             'updated_at'        => now(),
         ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Berhasil',
-            'data' => json_decode($response)
+            'status'    => $httpCode == 200 ? 'success' : 'failed',
+            'code'      => $httpCode,
+            'response'  => json_decode($response)
         ]);
     }
 }
 
+if(!function_exists('sendMedia')) {
+    function sendMedia($payload)
+    {
+        // Do curl to send text
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/api/messages/media',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . appSet('WHATSAPP_API_KEY')
+            ),
+        ));
 
+        $response = curl_exec($curl);
+        // Ambil HTTP response code
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
+        curl_close($curl);
 
+        // Store to DB
+        WhatsappChatHistory::create([
+            'type'              => $payload['type'],
+            'category'          => $payload['category'] ?? NULL,
+            'name'              => $payload['name'] ?? NULL,
+            'phone'             => $payload['jid'],
+            'message'           => $payload['caption'] ?? NULL,
+            'media_url'         => $payload['media_url'] ?? NULL,
+            'media_mime'        => $payload['media_mime'] ?? NULL,
+            'response_id'       => json_decode($response)->data->id ?? NULL,
+            'response_status'   => $httpCode,
+            'response_message'  => json_decode($response)->message ?? NULL,
+            'process_status'    => $httpCode == 200 ? 'success' : 'failed',
+            'created_at'        => now(),
+            'updated_at'        => now(),
+        ]);
+
+        return response()->json([
+            'status'    => $httpCode == 200 ? 'success' : 'failed',
+            'code'      => $httpCode,
+            'response'  => json_decode($response)
+        ]);
+    }
+}

@@ -55,13 +55,13 @@ class AppSettingSeeder extends Seeder
         AppSettings::create([
             'key' => 'SCHOOL_NSM',
             'value' => '131211060001',
-            'default_value' => '131211060001',
+            'default_value' => '00000000000',
         ]);
 
         AppSettings::create([
             'key' => 'SCHOOL_NPSN',
             'value' => '10114244',
-            'default_value' => '10114244',
+            'default_value' => '000000000',
         ]);
 
         AppSettings::create([
@@ -85,7 +85,7 @@ class AppSettingSeeder extends Seeder
         AppSettings::create([
             'key' => 'SCHOOL_CATEGORY',
             'value' => 'Dayah / Madrasah Aliyah',
-            'default_value' => 'Dayah / Madrasah Aliyah',
+            'default_value' => 'Madrasah Aliyah',
         ]);
 
         AppSettings::create([
@@ -104,26 +104,32 @@ class AppSettingSeeder extends Seeder
 
         AppSettings::create([
             'key' => 'WHATSAPP_SERVER',
-            'value' => 'http://202.10.42.178:9999',
-            'default_value' => 'http://202.10.42.178:9999',
+            'value' => 'http://127.0.0.1:3000',
+            'default_value' => 'http://127.0.0.1:3000',
         ]);
 
         AppSettings::create([
-            'key' => 'WHATSAPP_TOKEN',
-            'value' => 'Ruhul@Islam@1997',
-            'default_value' => 'Ruhul@Islam@1997',
+            'key' => 'WHATSAPP_API_KEY',
+            'value' => 'SIAKAD_WSS_API_KEY',
+            'default_value' => 'SIAKAD_WSS_API_KEY',
+        ]);
+
+        AppSettings::create([
+            'key' => 'WHATSAPP_SESSION_ID',
+            'value' => 'YOUR_SESSION_ID',
+            'default_value' => 'YOUR_SESSION_ID',
         ]);
 
         AppSettings::create([
             'key' => 'QURAN_API_URL',
-            'value' => 'http://202.10.42.178:3000',
-            'default_value' => 'http://202.10.42.178:3000',
+            'value' => 'http://127.0.0.1:4000',
+            'default_value' => 'http://127.0.0.1:4000',
         ]);
 
         AppSettings::create([
             'key' => 'SCHOOL_WEBSITE',
-            'value' => 'https://ruhulislam.com',
-            'default_value' => 'https://ruhulislam.com',
+            'value' => 'https://google.com',
+            'default_value' => 'https://google.com',
         ]);
 
     }

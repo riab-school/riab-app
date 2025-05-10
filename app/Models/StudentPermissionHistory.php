@@ -12,6 +12,7 @@ class StudentPermissionHistory extends Model
     protected $fillable = [
         'user_id',
         'requested_by',
+        'applicant_id',
         'approved_by',
         'checked_out_by',
         'checked_out_at',
@@ -24,12 +25,18 @@ class StudentPermissionHistory extends Model
         'pickup_by',
         'from_date',
         'to_date',
+        'is_notify_parent',
         'status'
     ];
 
     public function detail()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function applicantDetail()
+    {
+        return $this->belongsTo(User::class, 'applicant_id');
     }
 
     public function approvedBy()

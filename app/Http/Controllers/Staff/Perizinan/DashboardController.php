@@ -42,9 +42,9 @@ class DashboardController extends Controller
             else {
                 $years = now()->year;
             }
-            $chartData = StudentPermissionHistory::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+            $chartData = StudentPermissionHistory::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, requested_by, COUNT(*) as total')
                         ->whereYear('created_at', $years)
-                        ->groupBy('year', 'month')
+                        ->groupBy('year', 'month', 'requested_by')
                         ->orderBy('year')
                         ->orderBy('month')
                         ->get();

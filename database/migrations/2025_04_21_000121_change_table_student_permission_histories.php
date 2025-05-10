@@ -18,7 +18,7 @@ return new class extends Migration
 
         Schema::table('student_permission_histories', function (Blueprint $table) {
             // Tambahkan kolom enum baru
-            $table->enum('requested_by', ['orang_tua', 'wali', 'siswa'])->after('user_id')->nullable();
+            $table->enum('requested_by', ['orang_tua', 'wali', 'siswa', 'staff_kesehatan'])->after('user_id')->nullable();
         });
     }
 

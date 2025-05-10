@@ -6,15 +6,77 @@
         <strong>Perizinan Berhasil di setujui !</strong>
         <br>Token Izin : <b>{{ \Session::get('token') }}</b>
     </div>
-@endif  
-<div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Permission List</h5>
-        <a href="{{ route('staff.perizinan.create') }}" class="btn btn-primary btn-sm">Tambah Izin</a>
-    </div>
-    <div class="card-body">
+@endif
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-siswa-tab" data-bs-toggle="pill"
+            href="#pills-siswa" role="tab" aria-controls="pills-siswa"
+            aria-selected="true">Permohonan Mandiri</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-orang-tua-tab" data-bs-toggle="pill"
+            href="#pills-orang-tua" role="tab" aria-controls="pills-orang-tua"
+            aria-selected="false">Via Orang Tua / Wali</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-staff-kesehatan-tab" data-bs-toggle="pill"
+            href="#pills-staff-kesehatan" role="tab" aria-controls="pills-staff-kesehatan"
+            aria-selected="false">Via Staff Kesehatan</a>
+    </li>
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-siswa" role="tabpanel" aria-labelledby="pills-siswa-tab">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5>List Perizinan (Mandiri)</h5>
+            <a href="{{ route('staff.perizinan.create') }}" class="btn btn-primary btn-sm">Tambah Izin</a>
+        </div>
+        <hr>
         <div class="table-responsive">
-            <table id="dataTable" class="table table-sm table-hover" width="100%">
+            <table id="dataTable1" class="table table-sm table-hover dataTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Status</th>
+                        <th>Nama</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Token Izin</th>
+                        <th>Alasan</th>
+                        <th>Dari Tanggal</th>
+                        <th>Hingga Tanggal</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-orang-tua" role="tabpanel" aria-labelledby="pills-orang-tua-tab">
+        <h5>List Perizinan (Via Orang Tua / Wali)</h5>
+        <hr>
+        <div class="table-responsive">
+            <table id="dataTable2" class="table table-sm table-hover dataTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Status</th>
+                        <th>Nama</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Token Izin</th>
+                        <th>Alasan</th>
+                        <th>Dari Tanggal</th>
+                        <th>Hingga Tanggal</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-staff-kesehatan" role="tabpanel" aria-labelledby="pills-staff-kesehatan-tab">
+        <h5>List Perizinan (Via Staff Kesehatan)</h5>
+        <hr>
+        <div class="table-responsive">
+            <table id="dataTable3" class="table table-sm table-hover dataTable" width="100%">
                 <thead>
                     <tr>
                         <th>Action</th>
@@ -156,6 +218,7 @@
                 <div class="modal-body">
                     @csrf
                     <input type="hidden" name="id" id="id" required>
+                    <input type="hidden" name="user_id" id="user_id" required>
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label col-form-label-sm">Status</label>
                         <div class="col-sm-10">
@@ -228,6 +291,7 @@
                 type: 'GET',
                 success: function(res) {
                     $('#id').val(res.data.id);
+                    $('#user_id').val(res.data.user_id);
                     $('#status').find('option').each(function() {
                         if ($(this).val() == res.data.status) {
                             $(this).hide();
@@ -270,12 +334,34 @@
         });
 
         $(document).ready(function() {
-            $('#dataTable').DataTable({
+            $('#dataTable1').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ url()->current() }}',
+                ajax: '{{ url()->current() }}?requested_by=siswa',
                 drawCallback: function() {
                     $('.pagination').addClass('pagination-sm');
+                },
+                rowCallback: function(row, data) {
+                    switch (data.status) {
+                        case 'requested':
+                            $(row).addClass('table-info'); // Biru muda
+                            break;
+                        case 'approved':
+                            $(row).addClass('table-success'); // Hijau
+                            break;
+                        case 'check_out':
+                            $(row).addClass('table-primary'); // Biru
+                            break;
+                        case 'check_in':
+                            $(row).addClass('table-secondary'); // Abu-abu
+                            break;
+                        case 'rejected':
+                            $(row).addClass('table-danger'); // Merah
+                            break;
+                        case 'canceled':
+                            $(row).addClass('table-warning'); // Kuning
+                            break;
+                    }
                 },
                 columns: [
                     {
@@ -292,22 +378,206 @@
                         render: function(data, type, row) {
                             switch (row.status) {
                                 case 'requested':
-                                    return '<span class="badge badge-light-info">Permohonan Izin</span>';
+                                    return 'Permohonan Izin';
                                     break;
                                 case 'approved':
-                                    return '<span class="badge badge-light-success">Disetujui</span>';
+                                    return 'Disetujui';
                                     break;
                                 case 'check_out':
-                                    return '<span class="badge badge-light-primary">Sudah Keluar</span>';
+                                    return 'Sudah Keluar';
                                     break;
                                 case 'check_in':
-                                    return '<span class="badge badge-light-secondary">Sudah Kembali</span>';
+                                    return 'Sudah Kembali';
                                     break;
                                 case 'rejected':
-                                    return '<span class="badge badge-light-danger">Di Tolak</span>';
+                                    return 'Di Tolak';
                                     break;
                                 case 'canceled':
-                                    return '<span class="badge badge-light-warning">Di Batalkan</span>';
+                                    return 'Di Batalkan';
+                                    break;
+                            }
+                        }
+                    },
+                    {data: 'detail.student_detail.name', name: 'nama'},
+                    {data: 'detail.student_detail.nis', name: 'nis'},
+                    {data: 'detail.student_detail.nisn', name: 'nisn'},
+                    {
+                        data: 'token',
+                        name: 'token',
+                        className: 'fw-bold',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return '-'; // atau bisa dikosongkan dengan return '' jika kamu mau
+                            }
+
+                            return `
+                                <span class="token-mask" data-token="${data}">******</span>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-1 toggle-token" title="Lihat Token">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            `;
+                        }
+                    },
+                    {data: 'reason', name: 'reason'},
+                    {data: 'from_date', name: 'from_date'},
+                    {data: 'to_date', name: 'to_date'},
+                ]
+            })
+
+            $('#dataTable2').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ url()->current() }}?requested_by=orang_tua',
+                drawCallback: function() {
+                    $('.pagination').addClass('pagination-sm');
+                },
+                rowCallback: function(row, data) {
+                    switch (data.status) {
+                        case 'requested':
+                            $(row).addClass('table-info'); // Biru muda
+                            break;
+                        case 'approved':
+                            $(row).addClass('table-success'); // Hijau
+                            break;
+                        case 'check_out':
+                            $(row).addClass('table-primary'); // Biru
+                            break;
+                        case 'check_in':
+                            $(row).addClass('table-secondary'); // Abu-abu
+                            break;
+                        case 'rejected':
+                            $(row).addClass('table-danger'); // Merah
+                            break;
+                        case 'canceled':
+                            $(row).addClass('table-warning'); // Kuning
+                            break;
+                    }
+                },
+                columns: [
+                    {
+                        className: 'text-center',
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return `<div class="btn-group">
+                                        <button id="btnModalEdit" data-id="${row.id}" class="btn btn-icon btn-outline-warning"><i class="fas fa-edit"></i></button>
+                                        <button id="btnModalDetail" data-id="${row.id}" class="btn btn-icon btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                    </div>`;
+                        }
+                    },
+                    {data: 'status',
+                        render: function(data, type, row) {
+                            switch (row.status) {
+                                case 'requested':
+                                    return 'Permohonan Izin';
+                                    break;
+                                case 'approved':
+                                    return 'Disetujui';
+                                    break;
+                                case 'check_out':
+                                    return 'Sudah Keluar';
+                                    break;
+                                case 'check_in':
+                                    return 'Sudah Kembali';
+                                    break;
+                                case 'rejected':
+                                    return 'Di Tolak';
+                                    break;
+                                case 'canceled':
+                                    return 'Di Batalkan';
+                                    break;
+                            }
+                        }
+                    },
+                    {data: 'detail.student_detail.name', name: 'nama'},
+                    {data: 'detail.student_detail.nis', name: 'nis'},
+                    {data: 'detail.student_detail.nisn', name: 'nisn'},
+                    {
+                        data: 'token',
+                        name: 'token',
+                        className: 'fw-bold',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return '-'; // atau bisa dikosongkan dengan return '' jika kamu mau
+                            }
+
+                            return `
+                                <span class="token-mask" data-token="${data}">******</span>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-1 toggle-token" title="Lihat Token">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            `;
+                        }
+                    },
+                    {data: 'reason', name: 'reason'},
+                    {data: 'from_date', name: 'from_date'},
+                    {data: 'to_date', name: 'to_date'},
+                ]
+            })
+
+            $('#dataTable3').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ url()->current() }}?requested_by=staff_kesehatan',
+                drawCallback: function() {
+                    $('.pagination').addClass('pagination-sm');
+                },
+                rowCallback: function(row, data) {
+                    switch (data.status) {
+                        case 'requested':
+                            $(row).addClass('table-info'); // Biru muda
+                            break;
+                        case 'approved':
+                            $(row).addClass('table-success'); // Hijau
+                            break;
+                        case 'check_out':
+                            $(row).addClass('table-primary'); // Biru
+                            break;
+                        case 'check_in':
+                            $(row).addClass('table-secondary'); // Abu-abu
+                            break;
+                        case 'rejected':
+                            $(row).addClass('table-danger'); // Merah
+                            break;
+                        case 'canceled':
+                            $(row).addClass('table-warning'); // Kuning
+                            break;
+                    }
+                },
+                columns: [
+                    {
+                        className: 'text-center',
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return `<div class="btn-group">
+                                        <button id="btnModalEdit" data-id="${row.id}" class="btn btn-icon btn-outline-warning"><i class="fas fa-edit"></i></button>
+                                        <button id="btnModalDetail" data-id="${row.id}" class="btn btn-icon btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                    </div>`;
+                        }
+                    },
+                    {data: 'status',
+                        render: function(data, type, row) {
+                            switch (row.status) {
+                                case 'requested':
+                                    return 'Permohonan Izin';
+                                    break;
+                                case 'approved':
+                                    return 'Disetujui';
+                                    break;
+                                case 'check_out':
+                                    return 'Sudah Keluar';
+                                    break;
+                                case 'check_in':
+                                    return 'Sudah Kembali';
+                                    break;
+                                case 'rejected':
+                                    return 'Di Tolak';
+                                    break;
+                                case 'canceled':
+                                    return 'Di Batalkan';
                                     break;
                             }
                         }
@@ -340,7 +610,7 @@
                 ]
             })
         })
-        $('#dataTable').on('click', '.toggle-token', function() {
+        $('.dataTable').on('click', '.toggle-token', function() {
             const $span = $(this).closest('td').find('.token-mask');
             const isHidden = $span.text() === '******';
             if (isHidden) {

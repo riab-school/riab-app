@@ -23,12 +23,12 @@ class HomeController extends Controller
     {
         if($request->ajax()){
             $status = waStatus();
-            $waStatus = "Disconnect";
-            if($status->success){
-                if($status->data->Connected && $status->data->LoggedIn){
-                    $waStatus = "Connected";
-                }
+            if($status->session->isConnected){
+                $waStatus = "Connected";  
+            } else{
+                $waStatus = "Disconnect";
             }
+
             $data = [
                 'totalUsers'        => User::count(),
                 'totalLogs'         => AppLog::count(),

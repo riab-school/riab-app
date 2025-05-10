@@ -57,6 +57,14 @@
                             </div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="notify_parent" name="notify_parent" checked>
+                                <label class="form-check-label" for="notify_parent">
+                                    Notifikasi ke Orang Tua
+                                </label>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">
                             <i class="feather icon-save"></i> Simpan
                         </button>

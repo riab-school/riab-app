@@ -32,6 +32,10 @@ use App\Http\Controllers\Staff\Prestasi\DashboardController as PrestasiDashboard
 use App\Http\Controllers\Staff\Prestasi\ListController as PrestasiListController;
 use App\Http\Controllers\Staff\Prestasi\ReportController as PrestasiReportController;
 
+use App\Http\Controllers\Staff\Kesehatan\DashboardController as KesehatanDashboardController;
+use App\Http\Controllers\Staff\Kesehatan\ListController as KesehatanListController;
+use App\Http\Controllers\Staff\Kesehatan\ReportController as KesehatanReportController;
+
 
 
 use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController;
@@ -92,11 +96,24 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('sarpras')->group(function() {
-        
+        Route::get('list', function() {
+            return view('coming-soon');
+        });
+        Route::get('status', function() {
+            return view('coming-soon');
+        });
+        Route::get('lapor', function() {
+            return view('coming-soon');
+        });
     });
     
     Route::prefix('tu')->group(function() {
-        
+        Route::get('surat-masuk', function() {
+            return view('coming-soon');
+        });
+        Route::get('surat-keluar', function() {
+            return view('coming-soon');
+        });
     });
     
     Route::prefix('perizinan')->group(function() {
@@ -146,18 +163,51 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('hafalan-tahfidz')->group(function() {
-    
+        Route::get('dashboard', function() {
+            return view('coming-soon');
+        });
+        Route::get('list', function() {
+            return view('coming-soon');
+        });
+        Route::get('laporan', function() {
+            return view('coming-soon');
+        });
     });
 
     Route::prefix('kesehatan')->group(function() {
-    
+        Route::get('dashboard', [KesehatanDashboardController::class, 'showDashboard'])->name('staff.kesehatan.dashboard');
+        Route::prefix('list')->group(function() {
+            Route::get('/', [KesehatanListController::class, 'showListKesehatanPage'])->name('staff.kesehatan.list');
+            Route::get('detail', [KesehatanListController::class, 'showDetailData'])->name('staff.kesehatan.detail');
+            Route::get('create', [KesehatanListController::class, 'storeDataPage'])->name('staff.kesehatan.create');
+            Route::post('create', [KesehatanListController::class, 'handleStoreData'])->name('staff.kesehatan.handle.create');
+            Route::get('search', [KesehatanListController::class, 'searchData'])->name('staff.kesehatan.search');
+        });
+        Route::prefix('laporan')->group(function() {
+            Route::get('/', [KesehatanReportController::class, 'showReportFilterPage'])->name('staff.kesehatan.laporan');
+            Route::post('handleCreateReport', [KesehatanReportController::class, 'handleReportPrint'])->name('staff.kesehatan.laporan.handle');
+        });
     });
 
     Route::prefix('asrama')->group(function() {
-    
+        Route::get('dashboard', function() {
+            return view('coming-soon');
+        });
+        Route::get('list', function() {
+            return view('coming-soon');
+        });
+        Route::get('laporan', function() {
+            return view('coming-soon');
+        });
     });
 
     Route::prefix('kelas')->group(function() {
+        Route::get('dashboard', function() {
+            return view('coming-soon');
+        });
         Route::get('list', [ClassroomController::class, 'showClassroomList'])->name('staff.kelas.list');
+        Route::get('laporan', function() {
+            return view('coming-soon');
+        });
     });
 });

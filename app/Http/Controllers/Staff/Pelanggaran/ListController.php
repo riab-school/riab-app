@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Staff\Pelanggaran;
 
 use App\Http\Controllers\Controller;
 use App\Models\StudentDetail;
+use App\Models\StudentsParentDetail;
 use App\Models\StudentsViolation;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -65,7 +66,6 @@ class ListController extends Controller
         ]);
 
         try {
-            // dd($request->all());
             if($request->has('evidence')) {
                 $folder     = 'student/' . $request->user_id . '/' . 'violation';
                 $file       = $request->file('evidence');
@@ -73,15 +73,60 @@ class ListController extends Controller
                 $fullPath   = $folder . '/' . $filename;
                 Storage::disk('s3')->put($fullPath, file_get_contents($file));
             }
-            StudentsViolation::create([
-                'user_id'       => $request->user_id,
-                'detail'        => $request->detail,
-                'action_taked'  => $request->action_taked,
-                'evidence'      => $fullPath ?? null,
-                'process_by'    => auth()->user()->id
+            $data = StudentsViolation::create([
+                'user_id'           => $request->user_id,
+                'detail'            => $request->detail,
+                'action_taked'      => $request->action_taked,
+                'evidence'          => $fullPath ?? null,
+                'process_by'        => auth()->user()->id,
+                'is_notify_parent'  => $request->has('notify_parent') ? $request->notify_parent : 0,
             ]);
 
-            // Todo : Send Whatsapp Notification to parent
+            if($request->has('notify_parent') && $request->notify_parent == "1"){
+                // Try Get Parents Number
+                $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
+                if ($studentParent) {
+                    $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                    // Send Whatsapp Notification
+                    $message = "Assalamualaikum Bapak/Ibu,.\n\n";
+                    $message .= "Ananda : *".$data->userDetail->studentDetail->name."*\n\nTelah melakukan sebuah pelanggaran\n\n";
+                    $message .= "Ket :  ".$request->detail."\n";
+                    $message .= "Tindakan :  ".$request->action_taked."\n";
+                    $message .= "------------------\n";
+                    $message .= "Di Catat oleh :\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
+                    $message .= "Terima kasih. Wassalamualaikum.";
+                    
+                    if($request->has('evidence')) {
+                        $message .= "\n\n_Berikut kami sertakan bukti pelanggaran serta tindakan yang dilakukan_";
+                        $payloadImage = [
+                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
+                            'type'      => 'image',
+                            'category'  => 'parent_notification',
+                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
+                            'jid'       => whatsappNumber($parentNumber),
+                            'media_url' => Storage::disk('s3')->url($fullPath),
+                            'media_mime'=> 'image/jpg',
+                            "media" => [
+                                        "image" => [
+                                            "url" => Storage::disk('s3')->url($fullPath) 
+                                        ]
+                                    ], 
+                            "caption" => $message 
+                        ];
+                        sendMedia($payloadImage);
+                    } else {
+                        $payloadText = [
+                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
+                            'type'      => 'text',
+                            'category'  => 'parent_notification',
+                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
+                            'jid'       => whatsappNumber($parentNumber),
+                            'text'      => $message
+                        ];
+                        sendText($payloadText);
+                    }
+                }
+            }
             appLog(auth()->user()->id, 'success', 'Berhasil menambah pelanggaran untuk : '.$request->nama);
             return redirect()->back()->with([
                 'status'    => 'success',

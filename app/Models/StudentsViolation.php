@@ -15,6 +15,7 @@ class StudentsViolation extends Model
         'evidence',
         'action_taked',
         'process_by',
+        'is_notify_parent',
     ];
 
     public function userDetail()
