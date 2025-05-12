@@ -235,7 +235,12 @@ class MenuController extends Controller
                 }
             } else {
                 // Give all menu permission
-                $childMenu = MasterMenuChildren::all();
+                if($request->menu_for == "all"){
+                    $childMenu = MasterMenuChildren::all();
+                } else {
+                    // Get all child menu by level
+                    $childMenu = MasterMenuChildren::whereRelation('parent', 'level', $request->menu_for)->get();
+                }
                 foreach ($childMenu as $key => $value) {
                     UserHasMenuPermission::updateOrCreate([
                         'user_id'               => $request->user_id,

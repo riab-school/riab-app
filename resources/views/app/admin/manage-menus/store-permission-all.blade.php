@@ -32,8 +32,8 @@
                     <select class="form-control form-control-sm" id="menu_for" name="menu_for" required>
                         <option></option>
                         <option value="all">All Menu</option>
-                        <option value="all_admin">All Admin Menu</option>
-                        <option value="all_staff">All Staff Menu</option>
+                        <option value="admin">Admin Menu</option>
+                        <option value="staff">Staff Menu</option>
                     </select>
                 </div>
                 <div class="col-12">

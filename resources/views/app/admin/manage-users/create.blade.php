@@ -56,6 +56,20 @@
                         </div>
                         @enderror
                     </div>
+                    <div class="form-group mb-3 d-none" id="roles">
+                        <label class="form-label">Select Role</label>
+                        <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required>
+                            <option></option>
+                            @foreach (\App\Models\Roles::all() as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('role_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
                     <button type="submit" class="btn btn-primary mb-4 btf">Save</button>
                 </form>
             </div>
@@ -64,3 +78,19 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $('#user_level').on('change', function(){
+            var user_level = $('#user_level').val();
+            if(user_level == 'staff'){
+                $('#roles').removeClass('d-none');
+            } else {
+                $('#roles').addClass('d-none');
+            }
+
+        });
+
+
+    </script>
+@endpush

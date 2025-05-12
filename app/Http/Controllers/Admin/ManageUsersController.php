@@ -76,29 +76,34 @@ class ManageUsersController extends Controller
             ]);
             switch ($request->user_level) {
                 case 'admin':
-                AdminDetail::create([
-                    'user_id' => $user->id,
-                    'name'    => $request->name,
-                ]);
+                    AdminDetail::create([
+                        'user_id' => $user->id,
+                        'name'    => $request->name,
+                    ]);
+                break;
                 case 'staff':
-                StaffDetail::create([
-                    'user_id' => $user->id,
-                    'name'    => $request->name,
-                    'status'    => 'active'
-                ]);
+                    StaffDetail::create([
+                        'user_id' => $user->id,
+                        'name'    => $request->name,
+                        'role_id' => $request->role_id,
+                        'status'  => 'active'
+                    ]);
+                break;
                 case 'parent':
-                ParentDetail::create([
-                    'user_id' => $user->id,
-                    'name'    => $request->name,
-                ]);
+                    ParentDetail::create([
+                        'user_id' => $user->id,
+                        'name'    => $request->name,
+                    ]);
                 break;
             }
+
             appLog(auth()->user()->id, 'success', 'Berhasil menambah user baru : '.$request->username);
             return redirect()->route('admin.manage-users')->with([
                 'status'    => 'success',
                 'message'   => 'User berhasil dibuat',
             ]);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             appLog(auth()->user()->id, 'error', 'Gagal menambah user baru : '.$request->username);
             return redirect()->back()->withInput()->withErrors([
                 'status'    => 'error',
