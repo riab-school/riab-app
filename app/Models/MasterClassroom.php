@@ -19,4 +19,14 @@ class MasterClassroom extends Model
         'head_id',
         'head_tahfidz_id'
     ];
+
+    public function headDetail()
+    {
+        return $this->belongsTo(User::class, 'head_id');
+    }
+
+    public function headTahfidzDetail()
+    {
+        return $this->belongsTo(User::class, 'head_tahfidz_id ');
+    }
 }

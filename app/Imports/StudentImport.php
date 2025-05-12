@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\StudentClassroomHistory;
 use App\Models\StudentDetail;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -9,6 +10,14 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StudentImport implements ToModel, WithHeadingRow
 {
+
+    protected $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
     /**
     * @param array $row
     *
@@ -16,6 +25,7 @@ class StudentImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
+        // Create a new user and student detail
         $studentActive = User::create([
             'username'                  => $row['nisn'],
             'password'                  => bcrypt($row['nisn']),
@@ -23,6 +33,13 @@ class StudentImport implements ToModel, WithHeadingRow
             'is_need_to_update_profile' => true,
             'user_level'                => 'student',
             'is_active'                 => true,
+        ]);
+
+        StudentClassroomHistory::create([
+            'user_id'           => $studentActive->id,
+            'classroom_id'      => $this->data['classroom_id'],
+            'tahun_ajaran_id'   => $this->data['tahun_ajaran_id'],
+            'is_active'         => $this->data['is_active'],
         ]);
 
         return StudentDetail::create([

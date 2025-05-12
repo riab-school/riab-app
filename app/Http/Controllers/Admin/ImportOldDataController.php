@@ -108,14 +108,21 @@ class ImportOldDataController extends Controller
     public function handleImportOldStudentAccounts(Request $request)
     {
         $request->validate([
-            'file_old_student' => 'required|file|mimes:xlsx,xls,csv',
+            'file_old_student'  => 'required|file|mimes:xlsx,xls,csv',
+            'classroom_id'      => 'required|exists:master_classrooms,id',
+            'tahun_ajaran_id'   => 'required|exists:master_tahun_ajarans,id',
         ]);
         try {
             $file = $request->file('file_old_student');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads/temp'), $fileName);
             $path = 'uploads/temp/'.$fileName;
-            $import = Excel::import(new StudentImport(), public_path($path));
+            $data = [
+                'classroom_id'      => $request->classroom_id,
+                'tahun_ajaran_id'   => $request->tahun_ajaran_id,
+                'is_active'         => $request->is_active,
+            ];
+            $import = Excel::import(new StudentImport($data), public_path($path));
             File::delete(public_path($path));
             if($import) {
                 appLog(auth()->user()->id, 'success', 'Berhasil Import Akun Siswa Lama');

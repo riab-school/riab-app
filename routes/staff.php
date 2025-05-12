@@ -37,8 +37,7 @@ use App\Http\Controllers\Staff\Kesehatan\ListController as KesehatanListControll
 use App\Http\Controllers\Staff\Kesehatan\ReportController as KesehatanReportController;
 
 
-
-use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController;
+use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController as ListClassroomController;
 
 Route::get('/', [HomeController::class, 'homePageStaff'])->name('staff.home');
 
@@ -50,6 +49,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
         Route::get('list/detail', [StudentListController::class, 'studentDetail'])->name('staff.master-student.detail');
 
         Route::get('status', [StudentStatusController::class, 'showStatusStudentPage'])->name('staff.master-student.status');
+        Route::get('status/assign-kelas', [StudentStatusController::class, 'dataTableAssignKelas'])->name('staff.master-student.status.assign-kelas');
         Route::get('status/naik-kelas-from', [StudentStatusController::class, 'dataTableNaikKelasFrom'])->name('staff.master-student.status.naik-kelas-from');
 
 
@@ -190,9 +190,6 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('asrama')->group(function() {
-        Route::get('dashboard', function() {
-            return view('coming-soon');
-        });
         Route::get('list', function() {
             return view('coming-soon');
         });
@@ -202,10 +199,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('kelas')->group(function() {
-        Route::get('dashboard', function() {
-            return view('coming-soon');
-        });
-        Route::get('list', [ClassroomController::class, 'showClassroomList'])->name('staff.kelas.list');
+        Route::get('list', [ListClassroomController::class, 'showClassroomList'])->name('staff.kelas.list');
         Route::get('laporan', function() {
             return view('coming-soon');
         });

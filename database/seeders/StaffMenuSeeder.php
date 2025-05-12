@@ -345,17 +345,9 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu10->id,
-            'title'     => 'Dashboard Asrama',
-            'route'     => 'staff/asrama/dashboard',
-            'order'     => 1,
-            'is_active' => true
-        ]);
-
-        MasterMenuChildren::create([
-            'menu_id'   => $menu10->id,
             'title'     => 'List Asrama',
             'route'     => 'staff/asrama/list',
-            'order'     => 2,
+            'order'     => 1,
             'is_active' => true
         ]);
 
@@ -363,7 +355,7 @@ class StaffMenuSeeder extends Seeder
             'menu_id'   => $menu10->id,
             'title'     => 'Laporan Asrama',
             'route'     => 'staff/asrama/laporan',
-            'order'     => 3,
+            'order'     => 2,
             'is_active' => true
         ]);
 
@@ -378,17 +370,9 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu11->id,
-            'title'     => 'Dashboard Kelas',
-            'route'     => 'staff/kelas/dashboard',
-            'order'     => 1,
-            'is_active' => true
-        ]);
-
-        MasterMenuChildren::create([
-            'menu_id'   => $menu11->id,
             'title'     => 'List Kelas',
             'route'     => 'staff/kelas/list',
-            'order'     => 2,
+            'order'     => 1,
             'is_active' => true
         ]);
 
@@ -396,7 +380,7 @@ class StaffMenuSeeder extends Seeder
             'menu_id'   => $menu11->id,
             'title'     => 'Laporan Kelas',
             'route'     => 'staff/kelas/laporan',
-            'order'     => 3,
+            'order'     => 2,
             'is_active' => true
         ]);
     }

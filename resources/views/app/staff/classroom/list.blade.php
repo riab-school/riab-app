@@ -2,36 +2,77 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header">
-        <h5>Hello card</h5>
-        <div class="card-header-right">
-            <div class="btn-group card-option">
-                <button type="button" class="btn dropdown-toggle btn-icon"
-                    data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="feather icon-more-horizontal"></i>
-                </button>
-                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-end">
-                    <li class="dropdown-item full-card"><a href="#!"><span><i
-                                    class="feather icon-maximize"></i>
-                                maximize</span><span style="display:none"><i
-                                    class="feather icon-minimize"></i>
-                                Restore</span></a></li>
-                    <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                    class="feather icon-minus"></i> collapse</span><span
-                                style="display:none"><i class="feather icon-plus"></i>
-                                expand</span></a></li>
-                    <li class="dropdown-item reload-card"><a href="#!"><i
-                                class="feather icon-refresh-cw"></i> reload</a></li>
-                    <li class="dropdown-item close-card"><a href="#!"><i
-                                class="feather icon-trash"></i> remove</a></li>
-                </ul>
-            </div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Classroom List</h5>
+        <div>
+            <a href="" class="btn btn-primary btn-sm">Create Classroom</a>
+            <a href="" class="btn btn-secondary btn-sm">Import Classroom</a>
         </div>
     </div>
     <div class="card-body">
-        <p>Test Content</p>
+        <div class="table-responsive">
+            <table id="dataTable" class="table table-sm table-hover" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Name</th>
+                        <th>Focus</th>
+                        <th>Grade</th>
+                        <th>Number</th>
+                        <th>Limitation</th>
+                        <th>Location</th>
+                        <th>Class Head</th>
+                        <th>Tahfidz Head</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        $('#dataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ url()->current() }}',
+                type: 'GET'
+            },
+            drawCallback: function() {
+                $('.pagination').addClass('pagination-sm');
+            },
+            columns: [
+                {
+                className: 'text-center',
+                    render: function(data, type, row) {
+                        return `<div class="btn-group">
+                                    <a href="{{ route('staff.master-student.detail') }}?id=${row.id}" class="btn btn-icon btn-outline-info"><i class="fas fa-eye"></i></a>
+                                </div>`;
+                    }
+                },
+                { data: 'name', name: 'name' },
+                { data: 'focus', name: 'focus' },
+                { data: 'grade', name: 'grade' },
+                { data: 'number', name: 'number' },
+                { data: 'limitation', name: 'limitation' },
+                { data: 'location', name: 'location' },
+                { data: 'head_id', name: 'head_id' },
+                { data: 'head_tahfidz_id', name: 'head_tahfidz_id' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'updated_at', name: 'updated_at' }
+            ]
+        });
+    });
+</script>
+
+@endpush

@@ -81,3 +81,96 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+
+<script>
+    $(document).ready(function(){
+        var table = null;
+
+        $('#filter_classroom_from_1').on('change', function(){
+            $('#dataTableFrom1').DataTable().destroy();
+            var selectedClassroom = $(this).val();
+
+            if(selectedClassroom){
+                initializeDataTable(selectedClassroom);
+            } else {
+                table.destroy();
+                table = null;
+            }
+        });
+
+        function initializeDataTable(selectedClassroom){
+            table = $('#dataTableFrom1').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: {
+                    url: "{{ route('staff.master-student.status.naik-kelas-from') }}",
+                    data: function(d){
+                        d.classroom = selectedClassroom;
+                    }
+                },
+                drawCallback: function() {
+                    $('.pagination').addClass('pagination-sm');
+                },
+                columns: [
+                    {
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return `<div class="btn-group">
+                                        <a href="{{ route('staff.master-student.detail') }}?id=${row.id}" class="btn btn-icon btn-outline-info"><i class="fas fa-edit"></i></a>
+                                    </div>`;
+                        }
+                    },
+                    { data: 'student_detail.nis', name: 'nis' },
+                    { data: 'student_detail.nisn', name: 'nisn' },
+                    { data: 'student_detail.name', name: 'name' },
+                    { data: 'gender', name: 'gender' },
+                    { data: 'ttl', name: 'ttl' },
+                    { data: 'address', name: 'address' },
+                ]
+            });
+        }
+
+        $('#resetForm_1').on('click', function(){
+            $('#filter_classroom_from_1').val('');
+            $('#filter_grade_from_1').val('');
+            if(table !== null){
+                table.destroy();
+                table = null;
+            }
+        });
+    });
+
+    $('#filter_grade_from_1').on('change', function(){
+        $.ajax({
+            url: "{{ route('staff.master-student.classrooms') }}",
+            type: 'GET',
+            data: {
+                grade: $(this).val()
+            },
+            beforeSend: function(){
+                $('#filter_classroom_from_1').empty();
+            },
+            success: function(response){
+                $('#filter_classroom_from_1').html('<option>Pilih Kelas</option>');
+                $.each(response, function(index, item){
+                    $('#filter_classroom_from_1').append(`<option value="${item.id}">${item.name}</option>`);
+                });
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash;
+        if (hash) {
+            const activeTab = document.querySelector(`a[href="${hash}"]`);
+            if (activeTab) {
+                const tab = new bootstrap.Tab(activeTab);
+                tab.show();
+            }
+        }
+    });
+</script>
+@endpush
