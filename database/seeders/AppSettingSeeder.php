@@ -54,13 +54,13 @@ class AppSettingSeeder extends Seeder
 
         AppSettings::create([
             'key' => 'SCHOOL_NSM',
-            'value' => '131211060001',
+            'value' => '00000000000',
             'default_value' => '00000000000',
         ]);
 
         AppSettings::create([
             'key' => 'SCHOOL_NPSN',
-            'value' => '10114244',
+            'value' => '00000000000',
             'default_value' => '000000000',
         ]);
 
@@ -103,6 +103,12 @@ class AppSettingSeeder extends Seeder
         ]);
 
         AppSettings::create([
+            'key' => 'SCHOOL_WEBSITE',
+            'value' => 'https://google.com',
+            'default_value' => 'https://google.com',
+        ]);
+
+        AppSettings::create([
             'key' => 'WHATSAPP_SERVER',
             'value' => 'http://127.0.0.1:3000',
             'default_value' => 'http://127.0.0.1:3000',
@@ -110,27 +116,14 @@ class AppSettingSeeder extends Seeder
 
         AppSettings::create([
             'key' => 'WHATSAPP_API_KEY',
-            'value' => 'SIAKAD_WSS_API_KEY',
-            'default_value' => 'SIAKAD_WSS_API_KEY',
+            'value' => 'WSS_API_KEY',
+            'default_value' => 'WSS_API_KEY',
         ]);
 
         AppSettings::create([
             'key' => 'WHATSAPP_SESSION_ID',
-            'value' => 'YOUR_SESSION_ID',
-            'default_value' => 'YOUR_SESSION_ID',
+            'value' => 'WSS_SESSION_ID',
+            'default_value' => 'WSS_SESSION_ID',
         ]);
-
-        AppSettings::create([
-            'key' => 'QURAN_API_URL',
-            'value' => 'http://127.0.0.1:4000',
-            'default_value' => 'http://127.0.0.1:4000',
-        ]);
-
-        AppSettings::create([
-            'key' => 'SCHOOL_WEBSITE',
-            'value' => 'https://google.com',
-            'default_value' => 'https://google.com',
-        ]);
-
     }
 }

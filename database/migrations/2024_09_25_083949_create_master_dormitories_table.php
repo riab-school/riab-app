@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('master_dormitories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('name')->nullable();
             $table->string('building')->nullable();
             $table->string('number')->nullable();

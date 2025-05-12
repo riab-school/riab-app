@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterGenerationList extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory;
 
     protected $fillable = [
         'number',

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('master_generation_lists', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->integer('number');
             $table->string('name')->nullable();
             $table->string('logo')->nullable();

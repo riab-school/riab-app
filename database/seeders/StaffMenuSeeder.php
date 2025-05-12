@@ -295,9 +295,17 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu8->id,
+            'title'     => 'Manage Wali Kelas Tahfidz',
+            'route'     => 'staff/hafalan-tahfidz/wali',
+            'order'     => 3,
+            'is_active' => true
+        ]);
+
+        MasterMenuChildren::create([
+            'menu_id'   => $menu8->id,
             'title'     => 'Laporan Hafalan & Tahfidz',
             'route'     => 'staff/hafalan-tahfidz/laporan',
-            'order'     => 3,
+            'order'     => 4,
             'is_active' => true
         ]);
 
@@ -353,9 +361,17 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu10->id,
+            'title'     => 'Manage Pembina Asrama',
+            'route'     => 'staff/asrama/pembina',
+            'order'     => 2,
+            'is_active' => true
+        ]);
+
+        MasterMenuChildren::create([
+            'menu_id'   => $menu10->id,
             'title'     => 'Laporan Asrama',
             'route'     => 'staff/asrama/laporan',
-            'order'     => 2,
+            'order'     => 3,
             'is_active' => true
         ]);
 
@@ -378,9 +394,17 @@ class StaffMenuSeeder extends Seeder
 
         MasterMenuChildren::create([
             'menu_id'   => $menu11->id,
+            'title'     => 'Manage Wali Kelas',
+            'route'     => 'staff/kelas/wali',
+            'order'     => 2,
+            'is_active' => true
+        ]);
+
+        MasterMenuChildren::create([
+            'menu_id'   => $menu11->id,
             'title'     => 'Laporan Kelas',
             'route'     => 'staff/kelas/laporan',
-            'order'     => 2,
+            'order'     => 3,
             'is_active' => true
         ]);
     }

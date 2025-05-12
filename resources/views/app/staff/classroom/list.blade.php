@@ -21,8 +21,8 @@
                         <th>Number</th>
                         <th>Limitation</th>
                         <th>Location</th>
-                        <th>Class Head</th>
-                        <th>Tahfidz Head</th>
+                        <th>Class Head {{ Session::get('tahun_ajaran_aktif') }}</th>
+                        <th>Tahfidz Head {{ Session::get('tahun_ajaran_aktif') }}</th>
                         <th>Created At</th>
                         <th>Updated At</th>
                     </tr>

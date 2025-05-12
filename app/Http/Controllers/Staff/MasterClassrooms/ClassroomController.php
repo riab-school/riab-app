@@ -12,8 +12,7 @@ class ClassroomController extends Controller
     public function showClassroomList(Request $request)
     {
         if($request->ajax()) {
-            $data = MasterClassroom::with('headDetail.staffDetail', 'headTahfidzDetail.staffDetail')
-                ->get();
+            $data = MasterClassroom::get();
 
             return DataTables::of($data)
                 ->addIndexColumn()

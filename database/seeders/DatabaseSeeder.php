@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             TahunAjaranSeeder::class,
             GenerationSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
-            DistrictSeeder::class,
-            VillageSeeder::class,
+            // ProvinceSeeder::class,
+            // CitySeeder::class,
+            // DistrictSeeder::class,
+            // VillageSeeder::class,
             MenuList1::class,
         ]);
     }

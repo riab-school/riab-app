@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('master_menu_childrens', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('menu_id');
             $table->foreign('menu_id')->references('id')->on('master_menus')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');

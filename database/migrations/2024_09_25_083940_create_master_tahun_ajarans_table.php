@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('master_tahun_ajarans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('tahun_ajaran')->unique();
             $table->boolean('is_active')->default(false);
             $table->timestamps();

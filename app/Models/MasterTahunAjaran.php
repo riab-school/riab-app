@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterTahunAjaran extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory;
 
     protected $fillable = [
         'tahun_ajaran',

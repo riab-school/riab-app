@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterMenu extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory;
 
     protected $fillable = [
         'title',

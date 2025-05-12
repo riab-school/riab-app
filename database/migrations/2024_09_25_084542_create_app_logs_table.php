@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('app_logs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-
+            $table->id();
             $table->string('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 

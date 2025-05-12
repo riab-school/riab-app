@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterClassroom extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -16,17 +16,5 @@ class MasterClassroom extends Model
         'number',
         'limitation',
         'location',
-        'head_id',
-        'head_tahfidz_id'
     ];
-
-    public function headDetail()
-    {
-        return $this->belongsTo(User::class, 'head_id');
-    }
-
-    public function headTahfidzDetail()
-    {
-        return $this->belongsTo(User::class, 'head_tahfidz_id ');
-    }
 }

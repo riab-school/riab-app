@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('master_menus', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('title');
             $table->string('icon');
             $table->integer('order');

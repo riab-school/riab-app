@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserHasMenuPermission extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',

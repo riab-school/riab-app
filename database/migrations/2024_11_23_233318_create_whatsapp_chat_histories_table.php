@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('whatsapp_chat_histories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
 
             $table->enum('type', ['text', 'image', 'video', 'audio', 'document']);
 

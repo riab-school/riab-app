@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppLog extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',

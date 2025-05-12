@@ -12,19 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('master_classrooms', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('name')->nullable()->unique();
             $table->enum('focus', ['mipa', 'agama', 'others'])->nullable();
             $table->enum('grade', ['X', 'XI', 'XII'])->nullable();
             $table->integer('number')->nullable();
             $table->string('limitation')->nullable();
             $table->string('location')->nullable();
-
-            $table->string('head_id')->nullable();
-            $table->foreign('head_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
-
-            $table->string('head_tahfidz_id')->nullable();
-            $table->foreign('head_tahfidz_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
 
             $table->timestamps();
         });
