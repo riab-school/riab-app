@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->string('menu_children_id');
-            $table->foreign('menu_children_id')->references('id')->on('master_menu_childrens')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('menu_children_id')->constrained('master_menu_childrens')->onUpdate('cascade')->onDelete('cascade');
 
             $table->dateTime('assigned_at');
             $table->boolean('is_permanent_access')->default(1);

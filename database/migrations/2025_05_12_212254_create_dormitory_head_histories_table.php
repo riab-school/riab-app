@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('dormitory_head_histories', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('dormitory_id')->nullable();
-            $table->foreign('dormitory_id')->references('id')->on('master_dormitories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('dormitory_id')->constrained('master_dormitories')->onUpdate('cascade')->onDelete('cascade')->nullable();
             
             $table->string('head_id')->nullable();
             $table->foreign('head_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->string('tahun_ajaran_id')->nullable();
-            $table->foreign('tahun_ajaran_id')->references('id')->on('master_tahun_ajarans')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('tahun_ajaran_id')->constrained('master_tahun_ajarans')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('staff_details', function (Blueprint $table) {
-            $table->string('role_id')->nullable()->after('employee_number');
-            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('role_id')->constrained('roles')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('student_classroom_histories', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('tahun_ajaran_id')->nullable();
-            $table->foreign('tahun_ajaran_id')->references('id')->on('master_tahun_ajarans')->onDelete('SET NULL');
+            $table->foreignId('tahun_ajaran_id')->constrained('master_tahun_ajarans')->onDelete('cascade')->onUpdate('cascade')->nullable();
 
             $table->string('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->string('classroom_id');
-            $table->foreign('classroom_id')->references('id')->on('master_classrooms')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('classroom_id')->constrained('master_classrooms')->onUpdate('cascade')->onDelete('cascade');
 
             $table->boolean('is_active')->default(false);
             $table->timestamps();

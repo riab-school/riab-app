@@ -48,8 +48,7 @@ return new class extends Migration
             $table->boolean('is_biological')->nullable();
             $table->boolean('is_completed')->nullable()->default(false);
 
-            $table->string('generation_id')->nullable();
-            $table->foreign('generation_id')->references('id')->on('master_generation_lists')->onUpdate('cascade')->onDelete('SET NULL');
+            $table->foreignId('generation_id')->constrained('master_generation_lists')->onUpdate('cascade')->onDelete('cascade')->nullable();
 
             $table->enum('status', ['active', 'moved', 'drop_out', 'new'])->nullable();
 

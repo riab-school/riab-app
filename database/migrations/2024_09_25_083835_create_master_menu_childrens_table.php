@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('master_menu_childrens', function (Blueprint $table) {
             $table->id();
-            $table->string('menu_id');
-            $table->foreign('menu_id')->references('id')->on('master_menus')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('menu_id')->constrained('master_menus')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->string('route')->default('#');
             $table->integer('order');
