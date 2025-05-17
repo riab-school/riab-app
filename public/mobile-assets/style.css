@@ -5481,3 +5481,17 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
 [view-mode=rtl] .preview-iframe-wrapper .qr-code-wrapper {
   margin-left: auto;
 }
+
+/* HTML: <div class="loader"></div> */
+.loaders {
+  width: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+    0%  {box-shadow: 20px 0 #000, -20px 0 #0002;background: #000 }
+    33% {box-shadow: 20px 0 #000, -20px 0 #0002;background: #0002}
+    66% {box-shadow: 20px 0 #0002,-20px 0 #000; background: #0002}
+    100%{box-shadow: 20px 0 #0002,-20px 0 #000; background: #000 }
+}

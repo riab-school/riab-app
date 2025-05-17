@@ -109,6 +109,12 @@ class AppSettingSeeder extends Seeder
         ]);
 
         AppSettings::create([
+            'key' => 'SCHOOL_PSB_WEBSITE',
+            'value' => 'https://google.com',
+            'default_value' => 'https://google.com',
+        ]);
+
+        AppSettings::create([
             'key' => 'WHATSAPP_SERVER',
             'value' => 'http://127.0.0.1:3000',
             'default_value' => 'http://127.0.0.1:3000',

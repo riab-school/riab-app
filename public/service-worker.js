@@ -1,5 +1,5 @@
-const staticCacheName = 'precache-v3.0.1';
-const dynamicCacheName = 'runtimecache-v3.0.1';
+const staticCacheName = 'precache-v3.0.2';
+const dynamicCacheName = 'runtimecache-v3.0.2';
 
 // Pre Caching Assets
 const precacheAssets = [
@@ -30,23 +30,6 @@ self.addEventListener('activate', function (event) {
                 .filter(key => key !== staticCacheName && key !== dynamicCacheName)
                 .map(key => caches.delete(key))
             );
-        })
-    );
-});
-
-// Fetch Event
-self.addEventListener('fetch', function (event) {
-    event.respondWith(
-        caches.match(event.request).then(cacheRes => {
-            return cacheRes || fetch(event.request).then(response => {
-                return caches.open(dynamicCacheName).then(function (cache) {
-                    cache.put(event.request, response.clone());
-                    return response;
-                })
-            });
-        }).catch(function() {
-            // Fallback Page, When No Internet Connection
-            // return caches.match('offline.html');
         })
     );
 });

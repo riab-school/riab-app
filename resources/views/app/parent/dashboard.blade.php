@@ -90,13 +90,12 @@
 <div class="container pb-3">
     <div class="cta-text dir-rtl p-4 p-lg-5">
         <div class="row">
-            <div class="col-9">
-                <h4 class="text-white mb-1">Dapatkan Informasi dan Berita</h4>
+            <div class="col-auto mx-auto text-center">
+                <h4 class="text-white mb-1">Dapatkan Informasi dan Berita Terbaru</h4>
                 <p class="text-white mb-2 opacity-75">{{ appSet('SCHOOL_NAME') }}</p>
                 <a class="btn btn-warning" href="{{ appSet('SCHOOL_WEBSITE') }}" target="_blank">Kunjungi Laman</a>
             </div>
         </div>
-        {{-- <img src="img/bg-img/make-up.png" alt=""> --}}
     </div>
 </div>
 
@@ -106,7 +105,9 @@
             <h6>Berita Terbaru</h6>
           </div>
         <div class="row g-2 rtl-flex-d-row-r" id="renderBlog">
-            
+            <div class="text-center d-flex justify-content-center align-items-center py-5">
+                <div class="loaders"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -115,11 +116,12 @@
     <div class="discount-coupon-card p-4 p-lg-5 dir-rtl">
         <div class="d-flex align-items-center">
             <div class="discountIcon">
-                <img class="w-100" src="{{ asset('mobile-assets') }}/img/core-img/discount.png" alt="">
+                <img class="w-100" src="{{ asset('mobile-assets') }}/img/core-img/megaphone.png" alt="">
             </div>
             <div class="text-content">
-                <h4 class="text-white mb-1">Get 20% discount!</h4>
-                <p class="text-white mb-0">To get discount, enter the<span class="px-1 fw-bold">GET20</span>code on the checkout page.</p>
+                <h4 class="text-white mb-1">Info PSB RIAB</h4>
+                <p class="text-white mb-2">Informasi Penerimaan Santri Baru dapat di akses melalui link di bawah</p>
+                <a class="btn btn-warning" href="{{ appSet('SCHOOL_PSB_WEBSITE') }}" target="_blank">Kunjungi Laman</a>
             </div>
         </div>
     </div>
@@ -129,7 +131,7 @@
 @push('scripts-mobile')
 <script>
     $(document).ready(function() {
-    $.ajax({
+        $.ajax({
             url: '{{ url()->current() }}?_embed', // tambahkan ?_embed
             type: 'GET',
             dataType: 'json',
@@ -165,7 +167,6 @@
                     `;
                 });
                 $('#renderBlog').html(blogHtml);
-                
             },
             error: function(xhr, status, error) {
                 console.error(error);
