@@ -24,6 +24,6 @@
     <script src="{{ asset('mobile-assets') }}/js/theme-switching.js"></script>
     <script src="{{ asset('mobile-assets') }}/js/no-internet.js"></script>
     <script src="{{ asset('mobile-assets') }}/js/active.js"></script>
-    {{-- <script src="{{ asset('mobile-assets') }}/js/pwa.js"></script> --}}
+    <script src="{{ asset('mobile-assets') }}/js/pwa.js"></script>
 
     @stack('scripts-mobile')

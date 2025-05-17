@@ -28,5 +28,5 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('mobile-assets') }}/style.css">
     <!-- Web App Manifest -->
-    {{-- <link rel="manifest" href="{{ asset('mobile-assets') }}/manifest.json"> --}}
+    <link rel="manifest" href="{{ asset('mobile-assets') }}/manifest.json">
   </head>
