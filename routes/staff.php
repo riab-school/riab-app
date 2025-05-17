@@ -199,7 +199,11 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('kelas')->group(function() {
-        Route::get('list', [ListClassroomController::class, 'showClassroomList'])->name('staff.kelas.list');
+        Route::prefix('list')->group(function() {
+            Route::get('/', [ListClassroomController::class, 'showClassroomList'])->name('staff.kelas.list');
+            Route::get('create', [ListClassroomController::class, 'showCreatePage'])->name('staff.kelas.create');
+            Route::post('create', [ListClassroomController::class, 'handleCreate'])->name('staff.kelas.create.handle');
+        });
         Route::get('laporan', function() {
             return view('coming-soon');
         });

@@ -6,6 +6,7 @@ use App\Http\Middleware\EnsureNewStudentAccess;
 use App\Http\Middleware\EnsureParentAccess;
 use App\Http\Middleware\EnsureStaffAccess;
 use App\Http\Middleware\EnsureUserActive;
+use App\Http\Middleware\EnsureHasTahunAjaranSession;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $router->middleware('web')
                         ->group(base_path('routes/web.php'));
                 
-                $router->middleware(['web', 'auth', EnsureUserActive::class, EnsureAdminAccess::class])
+                $router->middleware(['web', 'auth', EnsureUserActive::class, EnsureAdminAccess::class, EnsureHasTahunAjaranSession::class])
                         ->prefix('admin')
                         ->group(base_path('routes/admin.php'));
 
@@ -33,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         ->prefix('student-new')
                         ->group(base_path('routes/student-new.php'));
 
-                $router->middleware(['web', 'auth', EnsureUserActive::class, EnsureStaffAccess::class])
+                $router->middleware(['web', 'auth', EnsureUserActive::class, EnsureStaffAccess::class, EnsureHasTahunAjaranSession::class])
                         ->prefix('staff')
                         ->group(base_path('routes/staff.php'));
 

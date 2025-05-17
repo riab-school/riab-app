@@ -3,10 +3,9 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Classroom List</h5>
+        <h5>Classroom List <span class="text-danger">{{ Session::get('tahun_ajaran_aktif') }}/{{ Session::get('tahun_ajaran_aktif')+1 }}</span></h5>
         <div>
-            <a href="" class="btn btn-primary btn-sm">Create Classroom</a>
-            <a href="" class="btn btn-secondary btn-sm">Import Classroom</a>
+            <a href="{{ route('staff.kelas.create') }}" class="btn btn-primary btn-sm">Create Classroom</a>
         </div>
     </div>
     <div class="card-body">
@@ -15,14 +14,14 @@
                 <thead>
                     <tr>
                         <th>Actions</th>
-                        <th>Name</th>
-                        <th>Focus</th>
-                        <th>Grade</th>
-                        <th>Number</th>
-                        <th>Limitation</th>
-                        <th>Location</th>
-                        <th>Class Head {{ Session::get('tahun_ajaran_aktif') }}</th>
-                        <th>Tahfidz Head {{ Session::get('tahun_ajaran_aktif') }}</th>
+                        <th>Nama</th>
+                        <th>Fokus</th>
+                        <th>Tingkat</th>
+                        <th>Nomor</th>
+                        <th>Batas Siswa</th>
+                        <th>Lokasi</th>
+                        <th>Wali Kelas</th>
+                        <th>Wali Kelas (Tahfidz)</th>
                         <th>Created At</th>
                         <th>Updated At</th>
                     </tr>
@@ -56,7 +55,8 @@
                 className: 'text-center',
                     render: function(data, type, row) {
                         return `<div class="btn-group">
-                                    <a href="{{ route('staff.master-student.detail') }}?id=${row.id}" class="btn btn-icon btn-outline-info"><i class="fas fa-eye"></i></a>
+                                    <a href="?id=${row.id}" class="btn btn-icon btn-outline-info"><i class="fas fa-eye"></i></a>
+                                    <a href="?id=${row.id}" class="btn btn-icon btn-outline-info"><i class="fas fa-eye"></i></a>
                                 </div>`;
                     }
                 },

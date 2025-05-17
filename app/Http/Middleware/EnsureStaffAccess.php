@@ -18,10 +18,7 @@ class EnsureStaffAccess
     public function handle(Request $request, Closure $next): Response
     {
         if(auth()->user()->user_level !== 'staff') {
-
-            // cek dulu ada izin menu atau tidak sama denga middkeware EnsureCanAccessMenu
             $url = $request->segment(1) . '/' . $request->segment(2). '/' . $request->segment(3);
-
             $dateTime = Carbon::now()->format('Y-m-d H:i:s');
             $getAccessList = UserHasMenuPermission::where('user_id', auth()->user()->id)->whereRelation('childMenuDetail', ['route' => $url, 'is_active'  => true])->first();
 

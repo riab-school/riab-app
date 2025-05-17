@@ -45,13 +45,6 @@ class HomeController extends Controller
 
     public function homePageStaff(Request $request)
     {
-
-        $activeYearId = Session::get('tahun_ajaran_aktif_id');
-        if(!$activeYearId){
-            return redirect()->route('logout');
-        }
-        $activeYear = MasterTahunAjaran::where('id', $activeYearId)->first()->tahun_ajaran;
-
         if($request->ajax()){
 
             // Change Session
@@ -69,8 +62,8 @@ class HomeController extends Controller
                 $data = [
                     'totalStudents'     => StudentDetail::where('status', 'active')->count(),
                     'totalTeachers'     => StaffDetail::where('status', 'active')->count(),
-                    'totalClassrooms'   => MasterClassroom::count(),
-                    'totalDormitories'  => MasterDormitory::count(),
+                    'totalClassrooms'   => MasterClassroom::whereRelation('headDetail', 'tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))->count(),
+                    'totalDormitories'  => MasterDormitory::whereRelation('headDetail', 'tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))->count(),
                 ];
                 return response()->json($data);
             }
@@ -78,40 +71,35 @@ class HomeController extends Controller
             // Get Grafik data for Dashboard
             if($request->has('for') && $request->for == 'grafik'){
                 $chartPermission = StudentPermissionHistory::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
-                        ->whereYear('created_at', $activeYear)
+                        ->whereYear('created_at', Session::get('tahun_ajaran_aktif'))
                         ->groupBy('year', 'month')
                         ->orderBy('year')
                         ->orderBy('month')
                         ->get();
                 $data = [
                     'studentViolation'      => StudentsViolation::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
-                                                            ->whereYear('created_at', $activeYear)
+                                                            ->whereYear('created_at', Session::get('tahun_ajaran_aktif'))
                                                             ->groupBy('year', 'month')
                                                             ->orderBy('year')
                                                             ->orderBy('month')
                                                             ->get(),
                                                             
                     'studentAchievement'    => StudentsAchievement::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
-                                                            ->whereYear('created_at', $activeYear)
+                                                            ->whereYear('created_at', Session::get('tahun_ajaran_aktif'))
                                                             ->groupBy('year', 'month')
                                                             ->orderBy('year')
                                                             ->orderBy('month')
                                                             ->get(),
                     
-                    // 'byGender'              => StudentDetail::where('status', 'active')
-                    //                                         ->whereYear('created_at', $activeYear)
-                    //                                         ->selectRaw('gender, COUNT(*) as total')
-                    //                                         ->groupBy('gender')
-                    //                                         ->get(),
 
-                    'byGender'              => StudentClassroomHistory::where('tahun_ajaran_id', $activeYearId)
+                    'byGender'              => StudentClassroomHistory::where('tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))
                                                             ->where('is_active', 1)
                                                             ->join('student_details', 'student_classroom_histories.user_id', '=', 'student_details.user_id')
                                                             ->selectRaw('student_details.gender, COUNT(*) as total')
                                                             ->groupBy('student_details.gender')
                                                             ->get(),
                     
-                    'byClassroom'           => StudentClassroomHistory::where('tahun_ajaran_id', $activeYearId)
+                    'byClassroom'           => StudentClassroomHistory::where('tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))
                                                             ->where('is_active', 1)
                                                             ->join('master_classrooms', 'student_classroom_histories.classroom_id', '=', 'master_classrooms.id')
                                                             ->selectRaw('master_classrooms.grade, COUNT(*) as total')
@@ -127,9 +115,7 @@ class HomeController extends Controller
             }            
 
         }
-        return view('app.staff.dashboard', [
-            'activeYear' => $activeYear
-        ]);
+        return view('app.staff.dashboard');
     }
 
     public function homePageParent()

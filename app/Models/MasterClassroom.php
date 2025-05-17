@@ -17,4 +17,14 @@ class MasterClassroom extends Model
         'limitation',
         'location',
     ];
+
+    public function headDetail()
+    {
+        return $this->hasOne(ClassroomHeadHistory::class, 'classroom_id', 'id');
+    }
+
+    public function headTahfidzDetail()
+    {
+        return $this->hasOne(ClassroomTahfidzHeadHistory::class, 'classroom_id', 'id');
+    }
 }

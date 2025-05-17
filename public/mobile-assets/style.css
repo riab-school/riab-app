@@ -1739,10 +1739,15 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: #19BCBF;
-  background: -o-linear-gradient(right, #19BCBF, #00b894);
-  background: -webkit-gradient(linear, right top, left top, from(#19BCBF), to(#00b894));
-  background: linear-gradient(to left, #19BCBF, #00b894);
+  background: #2A7B9B;
+  background: -webkit-linear-gradient(180deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  background: -moz-linear-gradient(180deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  background: linear-gradient(180deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(
+    startColorstr="#2A7B9B",
+    endColorstr="#EDDD53",
+    GradientType=0
+  );
   z-index: 1;
 }
 

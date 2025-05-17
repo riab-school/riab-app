@@ -28,6 +28,11 @@ class LoginController extends Controller
             appLog(auth()->user()->id, 'success', 'Berhasil masuk ke aplikasi');
             switch (auth()->user()->user_level) {
                 case 'admin':
+                    // Get Tahun Ajaran Aktif
+                    $tahunAjaran = MasterTahunAjaran::where('is_active', '1')->first();
+                    // Set Session
+                    Session::put('tahun_ajaran_aktif_id', $tahunAjaran->id);
+                    Session::put('tahun_ajaran_aktif', $tahunAjaran->tahun_ajaran);
                     return redirect()->route('admin.home');
                     break;
                 case 'staff':

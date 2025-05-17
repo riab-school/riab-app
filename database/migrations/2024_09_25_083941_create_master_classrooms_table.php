@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('master_classrooms', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable()->unique();
+            $table->string('name')->nullable();
             $table->enum('focus', ['mipa', 'agama', 'others'])->nullable();
             $table->enum('grade', ['X', 'XI', 'XII'])->nullable();
             $table->integer('number')->nullable();

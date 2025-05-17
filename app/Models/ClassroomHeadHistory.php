@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DormitoryHeadHistory extends Model
+class ClassroomHeadHistory extends Model
 {
     use HasFactory, Uuid;
-    
+
     protected $fillable = [
-        'dormitory_id',
+        'classroom_id',
         'head_id',
         'tahun_ajaran_id',
     ];
 
     public function classRoomDetail()
     {
-        return $this->belongsTo(MasterDormitory::class, 'dormitory_id');
+        return $this->belongsTo(MasterClassroom::class, 'classroom_id');
     }
     
-    public function headDetail()
+    public function userDetail()
     {
         return $this->belongsTo(User::class, 'head_id');
     }

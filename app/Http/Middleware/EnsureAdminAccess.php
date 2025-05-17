@@ -17,9 +17,9 @@ class EnsureAdminAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->user_level !== 'admin') {
 
-            // cek dulu ada izin menu atau tidak sama denga middkeware EnsureCanAccessMenu
+        // cek dulu ada izin menu atau tidak
+        if(auth()->user()->user_level !== 'admin') {
             $url = $request->segment(1) . '/' . $request->segment(2). '/' . $request->segment(3);
 
             $dateTime = Carbon::now()->format('Y-m-d H:i:s');

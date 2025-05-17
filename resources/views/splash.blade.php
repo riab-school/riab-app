@@ -2,7 +2,6 @@
 <html lang="en">
     @include('_layouts.mobile-layouts.head')
     <body>
-    
         <div class="preloader" id="preloader">
             <div class="spinner-grow text-secondary" role="status">
                 <div class="sr-only"></div>
@@ -17,7 +16,7 @@
             </div>
         </div>
         <div class="get-started-btn">
-            <a class="btn btn-warning btn-lg w-100" href="{{ route('login') }}">Ayo Mulai</a>
+            <a class="btn btn-primary btn-lg w-100" href="{{ route('login') }}">Ayo Mulai</a>
         </div>
         
         <script src="{{ asset('mobile-assets') }}/js/bootstrap.bundle.min.js"></script>

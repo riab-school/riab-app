@@ -3,11 +3,14 @@ const dynamicCacheName = 'runtimecache-v3.0.1';
 
 // Pre Caching Assets
 const precacheAssets = [
-    'mobile-assets/',
     'mobile-assets/img/core-img/logo-small.png',
     'mobile-assets/img/core-img/logo-white.png',
     'mobile-assets/img/bg-img/no-internet.png',
     'mobile-assets/js/theme-switching.js',
+    'assets/images/logo.png',
+    'assets/images/logo-dark.png',
+    'assets/images/logo-white.png',
+    'assets/images/favicon.ico',
 ];
 
 // Install Event

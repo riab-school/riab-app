@@ -17,4 +17,9 @@ class MasterDormitory extends Model
         'limitation',
         'head_id'
     ];
+
+    public function headDetail()
+    {
+        return $this->hasOne(DormitoryHeadHistory::class, 'dormitory_id', 'id');
+    }
 }
