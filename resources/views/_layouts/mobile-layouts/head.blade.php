@@ -6,7 +6,6 @@
     <meta name="author" content="Achdiadsyah" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#19BCBF">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     
     <!-- Title -->
@@ -29,5 +28,5 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('mobile-assets') }}/style.css">
     <!-- Web App Manifest -->
-    <link rel="manifest" href="{{ asset('mobile-assets') }}/manifest.json">
+    {{-- <link rel="manifest" href="{{ asset('mobile-assets') }}/manifest.json"> --}}
   </head>

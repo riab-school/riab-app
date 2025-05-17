@@ -10,7 +10,7 @@
             </div>
         </div>
         <ul class="sidenav-nav ps-0">
-        <li><a href="profile.html"><i class="fa-solid fa-user"></i>Profil Saya</a></li> 
+        <li><a href="{{ route('profile') }}"><i class="fa-solid fa-user"></i>Profil Saya</a></li> 
         <li><a href="profile.html"><i class="fa-solid fa-user"></i>Anandaku</a></li> 
         <li><a href="settings.html"><i class="fa-solid fa-sliders"></i>Pengaturan</a></li>
         <li><a href="{{ route('logout') }}"><i class="fa-solid fa-toggle-off"></i>Keluar</a></li>

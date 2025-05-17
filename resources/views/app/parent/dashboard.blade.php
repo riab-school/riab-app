@@ -4,31 +4,32 @@
 <div class="hero-wrapper">
     <div class="container">
         <div class="pt-3">
-            <div class="hero-slides owl-carousel">
+            <div class="hero-slides owl-carousel" id="heroSlides">
             
-            <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/1.jpg')">
-                <div class="slide-content h-100 d-flex align-items-center">
-                    <div class="slide-text">
-                        <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Selamat Datang</h4>
-                        <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">Aplikasi {{ appSet('APP_NAME') }} {{ appSet('SCHOOL_SHORT_NAME') }}</p>
+                <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/1.jpg')">
+                    <div class="slide-content h-100 d-flex align-items-center">
+                        <div class="slide-text">
+                            <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Selamat Datang</h4>
+                            <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">Aplikasi Kesantrian {{ appSet('SCHOOL_SHORT_NAME') }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/2.jpg')">
-                <div class="slide-content h-100 d-flex align-items-center">
-                    <div class="slide-text">
-                        <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Light Candle</h4>
-                        <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">Now only $22</p><a class="btn btn-success" href="#" data-animation="fadeInUp" data-delay="500ms" data-duration="1000ms">Buy Now</a>
+                
+                <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/2.jpg')">
+                    <div class="slide-content h-100 d-flex align-items-center">
+                        <div class="slide-text">
+                            <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Light Candle</h4>
+                            <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">Now only $22</p><a class="btn btn-success" href="#" data-animation="fadeInUp" data-delay="500ms" data-duration="1000ms">Buy Now</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/3.jpg')">
-                <div class="slide-content h-100 d-flex align-items-center">
-                    <div class="slide-text">
-                        <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Best Furniture</h4>
-                        <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">3 years warranty</p><a class="btn btn-danger" href="#" data-animation="fadeInUp" data-delay="800ms" data-duration="1000ms">Buy Now</a>
+                
+                <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/3.jpg')">
+                    <div class="slide-content h-100 d-flex align-items-center">
+                        <div class="slide-text">
+                            <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Best Furniture</h4>
+                            <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">3 years warranty</p><a class="btn btn-danger" href="#" data-animation="fadeInUp" data-delay="800ms" data-duration="1000ms">Buy Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,97 +45,68 @@
         <div class="row g-2 rtl-flex-d-row-r">
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/price-tag.png" alt=""><span>Anandaku</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/parent-kid.png" alt=""><span>Anandaku</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/woman-clothes.png" alt=""><span>Perizinan</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/permission.png" alt=""><span>Perizinan</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/grocery.png" alt=""><span>Pelanggaran</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/violation.png" alt=""><span>Pelanggaran</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/shampoo.png" alt=""><span>Prestasi</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/achiev.png" alt=""><span>Prestasi</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/rowboat.png" alt=""><span>Tahfidz</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/quran.png" alt=""><span>Tahfidz</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/tv-table.png" alt=""><span>Kesehatan</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/health.png" alt=""><span>Kesehatan</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/beach.png" alt=""><span>SPP Sekolah</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/spp.png" alt=""><span>SPP Sekolah</span></a></div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/core-img/baby-products.png" alt=""><span>Tasri</span></a></div>
+                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/saving.png" alt=""><span>Tasri</span></a></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
+<div class="container pb-3">
     <div class="cta-text dir-rtl p-4 p-lg-5">
         <div class="row">
             <div class="col-9">
-                <h4 class="text-white mb-1">Dapatkan Informasi</h4>
+                <h4 class="text-white mb-1">Dapatkan Informasi dan Berita</h4>
                 <p class="text-white mb-2 opacity-75">{{ appSet('SCHOOL_NAME') }}</p>
-                <a class="btn btn-warning" href="{{ appSet('SCHOOL_WEBSITE') }}" target="_blank">Selengkapnya</a>
+                <a class="btn btn-warning" href="{{ appSet('SCHOOL_WEBSITE') }}" target="_blank">Kunjungi Laman</a>
             </div>
         </div>
-        <img src="img/bg-img/make-up.png" alt="">
+        {{-- <img src="img/bg-img/make-up.png" alt=""> --}}
     </div>
 </div>
 
-<div class="weekly-best-seller-area py-3">
+<div class="blog-wrapper pb-3">
     <div class="container">
-        <div class="section-heading d-flex align-items-center justify-content-between dir-rtl">
-            <h6>Hafalan Minggu Ini</h6>
-        </div>
-        <div class="row g-2">
-            <div class="col-12">
-                <div class="horizontal-product-card bg-light rounded-2 shadow-sm">
-                    <div class="d-flex align-items-center">
-                        <div class="product-thumbnail-side">
-                            <a class="product-thumbnail shadow-sm d-block" href="#"><img src="https://ui-avatars.com/api/?background=19BCBF&color=fff&name=Ryan Syah" alt=""></a>
-                        </div>
-                        <div class="product-description">
-                            <a class="product-title d-block" href="#">Ryan Achdiadsyah</a>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p class="sale-price">
-                                        <i class="fa-solid fa-book"></i>1 Juz</span>
-                                    </p>
-                                    <div class="product-rating">
-                                        <i class="fa-solid fa-star"></i>Kelas XI
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <p class="sale-price">
-                                        <i class="fa-solid fa-book"></i>1 Juz</span>
-                                    </p>
-                                    <div class="product-rating">
-                                        <i class="fa-solid fa-star"></i>Kelas XI
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
+            <h6>Berita Terbaru</h6>
+          </div>
+        <div class="row g-2 rtl-flex-d-row-r" id="renderBlog">
+            
         </div>
     </div>
 </div>
@@ -153,3 +125,52 @@
     </div>
 </div>
 @endsection
+
+@push('scripts-mobile')
+<script>
+    $(document).ready(function() {
+    $.ajax({
+            url: '{{ url()->current() }}?_embed', // tambahkan ?_embed
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                let blogHtml = '';
+                $.each(data.blog, function(index, item) {
+                    // akses thumbnail
+                    let thumbUrl = '#';
+                    if (item._embedded 
+                        && item._embedded['wp:featuredmedia'] 
+                        && item._embedded['wp:featuredmedia'][0] 
+                        && item._embedded['wp:featuredmedia'][0].media_details 
+                        && item._embedded['wp:featuredmedia'][0].media_details.sizes 
+                        && item._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large) {
+                        thumbUrl = item._embedded['wp:featuredmedia'][0]
+                                    .media_details.sizes.medium_large.source_url;
+                    }
+                    
+                    blogHtml += `
+                        <div class="col-12 col-md-6">
+                            <div class="card blog-card list-card">
+                                <div class="post-img">
+                                    <img src="${thumbUrl}" alt="${item.title.rendered}" style="max-height: 180px; object-fit: cover; width: 100%;" loading="lazy">
+                                </div>
+                                
+                                <div class="post-content">
+                                    <a class="post-title" href="${item.link}" target="_blank">
+                                        ${item.title.rendered}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                $('#renderBlog').html(blogHtml);
+                
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+@endpush

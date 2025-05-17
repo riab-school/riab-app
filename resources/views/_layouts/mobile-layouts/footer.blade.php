@@ -6,7 +6,7 @@
             <li><a href="#"><i class="fa-solid fa-comment-dots"></i>Chat</a></li>
             <li><a href="#"><i class="fa-solid fa-bullhorn"></i>Informasi</a></li>
             <li><a href="#"><i class="fa-solid fa-gear"></i>Pengaturan</a></li>
-            <li><a href="#"><i class="fa-solid fa-user"></i>Profil</a></li>
+            <li><a href="{{ route('profile') }}"><i class="fa-solid fa-user"></i>Profil</a></li>
         </ul>
         </div>
     </div>
@@ -24,4 +24,6 @@
     <script src="{{ asset('mobile-assets') }}/js/theme-switching.js"></script>
     <script src="{{ asset('mobile-assets') }}/js/no-internet.js"></script>
     <script src="{{ asset('mobile-assets') }}/js/active.js"></script>
-    <script src="{{ asset('mobile-assets') }}/js/pwa.js"></script>
+    {{-- <script src="{{ asset('mobile-assets') }}/js/pwa.js"></script> --}}
+
+    @stack('scripts-mobile')

@@ -3781,7 +3781,7 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   left: 0.5rem;
   z-index: 100;
   border-radius: 6px;
-  background-color: #ffffff;
+  background-color: #ffffffb7;
   padding: 0.75rem;
   overflow: hidden;
 }
@@ -3839,7 +3839,7 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
 }
 .blog-card .post-content .post-title {
   font-size: 1rem;
-  color: #020310;
+  color: #101002;
   margin-bottom: 0.5rem;
   line-height: 1.2;
   display: -webkit-box;
@@ -3872,7 +3872,7 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   margin-right: 0.25rem;
 }
 .blog-card.list-card .post-content {
-  width: calc(50% - 1rem);
+  width: 94%;
   bottom: 0.75rem;
   left: 0.75rem;
 }

@@ -30,7 +30,7 @@
 		
 		@include('_layouts.mobile-layouts.navbar')
 
-		<div class="page-content-wrapper">
+		<div class="page-content-wrapper pb-3">
 			@yield('content')
 		</div>
 		
