@@ -139,7 +139,7 @@
                 let blogHtml = '';
                 $.each(data.blog, function(index, item) {
                     // akses thumbnail
-                    let thumbUrl = '#';
+                    let thumbUrl = '{{ asset('mobile-assets') }}/img/bg-img/default.png';
                     if (item._embedded 
                         && item._embedded['wp:featuredmedia'] 
                         && item._embedded['wp:featuredmedia'][0] 
