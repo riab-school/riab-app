@@ -3,7 +3,7 @@
 @section('content')
 <div class="hero-wrapper">
     <div class="container">
-        <div class="pt-3">
+        <div class="pt-1">
             <div class="hero-slides owl-carousel" id="heroSlides">
             
                 <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/1.jpg')">
@@ -45,42 +45,82 @@
         <div class="row g-2 rtl-flex-d-row-r">
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/parent-kid.png" alt=""><span>Anandaku</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="{{ route('parent.anandaku') }}">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/parent-kid.png" alt="">
+                            <span>Anandaku</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/permission.png" alt=""><span>Perizinan</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/permission.png" alt="">
+                            <span>Perizinan</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/violation.png" alt=""><span>Pelanggaran</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/violation.png" alt="">
+                            <span>Pelanggaran</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/achiev.png" alt=""><span>Prestasi</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/achiev.png" alt="">
+                            <span>Prestasi</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/quran.png" alt=""><span>Tahfidz</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/quran.png" alt="">
+                            <span>Tahfidz</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/health.png" alt=""><span>Kesehatan</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/health.png" alt="">
+                            <span>Kesehatan</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/spp.png" alt=""><span>SPP Sekolah</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/spp.png" alt="">
+                            <span>SPP Sekolah</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card catagory-card h-100">
-                    <div class="card-body px-2"><a href="#"><img src="{{ asset('mobile-assets') }}/img/icons/saving.png" alt=""><span>Tasri</span></a></div>
+                    <div class="card-body px-2">
+                        <a href="#">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/saving.png" alt="">
+                            <span>Tasri</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

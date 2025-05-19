@@ -11,11 +11,19 @@
 
 		<div class="header-area" id="headerArea">
 			<div class="container h-100 d-flex align-items-center justify-content-between d-flex rtl-flex-d-row-r">
+				@if(Route::is('parent.home'))
 				<div class="logo-wrapper">
 					<a href="{{ request()->home_url }}">
 						<img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="logo" style="width: 35px; height: auto;">
 					</a>
 				</div>
+				@else
+				<div class="logo-wrapper">
+					<a href="{{ url()->previous() }}">
+						<i class="fas fa-arrow-left"></i>
+					</a>
+				</div>
+				@endif
 				<div class="navbar-logo-container d-flex align-items-center">
 					<div class="suha-navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#suhaOffcanvas" aria-controls="suhaOffcanvas">
 						<div>
@@ -30,7 +38,7 @@
 		
 		@include('_layouts.mobile-layouts.navbar')
 
-		<div class="page-content-wrapper pb-3">
+		<div class="page-content-wrapper py-3">
 			@yield('content')
 		</div>
 		

@@ -3,17 +3,33 @@
     <div class="offcanvas-body">
         <div class="sidenav-profile">
             <div class="user-profile">
-                <img src="{{ asset('mobile-assets') }}/img/bg-img/9.jpg" alt="">
+                <img src="{{ asset('assets/images/blank_person.jpg') }}" alt="">
             </div>
             <div class="user-info">
                 <h5 class="user-name mb-1 text-white">{{ auth()->user()->myDetail->name }}</h5>
             </div>
         </div>
         <ul class="sidenav-nav ps-0">
-        <li><a href="{{ route('profile') }}"><i class="fa-solid fa-user"></i>Profil Saya</a></li> 
-        <li><a href="profile.html"><i class="fa-solid fa-user"></i>Anandaku</a></li> 
-        <li><a href="settings.html"><i class="fa-solid fa-sliders"></i>Pengaturan</a></li>
-        <li><a href="{{ route('logout') }}"><i class="fa-solid fa-toggle-off"></i>Keluar</a></li>
+            <li>
+                <a href="{{ route('profile') }}">
+                    <i class="fa-solid fa-user"></i>Profil Saya
+                </a>
+            </li> 
+            <li>
+                <a href="{{ route('parent.anandaku') }}">
+                    <i class="fa-solid fa-user"></i>Anandaku
+                </a>
+            </li> 
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-sliders"></i>Pengaturan
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('logout') }}">
+                    <i class="fa-solid fa-toggle-off"></i>Keluar
+                </a>
+            </li>
         </ul>
     </div>
 </div>
