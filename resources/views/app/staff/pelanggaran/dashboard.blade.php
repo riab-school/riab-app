@@ -103,10 +103,10 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header row justify-content-between align-items-center">
-                <div class="col-10">
+                <div class="col-8">
                     <h5>Grafik Pelanggaran Per Bulan</h5>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     <select id="chart_years" class="form-select" onchange="getData(this.value)">
                         @foreach (App\Models\MasterTahunAjaran::get()->sortBy('tahun_ajaran') as $item)
                         <option value="{{ $item->tahun_ajaran }}" @if($item->tahun_ajaran == now()->year) selected @endif>{{ $item->tahun_ajaran}}</option>    

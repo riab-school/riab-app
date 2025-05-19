@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff\Kesehatan;
 use App\Http\Controllers\Controller;
 use App\Models\StudentMedicalCheckHistory;
 use Illuminate\Http\Request;
+use Storage;
 
 class DashboardController extends Controller
 {
