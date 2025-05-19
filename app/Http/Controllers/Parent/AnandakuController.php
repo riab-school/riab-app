@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterTahunAjaran;
 use App\Models\ParentClaimStudent;
 use App\Models\StudentDetail;
 use Illuminate\Http\Request;
@@ -14,10 +15,41 @@ class AnandakuController extends Controller
         // Check if the user is logged in has student
         $check = ParentClaimStudent::where('parent_user_id', auth()->user()->id)->first();
         if ($check && $check->student_user_id !== null) {
+            $tahun_ajaran_id = MasterTahunAjaran::where('is_active', 1)->first()->id;
+            $detail = StudentDetail::where('user_id', $check->student_user_id)
+            ->with([
+                'studentDocument',
+                'studentParentDetail',
+                'studentClassroomHistory' => function($q) use ($tahun_ajaran_id) {
+                    $q->where('tahun_ajaran_id', $tahun_ajaran_id)
+                    ->with('classroomDetail')
+                    ->limit(1);
+                },
+                'studentDormitoryHistory' => function($q) use ($tahun_ajaran_id) {
+                    $q->where('tahun_ajaran_id', $tahun_ajaran_id)
+                    ->with('dormitoryDetail')
+                    ->limit(1);
+                },
+                'studentClassroomHistory.classroomDetail' => function($q) use ($tahun_ajaran_id) {
+                    $q->where('tahun_ajaran_id', $tahun_ajaran_id)
+                    ->with('userDetail')
+                    ->limit(1);
+                },
+            ])
+            ->first();
+
+            $classroomHistory = $detail->studentClassroomHistory->first(); 
+            $dormitoryHistory = $detail->studentDormitoryHistory->first();
+            $headClassroomHistory = $classroomHistory->classroomDetail->headDetail->first();
+
             $data = [
-                'status' => true,
+                'status'  => true,
                 'message' => 'Data ditemukan',
-                'data' => StudentDetail::where('user_id', $check->student_user_id)->with(['studentDocument'])->first()
+                'data'    => $detail,
+                'classroomInfo' => $classroomHistory ? $classroomHistory->classroomDetail : null,
+                'dormitoryInfo' => $dormitoryHistory ? $dormitoryHistory->dormitoryDetail : null,
+                'headClassroomInfo' => $headClassroomHistory ? $headClassroomHistory->userDetail : null,
+                
             ];
         } else {
             $data = [

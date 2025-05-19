@@ -5,12 +5,13 @@
     <div class="container">
         <div class="profile-wrapper-area py-3">
             <div class="card user-info-card">
-                <div class="card-body p-4 d-flex align-items-center">
+                <div class="card-body d-flex align-items-center">
                     <div class="user-profile me-3">
-                        <img src="{{ $data->studentDocument && $data->studentDocument->photo !== NULL ? Storage::disk('s3')->url($data->studentDocument->photo) : asset('assets/images/blank_person.jpg') }}" alt="">
+                        <img class="img-responsive" src="{{ $data->studentDocument && $data->studentDocument->photo !== NULL ? Storage::disk('s3')->url($data->studentDocument->photo) : asset('assets/images/blank_person.jpg') }}" alt="">
                     </div>
                     <div class="user-info">
                         <h5 class="mb-0">{{ $data->name }}</h5>
+                        <h6>{{ $data->studentParentDetail ? "Ananda, Bapak ". $data->studentParentDetail->dad_name." dan Ibu ".$data->studentParentDetail->mom_name : ""}}</h6>
                     </div>
                 </div>
             </div>
@@ -34,10 +35,25 @@
 
                     <div class="single-profile-data d-flex align-items-center justify-content-between">
                         <div class="title d-flex align-items-center">
+                            <i class="fa-solid fa-venus-mars"></i>
+                            <span>Jenis Kelamin</span>
+                        </div>
+                        <div class="data-content">@switch($data->gender)
+                            @case('male')
+                                Laki-Laki
+                                @break
+                            @case('female')
+                                Perempuan
+                                @break
+                        @endswitch</div>
+                    </div>
+
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center">
                             <i class="fa-solid fa-phone"></i>
                             <span>No HP</span>
                         </div>
-                        <div class="data-content">{{ $data->phone }}</div>
+                        <div class="data-content">{{ $data->phone !== NULL ? indoNumber($data->phone) : "-" }}</div>
                     </div>
 
                     <div class="single-profile-data d-flex align-items-center justify-content-between">
@@ -53,7 +69,7 @@
                             <i class="fa-solid fa-door-open"></i>
                             <span>Kelas</span>
                         </div>
-                        <div class="data-content"></div>
+                        <div class="data-content">{{ $classroomInfo !== NULL ? $classroomInfo->name : "-" }}</div>
                     </div>
 
                     <div class="single-profile-data d-flex align-items-center justify-content-between">
@@ -61,19 +77,31 @@
                             <i class="fa-solid fa-home"></i>
                             <span>Asrama</span>
                         </div>
-                        <div class="data-content"></div>
+                        <div class="data-content">{{ $dormitoryInfo !== NULL ? $dormitoryInfo->name.", Lantai ".$dormitoryInfo->level : "-" }}</div>
                     </div>
 
                     <div class="single-profile-data d-flex align-items-center justify-content-between">
                         <div class="title d-flex align-items-center">
-                            <i class="fa-solid fa-book"></i>
+                            <i class="fa-solid fa-user"></i>
+                            <span>Wali Kelas</span>
+                        </div>
+                        <div class="data-content">{{ $headClassroomInfo !== NULL ? $headClassroomInfo->staffDetail->name : "-" }}</div>
+                    </div>
+
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center">
+                            <i class="fa-solid fa-user"></i>
                             <span>Pembina Tahfidz</span>
                         </div>
                         <div class="data-content"></div>
                     </div>
 
-                    <div class="edit-profile-btn mt-3">
-                        <a class="btn btn-primary w-100" href="#">Selengkapnya</a>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Pembina Asrama</span>
+                        </div>
+                        <div class="data-content"></div>
                     </div>
                 </div>
             </div>

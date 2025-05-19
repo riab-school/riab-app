@@ -4277,11 +4277,10 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   position: relative;
   z-index: 1;
   width: 80px;
-  height: 80px;
   border-radius: 50%;
 }
 .user-info-card .user-profile img {
-  border-radius: 50%;
+  border-radius: 5%;
 }
 
 /* Notification CSS */
@@ -4771,7 +4770,7 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   color: #ffffff;
 }
 [theme-color=dark] .blog-card .post-content {
-  background-color: #332858;
+  background-color: #332858cf;
 }
 [theme-color=dark] .blog-card .post-content .post-title {
   color: #ffffff;

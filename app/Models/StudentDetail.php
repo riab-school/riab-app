@@ -77,4 +77,9 @@ class StudentDetail extends Model
     {
         return $this->hasMany(StudentMedicalCheckHistory::class, 'user_id', 'user_id');
     }
+
+    public function studentParentDetail()
+    {
+        return $this->hasOne(StudentsParentDetail::class, 'user_id', 'user_id');
+    }
 }

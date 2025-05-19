@@ -18,9 +18,9 @@
 					</a>
 				</div>
 				@else
-				<div class="logo-wrapper">
+				<div class="back-button me-2">
 					<a href="{{ url()->previous() }}">
-						<i class="fas fa-arrow-left"></i>
+						<i class="fa-solid fa-arrow-left-long"></i>
 					</a>
 				</div>
 				@endif

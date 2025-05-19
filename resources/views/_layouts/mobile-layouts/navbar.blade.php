@@ -21,7 +21,7 @@
                 </a>
             </li> 
             <li>
-                <a href="settings.html">
+                <a href="{{ route('parent.settings') }}">
                     <i class="fa-solid fa-sliders"></i>Pengaturan
                 </a>
             </li>
