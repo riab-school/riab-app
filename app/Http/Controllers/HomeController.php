@@ -62,8 +62,8 @@ class HomeController extends Controller
                 $data = [
                     'totalStudents'     => StudentDetail::where('status', 'active')->count(),
                     'totalTeachers'     => StaffDetail::where('status', 'active')->count(),
-                    'totalClassrooms'   => MasterClassroom::whereRelation('headDetail', 'tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))->count(),
-                    'totalDormitories'  => MasterDormitory::whereRelation('headDetail', 'tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))->count(),
+                    'totalClassrooms'   => MasterClassroom::where('tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))->count(),
+                    'totalDormitories'  => MasterDormitory::where('tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))->count(),
                 ];
                 return response()->json($data);
             }

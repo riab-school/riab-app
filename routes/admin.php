@@ -81,6 +81,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
         Route::prefix('import')->group(function() {
             Route::get('/', [ImportOldDataController::class, 'showImportPage'])->name('admin.import');
             Route::post('classroom', [ImportOldDataController::class, 'handleImportClassrooms'])->name('admin.import.classroom');
+            Route::post('classroom/get', [ImportOldDataController::class, 'getClassrooms'])->name('admin.import.classroom.get');
             Route::post('dormitory', [ImportOldDataController::class, 'handleImportDormitories'])->name('admin.import.dormitory');
             Route::post('staff', [ImportOldDataController::class, 'handleImportStaffAccounts'])->name('admin.import.staff');
             Route::post('student', [ImportOldDataController::class, 'handleImportOldStudentAccounts'])->name('admin.import.student');

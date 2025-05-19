@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ParentClaimStudent extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuid;
+
+    protected $fillable = [
+        'parent_user_id',
+        'student_user_id'
+    ];
 }

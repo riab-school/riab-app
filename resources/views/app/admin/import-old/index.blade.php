@@ -69,21 +69,17 @@
                 <form action="{{ route('admin.import.student') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
                     @csrf
                     <div class="form-group">
-                        <label for="classroom_id">Kelas</label>
-                        <select class="form-control" name="classroom_id" id="classroom_id"  required>
-                            <option></option>
-                            @foreach (App\Models\MasterClassroom::all() as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>    
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="tahun_ajaran_id">Tahun Ajaran</label>
                         <select class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id" required>
                             <option></option>
                             @foreach (App\Models\MasterTahunAjaran::all() as $item)
                             <option value="{{ $item->id }}">{{ $item->tahun_ajaran }}/{{ $item->tahun_ajaran+1 }}</option>    
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="classroom_id">Kelas</label>
+                        <select class="form-control" name="classroom_id" id="classroom_id" required>
                         </select>
                     </div>
                     <div class="form-group">
@@ -135,5 +131,28 @@
         </div>
     </div>
 </div>
-
 @endsection
+
+@push('scripts')
+    <script>
+        // on tahun_ajaran_id change, get classroom list
+        $('#tahun_ajaran_id').on('change', function() {
+            var tahun_ajaran_id = $(this).val();
+            $.ajax({
+                url: "{{ route('admin.import.classroom.get') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    tahun_ajaran_id: tahun_ajaran_id
+                },
+                success: function(response) {
+                    $('#classroom_id').empty();
+                    $('#classroom_id').append('<option></option>');
+                    $.each(response.data, function(index, item) {
+                        $('#classroom_id').append('<option value="' + item.id + '">' + item.name + '</option>');
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

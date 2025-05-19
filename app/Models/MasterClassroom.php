@@ -16,6 +16,7 @@ class MasterClassroom extends Model
         'number',
         'limitation',
         'location',
+        'tahun_ajaran_id',
     ];
 
     public function headDetail()

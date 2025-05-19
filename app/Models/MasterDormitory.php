@@ -15,7 +15,8 @@ class MasterDormitory extends Model
         'number',
         'level',
         'limitation',
-        'head_id'
+        'head_id',
+        'tahun_ajaran_id'
     ];
 
     public function headDetail()

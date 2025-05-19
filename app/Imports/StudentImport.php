@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Models\MasterGenerationList;
+use App\Models\MasterTahunAjaran;
 use App\Models\StudentClassroomHistory;
 use App\Models\StudentDetail;
 use App\Models\User;
@@ -42,6 +44,18 @@ class StudentImport implements ToModel, WithHeadingRow
             'is_active'         => $this->data['is_active'],
         ]);
 
+        // Get generation id from tahun ajaran
+        $tahunAjaran = MasterTahunAjaran::where('id', $this->data['tahun_ajaran_id'])->first();
+        if ($tahunAjaran) {
+            //find generation id by year
+            $generation = MasterGenerationList::where('year', $tahunAjaran->tahun_ajaran)->first();
+            if ($generation) {
+                $generationId = $generation->id;
+            } else {
+                $generationId = null;
+            }
+        }
+
         return StudentDetail::create([
             'user_id'           => $studentActive->id,
             'name'              => strtoupper($row['name']),
@@ -49,6 +63,7 @@ class StudentImport implements ToModel, WithHeadingRow
             'nis'               => $row['nis'],
             'place_of_birth'    => strtoupper($row['place_of_birth']),
             'date_of_birth'     => $row['date_of_birth'],
+            'generation_id'     => $generationId,
             'status'            => 'active',
         ]);
     }

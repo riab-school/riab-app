@@ -3,14 +3,30 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\ParentClaimStudent;
 use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 
 class AnandakuController extends Controller
 {
-    public function showPage(Request $request)
+    public function showPage()
     {
-        return view('app.parent.anandaku');
+        // Check if the user is logged in has student
+        $check = ParentClaimStudent::where('parent_user_id', auth()->user()->id)->first();
+        if ($check && $check->student_user_id !== null) {
+            $data = [
+                'status' => true,
+                'message' => 'Data ditemukan',
+                'data' => StudentDetail::where('user_id', $check->student_user_id)->with(['studentDocument'])->first()
+            ];
+        } else {
+            $data = [
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+                'data' => null
+            ];
+        }
+        return view('app.parent.anandaku', $data);
     }
 
     public function findStudentData(Request $request)
@@ -30,8 +46,33 @@ class AnandakuController extends Controller
         }
     }
 
-    public function pairingStudentWithParent()
+    public function pairingStudentWithParent(Request $request)
     {
-        
+        if($request->ajax()) {
+            try {
+                $check = ParentClaimStudent::where('parent_user_id', auth()->user()->id)->first();
+                if ($check && $check->student_user_id !== null) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Data sudah terdaftar'
+                    ], 400);
+                }
+
+                ParentClaimStudent::create([
+                    'parent_user_id'    => auth()->user()->id,
+                    'student_user_id'   => $request->student_user_id
+                ]);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil disambungkan',
+                ], 200);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+                
+        }
     }
 }

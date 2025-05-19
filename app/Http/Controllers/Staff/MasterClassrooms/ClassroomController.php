@@ -77,6 +77,7 @@ class ClassroomController extends Controller
                 'number'            => $request->number,
                 'limitation'        => $request->limitation,
                 'location'          => $request->location,
+                'tahun_ajaran_id'   => $request->tahun_ajaran_id,
             ]);
 
             $classroom->headDetail()->create([

@@ -47,6 +47,17 @@ class ImportOldDataController extends Controller
         }
     }
 
+    public function getClassrooms(Request $request)
+    {
+        if($request->ajax()) {
+            $classrooms = \App\Models\MasterClassroom::where('tahun_ajaran_id', $request->tahun_ajaran_id)->get();
+            return response()->json([
+                'status' => true,
+                'data' => $classrooms
+            ]);
+        }
+    }
+
     public function handleImportDormitories(Request $request)
     {
         $request->validate([
