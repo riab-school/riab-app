@@ -25,5 +25,7 @@
     <script src="{{ asset('mobile-assets') }}/js/no-internet.js"></script>
     <script src="{{ asset('mobile-assets') }}/js/active.js"></script>
     <script src="{{ asset('mobile-assets') }}/js/pwa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/js/default.js') }}"></script>
 
     @stack('scripts-mobile')

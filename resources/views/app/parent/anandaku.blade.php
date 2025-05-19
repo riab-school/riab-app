@@ -4,13 +4,12 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <div class="about-content-wrap dir-rtl text-center">
-                <h1>
+            <div class="alert alert-danger text-center" role="alert">
+                <h1 class="alert-heading">
                     <i class="fas fa-exclamation-triangle text-danger"></i>
                 </h1>
-                <h5>Akun anda belum terhubung dengan data Ananda, Hubungkan sekarang dengan memasukkan nomor NIS/NISN</h5>
+                <h6>Akun anda belum terhubung dengan data Ananda, Hubungkan sekarang dengan memasukkan nomor NIS/NISN</h6>
             </div>
-            <hr>
             <div class="form-group">
                 <input type="number" class="form-control" id="nis_nisn" name="nis_nisn" placeholder="Masukkan NIS/NISN" required>
             </div>
@@ -42,11 +41,11 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        alert("Terjadi kesalahan. Silakan coba lagi.");
+                        showSwal('warning', xhr.responseJSON.message);
                     }
                 });
             } else {
-                alert("NIS/NISN tidak boleh kosong.");
+                showSwal('warning', 'NIS/NISN tidak boleh kosong');
             }
         });
     </script>
