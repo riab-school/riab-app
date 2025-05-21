@@ -39,8 +39,7 @@ class AnandakuController extends Controller
             ->first();
 
             $classroomHistory = $detail->studentClassroomHistory->first(); 
-            $dormitoryHistory = $detail->studentDormitoryHistory->first();
-            $headClassroomHistory = $classroomHistory->classroomDetail->headDetail->first();
+            $dormitoryHistory = $detail->studentDormitoryHistory->first();            
 
             $data = [
                 'status'  => true,
@@ -48,7 +47,6 @@ class AnandakuController extends Controller
                 'data'    => $detail,
                 'classroomInfo' => $classroomHistory ? $classroomHistory->classroomDetail : null,
                 'dormitoryInfo' => $dormitoryHistory ? $dormitoryHistory->dormitoryDetail : null,
-                'headClassroomInfo' => $headClassroomHistory ? $headClassroomHistory->userDetail : null,
                 
             ];
         } else {

@@ -82,10 +82,9 @@ class ListController extends Controller
         try {
             // check if user already has permission with approved status
             $check = StudentPermissionHistory::where('user_id', $request->user_id)
-                ->where('to_date', '<=', $request->from_date)
-                ->whereNot('status', 'check_in')
                 ->where('status', 'approved')
                 ->orWhere('status', 'check_out')
+                ->whereNot('status', 'check_in')
                 ->first();
             if ($check) {
                 return redirect()->back()->with([

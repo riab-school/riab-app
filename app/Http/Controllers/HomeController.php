@@ -123,7 +123,7 @@ class HomeController extends Controller
         if($request->ajax()){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://ruhulislam.com/wp-json/wp/v2/posts?per_page=6&_embed',
+                CURLOPT_URL => appSet('SCHOOL_WEBSITE').'/wp-json/wp/v2/posts?per_page=6&_embed',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,

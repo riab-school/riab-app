@@ -2446,6 +2446,14 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   font-size: 14px;
   line-height: 1;
 }
+.product-card .badge-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  font-size: 14px;
+  line-height: 1;
+}
 .product-card .product-title {
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -2610,6 +2618,25 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
       -ms-flex-pack: center;
           justify-content: center;
 }
+
+.horizontal-product-card .product-description .badge-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 11;
+  font-size: 12px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .horizontal-product-card .product-description .sale-price {
   margin-bottom: 0.25rem;
   font-size: 1rem;
@@ -5191,7 +5218,15 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   right: auto;
   left: 1rem;
 }
+[view-mode=rtl] .product-card .badge-btn {
+  right: auto;
+  left: 1rem;
+}
 [view-mode=rtl] .horizontal-product-card .product-description .delete-btn {
+  right: auto;
+  left: 0;
+}
+[view-mode=rtl] .horizontal-product-card .product-description .badge-btn {
   right: auto;
   left: 0;
 }

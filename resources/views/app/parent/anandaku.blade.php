@@ -79,30 +79,6 @@
                         </div>
                         <div class="data-content">{{ $dormitoryInfo !== NULL ? $dormitoryInfo->name.", Lantai ".$dormitoryInfo->level : "-" }}</div>
                     </div>
-
-                    <div class="single-profile-data d-flex align-items-center justify-content-between">
-                        <div class="title d-flex align-items-center">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Wali Kelas</span>
-                        </div>
-                        <div class="data-content">{{ $headClassroomInfo !== NULL ? $headClassroomInfo->staffDetail->name : "-" }}</div>
-                    </div>
-
-                    <div class="single-profile-data d-flex align-items-center justify-content-between">
-                        <div class="title d-flex align-items-center">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Pembina Tahfidz</span>
-                        </div>
-                        <div class="data-content"></div>
-                    </div>
-
-                    <div class="single-profile-data d-flex align-items-center justify-content-between">
-                        <div class="title d-flex align-items-center">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Pembina Asrama</span>
-                        </div>
-                        <div class="data-content"></div>
-                    </div>
                 </div>
             </div>
         </div>

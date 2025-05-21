@@ -56,7 +56,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.perizinan') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/permission.png" alt="">
                             <span>Perizinan</span>
                         </a>
@@ -143,7 +143,7 @@
     <div class="container">
         <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
             <h6>Berita Terbaru</h6>
-          </div>
+        </div>
         <div class="row g-2 rtl-flex-d-row-r" id="renderBlog">
             <div class="text-center d-flex justify-content-center align-items-center py-5">
                 <div class="loaders"></div>
@@ -172,7 +172,7 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: '{{ url()->current() }}?_embed', // tambahkan ?_embed
+            url: '{{ url()->current() }}',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -191,7 +191,7 @@
                     }
                     
                     blogHtml += `
-                        <div class="col-12 col-md-6">
+                        <div class="col-12">
                             <div class="card blog-card list-card">
                                 <div class="post-img">
                                     <img src="${thumbUrl}" alt="${item.title.rendered}" style="max-height: 180px; object-fit: cover; width: 100%;" loading="lazy">
