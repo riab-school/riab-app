@@ -16,6 +16,15 @@
                 <form action="{{ route('admin.import.classroom') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
                     @csrf
                     <div class="form-group">
+                        <label for="tahun_ajaran_id">Tahun Ajaran</label>
+                        <select class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id" required>
+                            <option></option>
+                            @foreach (App\Models\MasterTahunAjaran::all() as $item)
+                            <option value="{{ $item->id }}">{{ $item->tahun_ajaran }}/{{ $item->tahun_ajaran+1 }}</option>    
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="file_classroom">Upload File</label>
                         <input type="file" name="file_classroom" id="file_classroom" class="form-control  @error('file_classroom') is-invalid @enderror" accept=".xlsx,.xls,.csv" required>
                         @error('file_classroom')
@@ -42,6 +51,15 @@
             <div class="card-body">
                 <form action="{{ route('admin.import.dormitory') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
                     @csrf
+                    <div class="form-group">
+                        <label for="tahun_ajaran_id">Tahun Ajaran</label>
+                        <select class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id" required>
+                            <option></option>
+                            @foreach (App\Models\MasterTahunAjaran::all() as $item)
+                            <option value="{{ $item->id }}">{{ $item->tahun_ajaran }}/{{ $item->tahun_ajaran+1 }}</option>    
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="file_dormitory">Upload File</label>
                         <input type="file" name="file_dormitory" id="file_dormitory" class="form-control  @error('file_dormitory') is-invalid @enderror" accept=".xlsx,.xls,.csv" required>
@@ -70,7 +88,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="tahun_ajaran_id">Tahun Ajaran</label>
-                        <select class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id" required>
+                        <select class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id_1" required>
                             <option></option>
                             @foreach (App\Models\MasterTahunAjaran::all() as $item)
                             <option value="{{ $item->id }}">{{ $item->tahun_ajaran }}/{{ $item->tahun_ajaran+1 }}</option>    
@@ -136,7 +154,7 @@
 @push('scripts')
     <script>
         // on tahun_ajaran_id change, get classroom list
-        $('#tahun_ajaran_id').on('change', function() {
+        $('#tahun_ajaran_id_1').on('change', function() {
             var tahun_ajaran_id = $(this).val();
             $.ajax({
                 url: "{{ route('admin.import.classroom.get') }}",

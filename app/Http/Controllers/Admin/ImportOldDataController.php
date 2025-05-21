@@ -28,7 +28,10 @@ class ImportOldDataController extends Controller
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads/temp'), $fileName);
             $path = 'uploads/temp/'.$fileName;
-            $import = Excel::import(new ClassroomImport(), public_path($path));
+            $data = [
+                'tahun_ajaran_id'       => $request->tahun_ajaran_id,
+            ];
+            $import = Excel::import(new ClassroomImport($data), public_path($path));
             File::delete(public_path($path));
             if($import) {
                 appLog(auth()->user()->id, 'success', 'Berhasil Import Data Kelas');
@@ -68,7 +71,10 @@ class ImportOldDataController extends Controller
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads/temp'), $fileName);
             $path = 'uploads/temp/'.$fileName;
-            $import = Excel::import(new DormitoryImport(), public_path($path));
+            $data = [
+                'tahun_ajaran_id'       => $request->tahun_ajaran_id,
+            ];
+            $import = Excel::import(new DormitoryImport($data), public_path($path));
             File::delete(public_path($path));
             if($import) {
                 appLog(auth()->user()->id, 'success', 'Berhasil Import Data Asrama');
