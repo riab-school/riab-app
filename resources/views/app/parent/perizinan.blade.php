@@ -31,7 +31,11 @@
             data: { page: page },
             dataType: "json",
             success: function(res) {
-                let html = '';
+                let html = `<div class="horizontal-product-card">
+                                <div class="d-flex align-items-center justify-content-center text-center py-5">
+                                    <h5>Tidak ada data</h5>
+                                </div>
+                            </div>`;
                 $('#totalCount').text(`(${res.total})`);
                 $.each(res.data, function(index, item) {
                     let statusBadge = '';

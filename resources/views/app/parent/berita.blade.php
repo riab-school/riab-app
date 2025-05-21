@@ -31,7 +31,11 @@
             dataType: 'json',
             success: function(res) {
                 if (res.status === 'success' && res.blog.length > 0) {
-                    let blogHtml = '';
+                    let blogHtml = `<div class="horizontal-product-card">
+                                        <div class="d-flex align-items-center justify-content-center text-center py-5">
+                                            <h5>Tidak ada data</h5>
+                                        </div>
+                                    </div>`;
                     $.each(res.blog, function(index, item) {
                         let thumbUrl = '{{ asset('mobile-assets') }}/img/bg-img/default.png';
                         if (item._embedded 
