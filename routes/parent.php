@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Parent\AnandakuController;
 use App\Http\Controllers\Parent\BeritaController;
+use App\Http\Controllers\Parent\ChatController;
 use App\Http\Controllers\Parent\KesehatanController;
 use App\Http\Controllers\Parent\PelanggaranController;
 use App\Http\Controllers\Parent\PerizinanController;
@@ -17,6 +18,10 @@ Route::get('/', [HomeController::class, 'homePageParent'])->name('parent.home');
 Route::get('settings', function () {
     return view('app.parent.settings');
 })->name('parent.settings');
+
+Route::prefix('chat')->group(function() {
+    Route::get('/', [ChatController::class, 'showPage'])->name('parent.chat');
+});
 
 Route::prefix('berita')->group(function() {
     Route::get('/', [BeritaController::class, 'showPage'])->name('parent.berita');
