@@ -28,8 +28,27 @@ class PerizinanController extends Controller
                     ->paginate($limit, ['*'], 'page', $page);
 
                 $history->getCollection()->transform(function ($item) {
-                    $item->from_date = dateIndo($item->from_date);
-                    $item->to_date = dateIndo($item->to_date);
+                    $item->from_date = $item->from_date !== NULL ? dateIndo($item->from_date) : '-';
+                    $item->to_date = $item->to_date !== NULL ? dateIndo($item->to_date) : '-';
+                    $item->rejected_by = $item->rejected_by !== NULL ? $item->rejectedBy->staffDetail->name : '-';
+                    $item->approved_by = $item->approved_by !== NULL ? $item->approvedBy->staffDetail->name : '-';
+                    $item->checked_in_by = $item->checked_in_by !== NULL ? $item->checkedInBy->staffDetail->name : '-';
+                    $item->checked_out_by = $item->checked_out_by !== NULL ? $item->checkedOutBy->staffDetail->name : '-';
+                    switch ($item->requested_by) {
+                        case 'staff_kesehatan':
+                            $item->requested_by = 'Staff Kesehatan';
+                            break;
+                        case 'wali':
+                            $item->requested_by = 'Wali Santri';
+                            $item->applicant_id = '-';
+                            break;
+                        case 'orang_tua':
+                            $item->requested_by = 'Orang Tua';
+                            break;
+                        case 'siswa':
+                            $item->requested_by = 'Siswa';
+                            break;
+                    }
                     return $item;
                 });
 

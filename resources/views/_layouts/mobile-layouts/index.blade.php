@@ -44,6 +44,17 @@
 		
 		<div class="internet-connection-status" id="internetStatus"></div>
 
+		{{-- Img Preview Modal --}}
+        <div class="modal fade no-backdrop" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-none bg-transparent">
+                    <div class="modal-body text-center p-0">
+                        <img id="previewImage" src="" class="img-fluid" alt="Preview">
+                    </div>
+                </div>
+            </div>
+        </div>
+
 		@include('_layouts.mobile-layouts.footer')
 
 	</body>

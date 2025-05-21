@@ -27,5 +27,13 @@
     <script src="{{ asset('mobile-assets') }}/js/pwa.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/default.js') }}"></script>
+    
+    <script>
+        $(document).on('click', '.img-preview', function () {
+            const src = $(this).data('src');
+            $('#previewImage').attr('src', src);
+            $('#imagePreviewModal').modal('show');
+        });
+    </script>
 
     @stack('scripts-mobile')

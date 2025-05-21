@@ -7,7 +7,10 @@
             <div class="card user-info-card">
                 <div class="card-body d-flex align-items-center">
                     <div class="user-profile me-3">
-                        <img class="img-responsive" src="{{ $data->studentDocument && $data->studentDocument->photo !== NULL ? Storage::disk('s3')->url($data->studentDocument->photo) : asset('assets/images/blank_person.jpg') }}" alt="">
+                        <img class="img-preview img-responsive" 
+                        data-src="{{ $data->studentDocument && $data->studentDocument->photo !== NULL ? Storage::disk('s3')->url($data->studentDocument->photo) : asset('assets/images/blank_person.jpg') }}" 
+                        src="{{ $data->studentDocument && $data->studentDocument->photo !== NULL ? Storage::disk('s3')->url($data->studentDocument->photo) : asset('assets/images/blank_person.jpg') }}" 
+                        alt="">
                     </div>
                     <div class="user-info">
                         <h5 class="mb-0">{{ $data->name }}</h5>

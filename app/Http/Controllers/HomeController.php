@@ -120,34 +120,6 @@ class HomeController extends Controller
 
     public function homePageParent(Request $request)
     {
-        if($request->ajax()){
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => appSet('SCHOOL_WEBSITE').'/wp-json/wp/v2/posts?per_page=6&_embed',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-            ));
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-            curl_close($curl);
-            if ($err) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Error retrieving data: '
-                ]);
-            } else {
-                $data = json_decode($response, true);
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Data retrieved successfully',
-                    'blog' => $data
-                ]);
-            }
-        }
         return view('app.parent.dashboard');
     }
 

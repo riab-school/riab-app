@@ -247,8 +247,11 @@ textarea:invalid {
 }
 
 .btn-danger {
-  background-color: #39465C;
-  border-color: #39465C;
+  background: linear-gradient(-45deg, #FF425C, #e53b52);
+}
+
+.btn-secondary {
+  background: linear-gradient(-45deg, #463699, #5d509c);
 }
 
 .btn-primary {
@@ -274,7 +277,12 @@ textarea:invalid {
 
 .bg-danger,
 .badge-danger {
-  background-color: #39465C !important;
+  background: linear-gradient(-45deg, #FF425C, #e53b52);
+}
+
+.bg-secondary,
+.badge-secondary {
+  background: linear-gradient(-45deg, #463699, #5d509c);
 }
 
 .bg-warning,
@@ -2512,6 +2520,12 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
 }
 
 /* Weekly Product Card CSS */
+.horizontal-product-card {
+  border: 1px;
+  border-style: dotted;
+  border-radius: 4px;
+  padding: 5px;
+}
 .horizontal-product-card .product-thumbnail-side {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 120px;
@@ -2571,7 +2585,6 @@ li.suha-dropdown-menu .dropdown-trigger-btn.active i {
   font-size: 1rem;
   color: #020310;
   line-height: 1;
-  white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;
      text-overflow: ellipsis;

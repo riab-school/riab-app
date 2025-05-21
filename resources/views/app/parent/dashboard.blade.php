@@ -66,7 +66,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.pelanggaran') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/violation.png" alt="">
                             <span>Pelanggaran</span>
                         </a>
@@ -76,7 +76,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.prestasi') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/achiev.png" alt="">
                             <span>Prestasi</span>
                         </a>
@@ -86,7 +86,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.tahfidz') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/quran.png" alt="">
                             <span>Tahfidz</span>
                         </a>
@@ -96,7 +96,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.kesehatan') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/health.png" alt="">
                             <span>Kesehatan</span>
                         </a>
@@ -106,7 +106,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.spp') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/spp.png" alt="">
                             <span>SPP Sekolah</span>
                         </a>
@@ -116,7 +116,7 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="#">
+                        <a href="{{ route('parent.tasri') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/saving.png" alt="">
                             <span>Tasri</span>
                         </a>
@@ -172,7 +172,7 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: '{{ url()->current() }}',
+            url: "{{ route('parent.berita.get') }}",
             type: 'GET',
             dataType: 'json',
             success: function(data) {
