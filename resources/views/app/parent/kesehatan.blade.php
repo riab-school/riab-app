@@ -30,12 +30,19 @@
             data: { page: page },
             dataType: "json",
             success: function(res) {
-                let html = `<div class="horizontal-product-card">
-                                <div class="d-flex align-items-center justify-content-center text-center py-5">
-                                    <h5>Tidak ada data</h5>
-                                </div>
-                            </div>`;
+                let html = '';
                 $('#totalCount').text(`(${res.total})`);
+                if (res.data.length === 0) {
+                    let html = `
+                        <div class="horizontal-product-card">
+                            <div class="d-flex align-items-center justify-content-center text-center py-5">
+                                <h5>Tidak ada data</h5>
+                            </div>
+                        </div>
+                    `;
+                    $('#scrollLoader').addClass('d-none');
+                    $('#renderRiwayatKesehatan').append(html);
+                }
                 $.each(res.data, function(index, item) {
                     html += `
                         <div class="col-12">
