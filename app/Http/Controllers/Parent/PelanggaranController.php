@@ -13,7 +13,13 @@ class PelanggaranController extends Controller
 {
     public function showPage()
     {
-        return view('app.parent.pelanggaran');
+        // Check if the user is logged in has student
+        $check = ParentClaimStudent::where('parent_user_id', auth()->user()->id)->first();
+        if ($check && $check->student_user_id !== null) {
+            return view('app.parent.pelanggaran');
+        } else {
+            return redirect()->route('parent.anandaku');
+        }
     }
 
     public function getData(Request $request)

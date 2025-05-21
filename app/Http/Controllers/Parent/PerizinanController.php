@@ -11,7 +11,13 @@ class PerizinanController extends Controller
 {
     public function showPage()
     {
-        return view('app.parent.perizinan');
+        // Check if the user is logged in has student
+        $check = ParentClaimStudent::where('parent_user_id', auth()->user()->id)->first();
+        if ($check && $check->student_user_id !== null) {
+            return view('app.parent.perizinan');
+        } else {
+            return redirect()->route('parent.anandaku');
+        }
     }
 
     public function getHistory(Request $request)
