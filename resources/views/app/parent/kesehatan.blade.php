@@ -135,7 +135,7 @@
                         </div>
                         <div class="col-12">
                             <h6>Di izinkan pulang :</h6>
-                            <p class="px-3">${res.data.is_allow_home ? 'Ya, Boleh Pulang <br>Silahkan hubungi bagian perizinan untuk mendapatkan token izin pulang' : 'Tidak dibenarkan pulang, <br>Disarankan cukup istirahat di asrama'}</p>
+                            <p class="px-3">${res.data.is_allow_home == "1" ? 'Ya, Boleh Pulang <br>Silahkan hubungi bagian perizinan untuk mendapatkan token izin pulang' : 'Tidak dibenarkan pulang, <br>Disarankan cukup istirahat di asrama'}</p>
                         </div>
                         <div class="col-12">
                             <h6>Di diagnosa Oleh :</h6>
