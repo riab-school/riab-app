@@ -89,7 +89,7 @@
         </div>
         <div class="container">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header fw-bold">
                     Alamat
                 </div>
                 <div class="card-body">
@@ -128,16 +128,13 @@
         </div>
         <div class="container">
             <div class="card">
-                <div class="card-header">
-                    Orang Tua
+                <div class="card-header fw-bold">
+                    Data Ayah
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" width="100%">
                             <tbody>
-                                <tr>
-                                    <td colspan="2" class="fw-bold">Data Ayah</td>
-                                </tr>
                                 <tr>
                                     <td>Nama Ayah</td>
                                     <td class="text-end">{{ $data->studentParentDetail ? $data->studentParentDetail->dad_name : '' }}</td>
@@ -161,9 +158,21 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2" class="fw-bold">Data Ibu</td>
-                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="card-header fw-bold">
+                    Data Ibu
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" width="100%">
+                            <tbody>
                                 <tr>
                                     <td>Nama Ibu</td>
                                     <td class="text-end">{{ $data->studentParentDetail ? $data->studentParentDetail->mom_name : '' }}</td>
@@ -195,8 +204,8 @@
         </div>
         <div class="container">
             <div class="card">
-                <div class="card-header">
-                    Wali Santi
+                <div class="card-header fw-bold">
+                    Data Wali Santi
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -222,7 +231,7 @@
         </div>
         <div class="container">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header fw-bold">
                     Data Lainnya
                 </div>
                 <div class="card-body">
