@@ -1,9 +1,9 @@
 @extends('_layouts.mobile-layouts.index')
-
+@section('title', 'Riwayat Perizinan')
 @section('content')
     <div class="container">
         <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
-            <h6>Riwayat Perizinan
+            <h6>Total Perizinan
                 <span id="totalCount"></span>
             </h6>
             <a href="{{ route('parent.perizinan.request') }}" class="btn btn-warning btn-sm">Ajukan Perizinan Mandiri</a>

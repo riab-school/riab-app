@@ -37,20 +37,20 @@
                 $('#password-recommendation').css('margin-top', '10px');
                 if (score < 50) {
                     $('#password-score').html('Weak password <span class="icofont-exclamation-tringle"></span>');
-                    $('#password-recommendation').html('<div id="password-recommendation-heading">Some tips for a strong password:</div><ul><li>Use at least 8 characters</li><li>Use upper and lower case characters</li><li>Use 1 or more numbers</li><li>Optionally use special characters</li></ul>');
+                    $('#password-recommendation').html('<div id="password-recommendation-heading">Beberapa tips untuk menentukan password yang kuat:</div><ul><li>Gunakan setidaknya lebih dari 8 karakter</li><li>Gunakan huruf besan dan kecil</li><li>Gunakan lebih dari 1 angka</li><li>(Opsional) Gunakan Karakter spesial</li></ul>');
                     $('#password-progress').removeClass();
                     $('#password-progress').addClass('progress-bar bg-danger');
                 }
                 else if (score <= 60) {
                     $('#password-score').html('Normal password <span class="icofont-check"></span>');
-                    $('#password-recommendation').html('<div id="password-recommendation-heading">For a stronger password:</div><ul><li>Use upper and lower case characters</li><li>Use 1 or more numbers</li><li>Use special characters for an even stronger password</li></ul>');
+                    $('#password-recommendation').html('<div id="password-recommendation-heading">Beberapa tips untuk menentukan password yang kuat:</div><ul><li>Gunakan setidaknya lebih dari 8 karakter</li><li>Gunakan huruf besan dan kecil</li><li>Gunakan lebih dari 1 angka</li><li>(Opsional) Gunakan Karakter spesial</li></ul>');
                     $('#password-recommendation-heading').css('text-align', 'left');
                     $('#password-progress').removeClass();
                     $('#password-progress').addClass('progress-bar bg-warning');
                 }
                 else if (score <= 80) {
                     $('#password-score').html('Strong password <span class="icofont-check"></span>');
-                    $('#password-recommendation').html('<div id="password-recommendation-heading">For an even stronger password:</div><ul><li>Increase the lenghth of your password to 15-30 characters</li><li>Use 2 or more numbers</li><li>Use 2 or more special characters</li></ul>');
+                    $('#password-recommendation').html('<div id="password-recommendation-heading">Beberapa tips untuk menentukan password yang kuat:</div><ul><li>Gunakan setidaknya lebih dari 8 karakter</li><li>Gunakan huruf besan dan kecil</li><li>Gunakan lebih dari 1 angka</li><li>(Opsional) Gunakan Karakter spesial</li></ul>');
                     $('#password-recommendation-heading').css('text-align', 'left');
                     $('#password-progress').removeClass();
                     $('#password-progress').addClass('progress-bar bg-info');

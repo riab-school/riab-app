@@ -76,3 +76,19 @@ function processWithQuestion(e, form) {
 
     return false;
 }
+
+function indoDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    };
+    const parts = new Intl.DateTimeFormat('id-ID', options).formatToParts(date);
+    const formattedDate = `${parts.find(p => p.type === 'day').value} ${parts.find(p => p.type === 'month').value} ${parts.find(p => p.type === 'year').value}`;
+    const formattedTime = `${parts.find(p => p.type === 'hour').value}:${parts.find(p => p.type === 'minute').value}`;
+    return formattedDate + ', ' + formattedTime;
+}

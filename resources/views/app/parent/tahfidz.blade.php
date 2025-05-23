@@ -1,5 +1,5 @@
 @extends('_layouts.mobile-layouts.index')
-
+@section('title', 'Hafalan & Tahfidz')
 @section('content')
     <div class="container">
         <div class="row">

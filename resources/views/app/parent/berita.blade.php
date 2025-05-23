@@ -1,12 +1,10 @@
 @extends('_layouts.mobile-layouts.index')
 
+@section('title', 'Berita dan Informasi')
+
 @section('content')
     <div class="container">
-        <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
-            <h6>Berita & Informasi</h6>
-            <a href="{{ appSet('SCHOOL_WEBSITE') }}" class="btn btn-primary btn-sm">Selengkapnya</a>
-        </div>
-        <div class="row g-2" id="renderBlog">
+        <div class="row gy-3" id="renderBlog">
             
         </div>
     </div>   
@@ -39,23 +37,28 @@
                             && item._embedded['wp:featuredmedia'][0] 
                             && item._embedded['wp:featuredmedia'][0].media_details 
                             && item._embedded['wp:featuredmedia'][0].media_details.sizes 
-                            && item._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large) {
-                            thumbUrl = item._embedded['wp:featuredmedia'][0]
-                                        .media_details.sizes.medium_large.source_url;
+                            && item._embedded['wp:featuredmedia'][0].media_details.sizes["Blog Column Thumbnail"]) {
+                            thumbUrl = item._embedded['wp:featuredmedia'][0].media_details.sizes["Blog Column Thumbnail"].source_url;
                         }
 
+                        let authorName = '';
+                        if (item._embedded 
+                            && item._embedded['author'] 
+                            && item._embedded['author'][0] 
+                            && item._embedded['author'][0].name ) {
+                            authorName = item._embedded['author'][0].name;
+                        }
+                        
                         blogHtml += `
                             <div class="col-12">
-                                <div class="card blog-card list-card">
-                                    <div class="post-img">
-                                        <img src="${thumbUrl}" alt="${item.title.rendered}" style="max-height: 180px; object-fit: cover; width: 100%;" loading="lazy">
+                                <div class="single-vendor-wrap bg-img p-4 bg-overlay" style="background-image: url('${thumbUrl}')">
+                                    <h6 class="vendor-title text-white">${item.title.rendered}</h6>
+                                    <div class="vendor-info">
+                                        <p class="mb-1 text-white">
+                                            ${authorName} | ${indoDateTime(item.date)}
+                                        </p>                                    
                                     </div>
-                                    
-                                    <div class="post-content">
-                                        <a class="post-title" href="${item.link}" target="_blank">
-                                            ${item.title.rendered}
-                                        </a>
-                                    </div>
+                                    <a class="btn btn-warning btn-sm mt-3" href="${item.link}" target="_blank">Baca Selengkapnya<i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                                 </div>
                             </div>
                         `;

@@ -6,7 +6,7 @@
             <li><a href="{{ route('parent.chat') }}"><i class="fa-solid fa-comment-dots"></i>Chat</a></li>
             <li><a href="{{ route('parent.berita') }}"><i class="fa-solid fa-bullhorn"></i>Berita</a></li>
             <li><a href="{{ route('parent.settings') }}"><i class="fa-solid fa-sliders"></i>Pengaturan</a></li>
-            <li><a href="{{ route('profile') }}"><i class="fa-solid fa-user"></i>Profil</a></li>
+            <li><a href="{{ route('parent.profile') }}"><i class="fa-solid fa-user"></i>Profil</a></li>
         </ul>
         </div>
     </div>
@@ -37,3 +37,9 @@
     </script>
 
     @stack('scripts-mobile')
+
+    @if (\Session::has('status'))
+    <script>
+        showSwal('{{ Session::get('status') }}', '{{ Session::get('message') }}');
+    </script>
+    @endif

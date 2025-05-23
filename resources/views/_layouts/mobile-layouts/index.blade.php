@@ -23,6 +23,9 @@
 						<i class="fa-solid fa-arrow-left-long"></i>
 					</a>
 				</div>
+				<div class="d-flex justify-content-center">
+					<span>@yield('title', '')</span>
+				</div>
 				@endif
 				<div class="navbar-logo-container d-flex align-items-center">
 					<div class="suha-navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#suhaOffcanvas" aria-controls="suhaOffcanvas">

@@ -62,7 +62,7 @@ class AnandakuController extends Controller
     public function findStudentData(Request $request)
     {
         if($request->ajax()) {
-            $data = StudentDetail::where('nis', $request->nis_nisn)->orWhere('nisn', $request->nis_nisn)->first();
+            $data = StudentDetail::where('status', 'active')->where('nis', $request->nis_nisn)->orWhere('nisn', $request->nis_nisn)->first();
             if (!$data) {
                 return response()->json([
                     'status' => false,

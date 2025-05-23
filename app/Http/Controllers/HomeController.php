@@ -99,12 +99,11 @@ class HomeController extends Controller
                                                             ->groupBy('student_details.gender')
                                                             ->get(),
                     
-                    'byClassroom'           => StudentClassroomHistory::where('tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))
-                                                            ->where('is_active', 1)
-                                                            ->join('master_classrooms', 'student_classroom_histories.classroom_id', '=', 'master_classrooms.id')
+                    'byClassroom'           => StudentClassroomHistory::join('master_classrooms', 'student_classroom_histories.classroom_id', '=', 'master_classrooms.id')
+                                                            ->where('master_classrooms.tahun_ajaran_id', Session::get('tahun_ajaran_aktif_id'))
                                                             ->selectRaw('master_classrooms.grade, COUNT(*) as total')
                                                             ->groupBy('master_classrooms.grade')
-                                                            ->orderBy('master_classrooms.grade') // Urutkan berdasarkan grade
+                                                            ->orderBy('master_classrooms.grade')
                                                             ->get(),
                     
                     'byPermission'          => $chartPermission,

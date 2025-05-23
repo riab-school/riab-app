@@ -1,5 +1,5 @@
 @extends('_layouts.mobile-layouts.index')
-@section('title', 'Informasi SPP')
+@section('title', 'Raport Sekolah')
 @section('content')
     <div class="container">
         <div class="row">

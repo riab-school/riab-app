@@ -13,6 +13,7 @@ class ParentDetail extends Model
         'user_id',
         'name',
         'photo',
-        'phone'
+        'phone',
+        'is_allow_send_wa'
     ];
 }

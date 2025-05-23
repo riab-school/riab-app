@@ -3,7 +3,7 @@
     <div class="offcanvas-body">
         <div class="sidenav-profile">
             <div class="user-profile">
-                <img src="{{ asset('assets/images/blank_person.jpg') }}" alt="">
+                <img class="img-fluid" src="{{ auth()->user()->myDetail->photo == 'default.png' ? asset('assets/images/blank_person.jpg') : Storage::disk('s3')->url(auth()->user()->myDetail->photo)  }}" alt="img_thumb">
             </div>
             <div class="user-info">
                 <h5 class="user-name mb-1 text-white">{{ auth()->user()->myDetail->name }}</h5>
@@ -11,7 +11,7 @@
         </div>
         <ul class="sidenav-nav ps-0">
             <li>
-                <a href="{{ route('profile') }}">
+                <a href="{{ route('parent.profile') }}">
                     <i class="fa-solid fa-user"></i>Profil Saya
                 </a>
             </li> 

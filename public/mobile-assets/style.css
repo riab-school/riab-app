@@ -1594,7 +1594,6 @@ textarea:invalid {
   position: relative;
   z-index: 1;
   width: 80px;
-  height: 80px;
   border-radius: 50%;
   margin: 2rem auto 1.5rem;
 }

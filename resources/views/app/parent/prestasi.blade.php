@@ -1,9 +1,9 @@
 @extends('_layouts.mobile-layouts.index')
-
+@section('title', 'Riwayat Prestasi')
 @section('content')
     <div class="container">
         <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
-            <h6>Riwayat Prestasi
+            <h6>Total Catatan Prestasi
                 <span id="totalCount"></span>
             </h6>
         </div>

@@ -1,5 +1,5 @@
 @extends('_layouts.mobile-layouts.index')
-
+@section('title', 'Chat')
 @section('content')
     <div class="container">
         <div class="row">

@@ -9,10 +9,9 @@ class ProfileController extends Controller
 {
     public function showProfilePage()
     {
-        if(auth()->user()->user_level == 'parent'){
-            return view('app.parent.profile');
+        if(auth()->user()->user_level !== 'parent'){
+            return view('app.profile');
         }
-        return view('app.profile');
     }
 
     public function handleProfileUpdate(Request $request)

@@ -1,5 +1,5 @@
 @extends('_layouts.mobile-layouts.index')
-
+@section('title', 'Anandaku')
 @section('content')
     @if($status)
     <div class="container">
