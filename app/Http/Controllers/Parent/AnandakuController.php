@@ -88,8 +88,8 @@ class AnandakuController extends Controller
                         'message' => 'Data sudah terdaftar'
                     ], 400);
                 }
-
-                if ($check && $check->student_user_id == $request->student_user_id) {
+                $check2 = ParentClaimStudent::where('student_user_id', $request->student_user_id)->first();
+                if ($check2) {
                     return response()->json([
                         'status' => false,
                         'message' => 'Data santri sudah digunakan oleh akun lain'
