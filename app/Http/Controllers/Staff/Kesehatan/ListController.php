@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Staff\Kesehatan;
 
 use App\Http\Controllers\Controller;
+use App\Models\ParentClaimStudent;
 use App\Models\StudentDetail;
 use App\Models\StudentMedicalCheckHistory;
 use App\Models\StudentPermissionHistory;
-use App\Models\StudentsParentDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Storage;
@@ -89,11 +89,11 @@ class ListController extends Controller
 
             if($request->has('notify_parent') && $request->notify_parent == "1"){
                 // Try Get Parents Number
-                $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                if ($studentParent) {
-                    $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                    $parentNumber = $studentParent->parentDetail->phone;
                     // Send Whatsapp Notification
-                    $message = "Assalamualaikum Bapak/Ibu,.\n\n";
+                    $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                     $message .= "*Ananda :*\n*".$data->userDetail->studentDetail->name."*\n\nTelah melakukan kunjungan ke *Pusat Kesehatan Pesantren* (POSKESTREN)\n\n";
                     $message .= "*Diagnosa :*\n".$request->diagnose."\n\n";
                     $message .= "*Treatment :*\n".$request->treatment."\n\n";

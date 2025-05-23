@@ -299,7 +299,7 @@
                     success: function(response) {
                         if (response.status) {
                             Swal.fire({
-                                title: "Data anada di temukan",
+                                title: "Data ananda di temukan",
                                 html: "Nama : <b>" + response.data.name + "</b><br>NIS : <b>" + response.data.nis+"</b>"+"<br>NISN : <b>" + response.data.nisn+"</b>",
                                 icon: "success",
                                 showCancelButton: true,

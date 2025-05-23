@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Staff\Perizinan;
 
 use App\Http\Controllers\Controller;
+use App\Models\ParentClaimStudent;
 use App\Models\StudentDetail;
 use App\Models\StudentPermissionHistory;
-use App\Models\StudentsParentDetail;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -112,11 +112,11 @@ class ListController extends Controller
 
             // Try Get Parents Number
             if($request->has('notify_parent') && $request->notify_parent == "1"){
-                $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                if ($studentParent) {
-                    $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                    $parentNumber = $studentParent->parentDetail->phone;
                     // Send Whatsapp Notification
-                    $message = "Assalamualaikum Bapak/Ibu.\n\n";
+                    $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                     $message .= "*Ananda :*\n*".$request->nama."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
                     $message .= "*Tujuan/Alasan :*\n".$request->reason."\n\n";
                     $message .= "*Di jemput oleh :*\n".$request->pickup_by."\n\n";
@@ -172,11 +172,11 @@ class ListController extends Controller
                 if ($request->status == 'approved') {
                     $token = rand(100000, 999999);
                     // Try Get Parents Number
-                    $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                    if ($studentParent) {
-                        $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                    $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                    if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                        $parentNumber = $studentParent->parentDetail->phone;
                         // Send Whatsapp Notification
-                        $message = "Assalamualaikum Bapak/Ibu.\n\n";
+                        $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                         $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
                         $message .= "*Tujuan/Alasan :*\n".$data->reason."\n\n";
                         $message .= "*Di jemput oleh :*\n".$data->pickup_by."\n\n";
@@ -215,11 +215,11 @@ class ListController extends Controller
                 }
                 if($request->status == 'rejected') {
                     // Try Get Parents Number
-                    $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                    if ($studentParent) {
-                        $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                    $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                    if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                        $parentNumber = $studentParent->parentDetail->phone;
                         // Send Whatsapp Notification
-                        $message = "Assalamualaikum Bapak/Ibu,.\n\n";
+                        $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                         $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\nPermohanan izin ananda telah *Di Tolak*.\n\n";
                         $message .= "*Alasan Penolakan :*\n".$request->reject_reason."\n";
                         $message .= "------------------\n";
@@ -250,11 +250,11 @@ class ListController extends Controller
                 }
                 if($request->status == 'canceled') {
                     // Try Get Parents Number
-                    $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                    if ($studentParent) {
-                        $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                    $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                    if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                        $parentNumber = $studentParent->parentDetail->phone;
                         // Send Whatsapp Notification
-                        $message = "Assalamualaikum Bapak/Ibu,.\n\n";
+                        $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                         $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\nPermohanan izin ananda telah *Di Batalkan*.\n\n";
                         $message .= "------------------\n";
                         $message .= "*Di Batalkan oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
@@ -283,11 +283,11 @@ class ListController extends Controller
                 }
                 if($request->status == 'check_in') {
                     // Try Get Parents Number
-                    $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                    if ($studentParent) {
-                        $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                    $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                    if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                        $parentNumber = $studentParent->parentDetail->phone;
                         // Send Whatsapp Notification
-                        $message = "Assalamualaikum Bapak/Ibu,.\n\n";
+                        $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                         $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\nTelah kembali ke Dayah/Sekolah.\n\n";
                         $message .= "*Check In Pada :*\n".dateIndo(date('Y-m-d'))."\n\n";
                         $message .= "------------------\n";

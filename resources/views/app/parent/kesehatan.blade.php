@@ -12,7 +12,21 @@
                 <div class="loaders"></div>
             </div>
         </div>
-    </div>   
+    </div>
+    
+    <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rekam Diganosa Kesehatan</h5>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts-mobile')
@@ -61,26 +75,7 @@
                                     </div>
                                     <div class="product-description">
                                         <div class="product-title d-block">${item.diagnose}</div>
-                                        <div class="d-flex flex-column gap-1">
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-hand-holding-medical bg-danger"></i><b>Tindakan : </b>&nbsp;${item.treatment}
-                                            </div>
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-pills bg-danger"></i><b>Obat : </b>&nbsp;${item.drug_given}
-                                            </div>
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-notes-medical bg-danger"></i><b>Catatan Dokter  : </b>&nbsp;${item.note}
-                                            </div>
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-home bg-info"></i><b>Di izinkan pulang : </b>&nbsp;${item.is_allow_home ? '<span class="badge rounded-pill badge-success">Ya</span>' : '<span class="badge rounded-pill badge-danger">Tidak</span>'}
-                                            </div>
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-star"></i><b>Di diagnosa Oleh : </b>&nbsp;${item.diagnozed_by.staff_detail.name}
-                                            </div>
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-calendar bg-primary"></i>${item.createdAt}
-                                            </div>
-                                        </div>
+                                        <button class="btn btn-sm btn-danger mt-1" id="btnModalDetail" data-id="${item.id}"><i class="fas fa-magnifying-glass"></i> Lihat Selengkapnya</button>
                                     </div>
                                 </div>
                             </div>
@@ -110,5 +105,56 @@
             }
         });
     });
+
+    // Modal Detail Riwayat Kesehatan on click
+    $(document).on('click', '#btnModalDetail', function() {
+        let id = $(this).data('id');
+        $.ajax({
+            url: "{{ route('parent.kesehatan.detail') }}",
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function(res) {
+                let html = `
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Diagnosa :</h6>
+                            <p class="px-3">${res.data.diagnose}</p>
+                        </div>
+                        <div class="col-12">
+                            <h6>Tindakan :</h6>
+                            <p class="px-3">${res.data.treatment}</p>
+                        </div>
+                        <div class="col-12">
+                            <h6>Obat diberikan :</h6>
+                            <p class="px-3">${res.data.drug_given}</p>
+                        </div>
+                        <div class="col-12">
+                            <h6>Catatan Dokter :</h6>
+                            <p class="px-3">${res.data.note}</p>
+                        </div>
+                        <div class="col-12">
+                            <h6>Di izinkan pulang :</h6>
+                            <p class="px-3">${res.data.is_allow_home ? 'Ya, Boleh Pulang <br>Silahkan hubungi bagian perizinan untuk mendapatkan token izin pulang' : 'Tidak dibenarkan pulang, <br>Disarankan cukup istirahat di asrama'}</p>
+                        </div>
+                        <div class="col-12">
+                            <h6>Di diagnosa Oleh :</h6>
+                            <p class="px-3">${res.data.diagnozed_by.staff_detail.name}</p>
+                        </div>
+                        <div class="col-12">
+                            <h6>Tanggal Kunjungan :</h6>
+                            <p class="px-3">${res.data.createdAt}</p>
+                        </div>
+                    </div>
+                `;
+                $('#modalDetail .modal-body').html(html);
+                $('#modalDetail').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    
 </script>
 @endpush

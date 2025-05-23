@@ -13,4 +13,9 @@ class ParentClaimStudent extends Model
         'parent_user_id',
         'student_user_id'
     ];
+
+    public function parentDetail()
+    {
+        return $this->belongsTo(ParentDetail::class, 'parent_user_id', 'user_id');
+    }
 }

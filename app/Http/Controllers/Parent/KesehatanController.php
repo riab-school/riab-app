@@ -55,4 +55,26 @@ class KesehatanController extends Controller
             ], 404);
         }
     }
+
+    public function getDetail(Request $request)
+    {
+        if ($request->ajax()) {
+            $history = StudentMedicalCheckHistory::where('id', $request->id)->first();
+            if ($history) {
+                $history->created_at = $history->createdAt = $history->created_at->format('d-M-Y H:i');
+                $history->diagnozed_by = $history->diagnozedBy->staffDetail->name ?? '-';
+                $history->evidence = $history->evidence !== NULL ? Storage::disk('s3')->url($history->evidence) : null;
+
+                return response()->json([
+                    'status' => true,
+                    'data' => $history
+                ], 200);
+            }
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Data not found'
+            ], 404);
+        }
+    }
 }

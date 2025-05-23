@@ -70,6 +70,7 @@ Route::prefix('prestasi')->group(function() {
 Route::prefix('kesehatan')->group(function() {
     Route::get('/', [KesehatanController::class, 'showPage'])->name('parent.kesehatan');
     Route::get('get-data', [KesehatanController::class, 'getData'])->name('parent.kesehatan.history');
+    Route::get('get-detail', [KesehatanController::class, 'getDetail'])->name('parent.kesehatan.detail');
 });
 
 Route::prefix('tahfidz')->group(function() {

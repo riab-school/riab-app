@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Staff\Prestasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\ParentClaimStudent;
 use App\Models\StudentDetail;
 use App\Models\StudentsAchievement;
-use App\Models\StudentsParentDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Storage;
@@ -85,11 +85,11 @@ class ListController extends Controller
 
             if($request->has('notify_parent') && $request->notify_parent == "1"){
                 // Try Get Parents Number
-                $studentParent = StudentsParentDetail::where('user_id', $request->user_id)->first();
-                if ($studentParent) {
-                    $parentNumber = $studentParent->dad_phone != null ? $studentParent->dad_phone : $studentParent->mom_phone;
+                $studentParent = ParentClaimStudent::where('student_user_id', $request->user_id)->first();
+                if ($studentParent && $studentParent->parentDetail->phone !== NULL && $studentParent->parentDetail->is_allow_send_wa) {
+                    $parentNumber = $studentParent->parentDetail->phone;
                     // Send Whatsapp Notification
-                    $message = "Assalamualaikum Bapak/Ibu,.\n\n";
+                    $message = "Assalamualaikum Bapak/Ibu, ".$studentParent->parentDetail->name."\n\n";
                     $message .= "*Ananda :*\n*".$data->userDetail->studentDetail->name."*\n\nTelah mendapatkan sebuah prestasi membanggakan\n\n";
                     $message .= "*Ket :*\n".$request->detail."\n\n";
                     $message .= "*Tindakan :*\n".$request->action_taked."\n\n";
