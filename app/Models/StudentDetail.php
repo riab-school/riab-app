@@ -82,4 +82,9 @@ class StudentDetail extends Model
     {
         return $this->hasOne(StudentsParentDetail::class, 'user_id', 'user_id');
     }
+
+    public function studentGuardianDetail()
+    {
+        return $this->hasOne(StudentsGuardianDetail::class, 'user_id', 'user_id');
+    }
 }

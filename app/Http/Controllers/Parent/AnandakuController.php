@@ -20,6 +20,7 @@ class AnandakuController extends Controller
             ->with([
                 'studentDocument',
                 'studentParentDetail',
+                'studentGuardianDetail',
                 'studentClassroomHistory' => function($q) use ($tahun_ajaran_id) {
                     $q->where('tahun_ajaran_id', $tahun_ajaran_id)
                     ->with('classroomDetail')

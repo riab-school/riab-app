@@ -19,7 +19,7 @@
 				</div>
 				@else
 				<div class="back-button me-2">
-					<a href="{{ url()->previous() }}">
+					<a href="javascript:void(0)" onclick="history.back()">
 						<i class="fa-solid fa-arrow-left-long"></i>
 					</a>
 				</div>

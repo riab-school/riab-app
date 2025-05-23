@@ -180,7 +180,7 @@
     <div class="container">
         <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
             <h6>Berita Terbaru</h6>
-            <a href="{{ route('parent.berita') }}" class="btn btn-primary btn-sm">Selengkapnya</a>
+            <a href="{{ route('parent.berita') }}" class="btn btn-primary btn-sm">Lihat Semua</a>
         </div>
         <div class="row gy-3 rtl-flex-d-row-r" id="renderBlog">
             <div class="text-center d-flex justify-content-center align-items-center py-5">
