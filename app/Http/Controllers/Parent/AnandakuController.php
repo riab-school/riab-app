@@ -89,7 +89,7 @@ class AnandakuController extends Controller
                     ], 400);
                 }
 
-                if ($check->student_user_id == $request->student_user_id) {
+                if ($check && $check->student_user_id == $request->student_user_id) {
                     return response()->json([
                         'status' => false,
                         'message' => 'Data santri sudah digunakan oleh akun lain'
