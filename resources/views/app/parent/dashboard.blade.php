@@ -16,19 +16,15 @@
                 </div>
                 
                 <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/2.jpg')">
-                    <div class="slide-content h-100 d-flex align-items-center">
-                        <div class="slide-text">
-                            <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Light Candle</h4>
-                            <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">Now only $22</p><a class="btn btn-success" href="#" data-animation="fadeInUp" data-delay="500ms" data-duration="1000ms">Buy Now</a>
-                        </div>
-                    </div>
+                    
                 </div>
                 
                 <div class="single-hero-slide" style="background-image: url('{{ asset('mobile-assets') }}/img/bg-img/3.jpg')">
                     <div class="slide-content h-100 d-flex align-items-center">
                         <div class="slide-text">
-                            <h4 class="text-white mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Best Furniture</h4>
-                            <p class="text-white" data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">3 years warranty</p><a class="btn btn-danger" href="#" data-animation="fadeInUp" data-delay="800ms" data-duration="1000ms">Buy Now</a>
+                            <h4 class="mb-0" data-animation="fadeInUp" data-delay="100ms" data-duration="1000ms">Jauh Lebih Mudah</h4>
+                            <p data-animation="fadeInUp" data-delay="400ms" data-duration="1000ms">Dapatkan informasi ananda <br>dalam 1 aplikasi</p>
+                            <a class="btn btn-danger" href="#" data-animation="fadeInUp" data-delay="800ms" data-duration="1000ms">Coba Sekarang</a>
                         </div>
                     </div>
                 </div>

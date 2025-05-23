@@ -23,7 +23,9 @@
         welcomeSlider.owlCarousel({
             items: 1,
             loop: true,
-            autoplay: false,
+            autoplay: true,
+            autoplayTimeout: 4000,
+            autoplayHoverPause: true,
             dots: true,
             center: true,
             margin: 0,
