@@ -112,7 +112,7 @@ class PerizinanController extends Controller
                         $history->applicantDetailtext = 'Siswa';
                         break;
                     case 'orang_tua':
-                        $history->applicantDetailtext = 'Ditolak';
+                        $history->applicantDetailtext = 'Orang Tua';
                         break;
                     case 'wali':
                         $history->applicantDetailtext = 'Wali Santri';
