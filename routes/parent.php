@@ -53,6 +53,7 @@ Route::prefix('anandaku')->group(function() {
 Route::prefix('perizinan')->group(function() {
     Route::get('/', [PerizinanController::class, 'showPage'])->name('parent.perizinan');
     Route::get('get-history', [PerizinanController::class, 'getHistory'])->name('parent.perizinan.history');
+    Route::get('get-detail', [PerizinanController::class, 'getDetail'])->name('parent.perizinan.detail');
     Route::get('request', [PerizinanController::class, 'showPageRequestPermission'])->name('parent.perizinan.request');
     Route::post('request', [PerizinanController::class, 'handleRequestPermission'])->name('parent.perizinan.handle');
 });

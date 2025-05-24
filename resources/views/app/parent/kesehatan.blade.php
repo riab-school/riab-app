@@ -75,6 +75,7 @@
                                     </div>
                                     <div class="product-description">
                                         <div class="product-title d-block">${item.diagnose}</div>
+                                        <div class="product-title d-block">${item.createdAt}</div>
                                         <button class="btn btn-sm btn-danger mt-1" id="btnModalDetail" data-id="${item.id}"><i class="fas fa-magnifying-glass"></i> Lihat Selengkapnya</button>
                                     </div>
                                 </div>
@@ -127,7 +128,7 @@
                         </div>
                         <div class="col-12">
                             <h6>Obat diberikan :</h6>
-                            <p class="px-3">${res.data.drug_given}</p>
+                            <p class="px-3">${res.data.drug_given.replace(/(?:\r\n|\r|\n)/g, "<br>")}</p>
                         </div>
                         <div class="col-12">
                             <h6>Catatan Dokter :</h6>

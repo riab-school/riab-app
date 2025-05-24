@@ -13,6 +13,19 @@
                 <div class="loaders"></div>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail Perizinan</h5>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+            </div>
+        </div>
     </div>   
 @endsection
 
@@ -69,54 +82,6 @@
                             statusBadge = '<span class="badge rounded-pill badge-light">N/A</span>';
                             break;
                     }
-
-                    let detailHtml = '';
-                    if (item.status === 'rejected') {
-                        detailHtml = `
-                            <div class="product-rating">
-                                <i class="fa-solid fa-comment-dots bg-danger"></i><b>Alasan ditolak :</b>&nbsp;${item.reject_reason}
-                            </div>
-                            <div class="product-rating">
-                                <i class="fa-solid fa-comment-dots bg-danger"></i><b>Di tolak oleh :</b>&nbsp;${item.rejected_by.staff_detail.name}
-                            </div>
-                        `;
-                    }
-
-                    if (item.status === 'requested') {
-                        detailHtml = `
-                            <div class="product-rating">
-                                <i class="fa-solid fa-comment-dots bg-danger"></i><b>Dimohon oleh :</b>&nbsp;${item.requested_by}
-                            </div>
-                            
-                        `;
-                    }
-
-                    if (item.status === 'approved') {
-                        detailHtml = `
-                            <div class="product-rating">
-                                <i class="fa-solid fa-comment-dots bg-danger"></i><b>Pemberi izin :</b>&nbsp;${item.approved_by.staff_detail.name}
-                            </div>
-                            <div class="product-rating">
-                                <i class="fa-solid fa-key bg-danger"></i><b>Token :</b>&nbsp;<span class="fw-bold">${item.token ? item.token : '-'}</span> 
-                            </div>
-                        `;
-                    }
-
-                    if (item.status === 'check_in') {
-                        detailHtml = `
-                            <div class="product-rating">
-                                <i class="fa-solid fa-comment-dots bg-danger"></i><b>Diterima Kembali Oleh :</b>&nbsp;${item.checked_in_by.staff_detail.name}
-                            </div>
-                        `;
-                    }
-
-                    if (item.status === 'check_out') {
-                        detailHtml = `
-                            <div class="product-rating">
-                                <i class="fa-solid fa-comment-dots bg-danger"></i><b>Pemeriksaan POS Oleh :</b>&nbsp;${item.checked_out_by.staff_detail.name}
-                            </div>
-                        `;
-                    }
                     html += `
                         <div class="col-12">
                             <div class="horizontal-product-card">
@@ -131,15 +96,10 @@
                                             ${statusBadge}
                                         </a>
                                         <div class="product-title d-block">${item.reason}</div>
-                                        <div class="d-flex flex-column gap-1">
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-calendar bg-primary"></i>${item.from_date} s/d ${item.to_date}
-                                            </div>
-                                            <div class="product-rating">
-                                                <i class="fa-solid fa-star"></i><b>Di Jemput Oleh :</b>&nbsp;${item.pickup_by}
-                                            </div>
-                                            ${detailHtml}
+                                        <div class="product-rating">
+                                            ${item.from_date} s/d ${item.to_date}
                                         </div>
+                                        <button class="btn btn-sm btn-danger mt-1" id="btnModalDetail" data-id="${item.id}"><i class="fas fa-magnifying-glass"></i> Lihat Selengkapnya</button>
                                     </div>
                                 </div>
                             </div>
@@ -166,6 +126,142 @@
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
                 loadRiwayat();
+            }
+        });
+    });
+
+    $(document).on('click', '#btnModalDetail', function() {
+        let id = $(this).data('id');
+        $.ajax({
+            url: "{{ route('parent.perizinan.detail') }}",
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function(res) {
+                let detailHtml = '';
+                if (res.data.status === 'rejected') {
+                    detailHtml = `
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Alasan Penolakan :</h6>
+                                <p class="px-3">${res.data.reject_reason}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Ditolak Oleh :</h6>
+                                <p class="px-3">${res.data.rejected_by.staff_detail.name}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (res.data.status === 'requested') {
+                    detailHtml = `
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Di mohon oleh :</h6>
+                                <p class="px-3">${res.data.requested_by}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (res.data.status === 'approved') {
+                    detailHtml = `
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Pemberi izin :</h6>
+                                <p class="px-3">${res.data.approved_by.staff_detail.name}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Token izin :</h6>
+                                <h4 class="px-3"><span class="fw-bold">${res.data.token ? res.data.token : '-'}</span></h4>
+                                <span class="text-muted px-3">*Tunjukan token ini kepada petugas pos saat keluar atau kembali</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (res.data.status === 'check_in') {
+                    detailHtml = `
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Pemberi izin :</h6>
+                                <p class="px-3">${res.data.approved_by.staff_detail.name}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Petugas Pos Check In :</h6>
+                                <p class="px-3">${res.data.checked_in_by.staff_detail.name}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (res.data.status === 'check_out') {
+                    detailHtml = `
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Pemberi izin :</h6>
+                                <p class="px-3">${res.data.approved_by.staff_detail.name}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Petugas Pos Check Out :</h6>
+                                <p class="px-3">${res.data.checked_out_by.staff_detail.name}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                let html = `
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Tujuan Izin :</h6>
+                            <p class="px-3">${res.data.reason}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Pemohon Izin :</h6>
+                            <p class="px-3">${res.data.applicantDetailtext}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Dari Tanggal :</h6>
+                            <p class="px-3">${res.data.from_date}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Hingga Tanggal :</h6>
+                            <p class="px-3">${res.data.to_date}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Di Jemput Oleh :</h6>
+                            <p class="px-3">${res.data.pickup_by}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Status :</h6>
+                            <p class="px-3">${res.data.statusText}</p>
+                        </div>
+                    </div>
+                    ${detailHtml}
+                `;
+                $('#modalDetail .modal-body').html(html);
+                $('#modalDetail').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     });

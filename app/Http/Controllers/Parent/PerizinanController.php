@@ -73,6 +73,63 @@ class PerizinanController extends Controller
         }
     }
 
+    public function getDetail(Request $request)
+    {
+        if ($request->ajax()) {
+            $history = StudentPermissionHistory::where('id', $request->id)->with(['approvedBy', 'rejectedBy', 'checkedInBy', 'checkedOutBy'])->first();
+            if ($history) {
+                // Map From Date and To Date
+                $history->from_date = $history->from_date !== NULL ? dateIndo($history->from_date) : '-';
+                $history->to_date = $history->to_date !== NULL ? dateIndo($history->to_date) : '-';
+                $history->rejected_by = $history->rejected_by !== NULL ? $history->rejectedBy->staffDetail->name : '-';
+                $history->approved_by = $history->approved_by !== NULL ? $history->approvedBy->staffDetail->name : '-';
+                $history->checked_in_by = $history->checked_in_by !== NULL ? $history->checkedInBy->staffDetail->name : '-';
+                $history->checked_out_by = $history->checked_out_by !== NULL ? $history->checkedOutBy->staffDetail->name : '-';
+                //switch status
+                switch ($history->status) {
+                    case 'requested':
+                        $history->statusText = 'Menunggu Persetujuan';
+                        break;
+                    case 'approved':
+                        $history->statusText = 'Disetujui';
+                        break;
+                    case 'rejected':
+                        $history->statusText = 'Ditolak';
+                        break;
+                    case 'check_out':
+                        $history->statusText = 'Sudah Keluar';
+                        break;
+                    case 'check_in':
+                        $history->statusText = 'Sudah Kembali';
+                        break;
+                }
+                //switch status
+                switch ($history->requested_by) {
+                    case 'staff_kesehatan':
+                        $history->applicantDetailtext = 'Staff Kesehatan';
+                        break;
+                    case 'siswa':
+                        $history->applicantDetailtext = 'Siswa';
+                        break;
+                    case 'orang_tua':
+                        $history->applicantDetailtext = 'Ditolak';
+                        break;
+                    case 'wali':
+                        $history->applicantDetailtext = 'Wali Santri';
+                        break;
+                }
+                return response()->json([
+                    'status' => true,
+                    'data' => $history
+                ], 200);
+            }
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Data not found'
+            ], 404);
+        }
+    }
 
     public function showPageRequestPermission()
     {
