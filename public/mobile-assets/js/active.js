@@ -24,7 +24,7 @@
             items: 1,
             loop: true,
             autoplay: true,
-            autoplayTimeout: 4000,
+            autoplayTimeout: 6000,
             autoplayHoverPause: true,
             dots: true,
             center: true,
