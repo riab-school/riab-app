@@ -29,8 +29,8 @@ class StudentImport implements ToModel, WithHeadingRow
     {
         // Create a new user and student detail
         $studentActive = User::create([
-            'username'                  => $row['nisn'],
-            'password'                  => bcrypt($row['nisn']),
+            'username'                  => $row['nis'],
+            'password'                  => bcrypt($row['nis']),
             'password_changed_at'       => now(),
             'is_need_to_update_profile' => true,
             'user_level'                => 'student',
@@ -59,7 +59,7 @@ class StudentImport implements ToModel, WithHeadingRow
         return StudentDetail::create([
             'user_id'           => $studentActive->id,
             'name'              => strtoupper($row['name']),
-            'nisn'              => $row['nisn'],
+            'nisn'              => $row['nisn'] ?? NULL,
             'nis'               => $row['nis'],
             'place_of_birth'    => strtoupper($row['place_of_birth']),
             'date_of_birth'     => $row['date_of_birth'],

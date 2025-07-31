@@ -29,6 +29,7 @@ class StaffImport implements ToModel, WithHeadingRow
             'user_id'           => $staff->id,
             'employee_number'   => $row['nip'],
             'name'              => strtoupper($row['full_name']),
+            'role_id'           => '1',
             'status'            => 'active',
         ]);
     }
