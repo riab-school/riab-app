@@ -69,7 +69,6 @@ class ListController extends Controller
 
     public function handleCreatePermission(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'user_id'       => 'required|exists:users,id',
             'reason'        => 'required|string',

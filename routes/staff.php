@@ -38,6 +38,9 @@ use App\Http\Controllers\Staff\Kesehatan\ReportController as KesehatanReportCont
 
 
 use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController as ListClassroomController;
+use App\Http\Controllers\Staff\Tahfidz\CreateController;
+use App\Http\Controllers\Staff\Tahfidz\DashboardController;
+use App\Http\Controllers\Staff\Tahfidz\ListController;
 
 Route::get('/', [HomeController::class, 'homePageStaff'])->name('staff.home');
 
@@ -163,11 +166,16 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
     });
 
     Route::prefix('hafalan-tahfidz')->group(function() {
-        Route::get('dashboard', function() {
-            return view('coming-soon');
+        Route::prefix('dashboard')->group(function() {
+            Route::get('/', [DashboardController::class, 'showDashboard'])->name('staff.tahfidz.dashboard');
+            Route::get('card', [DashboardController::class, 'cardData'])->name('staff.tahfidz.dashboard.card');
+            Route::get('chart1', [DashboardController::class, 'getStudentCountPerJuz'])->name('staff.tahfidz.dashboard.chart-1');
         });
-        Route::get('list', function() {
-            return view('coming-soon');
+        Route::prefix('list')->group(function() {
+            Route::get('/', [ListController::class, 'showListPage'])->name('staff.tahfidz.list');
+            Route::get('create', [CreateController::class, 'showCreatePage'])->name('staff.tahfidz.list.create');
+            Route::post('store', [CreateController::class, 'handleStoreTahfidz'])->name('staff.tahfidz.list.create.store');
+            Route::get('search', [ListController::class, 'searchData'])->name('staff.tahfidz.list.serach');
         });
         Route::get('laporan', function() {
             return view('coming-soon');

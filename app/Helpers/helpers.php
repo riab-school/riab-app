@@ -3,6 +3,7 @@
 use App\Models\AppLog;
 use App\Models\AppSettings;
 use App\Models\WhatsappChatHistory;
+use Illuminate\Support\Facades\DB;
 
 if(!function_exists('appSet')){
     function appSet($key){
@@ -363,3 +364,89 @@ if(!function_exists('sendMedia')) {
         ]);
     }
 }
+
+if (!function_exists('getTotalAyatInSurah')) {
+    function getTotalAyatInSurah($surah)
+    {
+        $totalAyat = DB::table('master_alqurans')
+            ->where('nomor_surah', $surah)
+            ->value('total_ayat');
+        return $totalAyat;
+    }
+}
+
+function getJuzProgress($userId)
+{
+    $memorizedAyats = DB::table('students_memorizations')
+        ->where('user_id', $userId)
+        ->get();
+
+    $memorizedAyatKeys = [];
+
+    foreach ($memorizedAyats as $memorization) {
+        for ($i = $memorization->from_ayat; $i <= $memorization->to_ayat; $i++) {
+            $key = $memorization->surah . ':' . $i;
+            $memorizedAyatKeys[$key] = true;
+        }
+    }
+
+    $juzList = DB::table('master_juzs')->get();
+
+    $progress = [];
+
+    foreach ($juzList as $juz) {
+        $matchedAyats = 0;
+        $totalAyats = 0;
+
+        for (
+            $surah = $juz->from_surah;
+            $surah <= $juz->to_surah;
+            $surah++
+        ) {
+            $startAyat = ($surah == $juz->from_surah) ? $juz->from_ayat : 1;
+            $endAyat = ($surah == $juz->to_surah) ? $juz->to_ayat : getTotalAyatInSurah($surah); // Helper
+
+            for ($i = $startAyat; $i <= $endAyat; $i++) {
+                $totalAyats++;
+                if (isset($memorizedAyatKeys["$surah:$i"])) {
+                    $matchedAyats++;
+                }
+            }
+        }
+
+        $percent = ($totalAyats > 0) ? round(($matchedAyats / $totalAyats) * 100, 2) : 0;
+
+        $progress[] = [
+            'juz' => $juz->juz,
+            'percent' => $percent,
+        ];
+    }
+
+    return $progress;
+}
+
+function getAyatRange($fromSurah, $fromAyat, $toSurah, $toAyat)
+{
+    $ayatList = [];
+
+    for ($surah = $fromSurah; $surah <= $toSurah; $surah++) {
+        $totalAyat = getTotalAyatInSurah($surah);
+
+        $start = ($surah == $fromSurah) ? $fromAyat : 1;
+        $end = ($surah == $toSurah) ? $toAyat : $totalAyat;
+
+        for ($ayat = $start; $ayat <= $end; $ayat++) {
+            $ayatList[] = "{$surah}:{$ayat}";
+        }
+    }
+
+    return $ayatList;
+}
+
+function getTotalAyatInSurah($surah)
+{
+    return DB::table('master_alqurans')
+        ->where('nomor_surah', $surah)
+        ->value('total_ayat');
+}
+

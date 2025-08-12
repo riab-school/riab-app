@@ -87,4 +87,9 @@ class StudentDetail extends Model
     {
         return $this->hasOne(StudentsGuardianDetail::class, 'user_id', 'user_id');
     }
+
+    public function studentTahfidzHistory()
+    {
+        return $this->hasMany(StudentsMemorization::class, 'user_id', 'user_id');
+    }
 }
