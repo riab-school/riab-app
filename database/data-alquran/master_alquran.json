@@ -1,0 +1,572 @@
+[
+  {
+    "nomor_surah": 1,
+    "nama_surah": "Al-Fatihah",
+    "total_ayat": 7
+  },
+  {
+    "nomor_surah": 2,
+    "nama_surah": "Al-Baqarah",
+    "total_ayat": 286
+  },
+  {
+    "nomor_surah": 3,
+    "nama_surah": "Ali 'Imran",
+    "total_ayat": 200
+  },
+  {
+    "nomor_surah": 4,
+    "nama_surah": "An-Nisa'",
+    "total_ayat": 176
+  },
+  {
+    "nomor_surah": 5,
+    "nama_surah": "Al-Ma'idah",
+    "total_ayat": 120
+  },
+  {
+    "nomor_surah": 6,
+    "nama_surah": "Al-An'am",
+    "total_ayat": 165
+  },
+  {
+    "nomor_surah": 7,
+    "nama_surah": "Al-A'raf",
+    "total_ayat": 206
+  },
+  {
+    "nomor_surah": 8,
+    "nama_surah": "Al-Anfal",
+    "total_ayat": 75
+  },
+  {
+    "nomor_surah": 9,
+    "nama_surah": "At-Tawbah",
+    "total_ayat": 129
+  },
+  {
+    "nomor_surah": 10,
+    "nama_surah": "Yunus",
+    "total_ayat": 109
+  },
+  {
+    "nomor_surah": 11,
+    "nama_surah": "Hud",
+    "total_ayat": 123
+  },
+  {
+    "nomor_surah": 12,
+    "nama_surah": "Yusuf",
+    "total_ayat": 111
+  },
+  {
+    "nomor_surah": 13,
+    "nama_surah": "Ar-Ra'd",
+    "total_ayat": 43
+  },
+  {
+    "nomor_surah": 14,
+    "nama_surah": "Ibrahim",
+    "total_ayat": 52
+  },
+  {
+    "nomor_surah": 15,
+    "nama_surah": "Al-Hijr",
+    "total_ayat": 99
+  },
+  {
+    "nomor_surah": 16,
+    "nama_surah": "An-Nahl",
+    "total_ayat": 128
+  },
+  {
+    "nomor_surah": 17,
+    "nama_surah": "Al-Isra'",
+    "total_ayat": 111
+  },
+  {
+    "nomor_surah": 18,
+    "nama_surah": "Al-Kahf",
+    "total_ayat": 110
+  },
+  {
+    "nomor_surah": 19,
+    "nama_surah": "Maryam",
+    "total_ayat": 98
+  },
+  {
+    "nomor_surah": 20,
+    "nama_surah": "Ta-Ha",
+    "total_ayat": 135
+  },
+  {
+    "nomor_surah": 21,
+    "nama_surah": "Al-Anbiya'",
+    "total_ayat": 112
+  },
+  {
+    "nomor_surah": 22,
+    "nama_surah": "Al-Hajj",
+    "total_ayat": 78
+  },
+  {
+    "nomor_surah": 23,
+    "nama_surah": "Al-Mu'minun",
+    "total_ayat": 118
+  },
+  {
+    "nomor_surah": 24,
+    "nama_surah": "An-Nur",
+    "total_ayat": 64
+  },
+  {
+    "nomor_surah": 25,
+    "nama_surah": "Al-Furqan",
+    "total_ayat": 77
+  },
+  {
+    "nomor_surah": 26,
+    "nama_surah": "Ash-Shu'ara'",
+    "total_ayat": 227
+  },
+  {
+    "nomor_surah": 27,
+    "nama_surah": "An-Naml",
+    "total_ayat": 93
+  },
+  {
+    "nomor_surah": 28,
+    "nama_surah": "Al-Qasas",
+    "total_ayat": 88
+  },
+  {
+    "nomor_surah": 29,
+    "nama_surah": "Al-'Ankabut",
+    "total_ayat": 69
+  },
+  {
+    "nomor_surah": 30,
+    "nama_surah": "Ar-Rum",
+    "total_ayat": 60
+  },
+  {
+    "nomor_surah": 31,
+    "nama_surah": "Luqman",
+    "total_ayat": 34
+  },
+  {
+    "nomor_surah": 32,
+    "nama_surah": "As-Sajdah",
+    "total_ayat": 30
+  },
+  {
+    "nomor_surah": 33,
+    "nama_surah": "Al-Ahzab",
+    "total_ayat": 73
+  },
+  {
+    "nomor_surah": 34,
+    "nama_surah": "Saba'",
+    "total_ayat": 54
+  },
+  {
+    "nomor_surah": 35,
+    "nama_surah": "Fatir",
+    "total_ayat": 45
+  },
+  {
+    "nomor_surah": 36,
+    "nama_surah": "Ya-Sin",
+    "total_ayat": 83
+  },
+  {
+    "nomor_surah": 37,
+    "nama_surah": "As-Saffat",
+    "total_ayat": 182
+  },
+  {
+    "nomor_surah": 38,
+    "nama_surah": "Sad",
+    "total_ayat": 88
+  },
+  {
+    "nomor_surah": 39,
+    "nama_surah": "Az-Zumar",
+    "total_ayat": 75
+  },
+  {
+    "nomor_surah": 40,
+    "nama_surah": "Ghafir",
+    "total_ayat": 85
+  },
+  {
+    "nomor_surah": 41,
+    "nama_surah": "Fussilat",
+    "total_ayat": 54
+  },
+  {
+    "nomor_surah": 42,
+    "nama_surah": "Ash-Shura",
+    "total_ayat": 53
+  },
+  {
+    "nomor_surah": 43,
+    "nama_surah": "Az-Zukhruf",
+    "total_ayat": 89
+  },
+  {
+    "nomor_surah": 44,
+    "nama_surah": "Ad-Dukhan",
+    "total_ayat": 59
+  },
+  {
+    "nomor_surah": 45,
+    "nama_surah": "Al-Jathiyah",
+    "total_ayat": 37
+  },
+  {
+    "nomor_surah": 46,
+    "nama_surah": "Al-Ahqaf",
+    "total_ayat": 35
+  },
+  {
+    "nomor_surah": 47,
+    "nama_surah": "Muhammad",
+    "total_ayat": 38
+  },
+  {
+    "nomor_surah": 48,
+    "nama_surah": "Al-Fath",
+    "total_ayat": 29
+  },
+  {
+    "nomor_surah": 49,
+    "nama_surah": "Al-Hujurat",
+    "total_ayat": 18
+  },
+  {
+    "nomor_surah": 50,
+    "nama_surah": "Qaf",
+    "total_ayat": 45
+  },
+  {
+    "nomor_surah": 51,
+    "nama_surah": "Adh-Dhariyat",
+    "total_ayat": 60
+  },
+  {
+    "nomor_surah": 52,
+    "nama_surah": "At-Tur",
+    "total_ayat": 49
+  },
+  {
+    "nomor_surah": 53,
+    "nama_surah": "An-Najm",
+    "total_ayat": 62
+  },
+  {
+    "nomor_surah": 54,
+    "nama_surah": "Al-Qamar",
+    "total_ayat": 55
+  },
+  {
+    "nomor_surah": 55,
+    "nama_surah": "Ar-Rahman",
+    "total_ayat": 78
+  },
+  {
+    "nomor_surah": 56,
+    "nama_surah": "Al-Waqi'ah",
+    "total_ayat": 96
+  },
+  {
+    "nomor_surah": 57,
+    "nama_surah": "Al-Hadid",
+    "total_ayat": 29
+  },
+  {
+    "nomor_surah": 58,
+    "nama_surah": "Al-Mujadila",
+    "total_ayat": 22
+  },
+  {
+    "nomor_surah": 59,
+    "nama_surah": "Al-Hashr",
+    "total_ayat": 24
+  },
+  {
+    "nomor_surah": 60,
+    "nama_surah": "Al-Mumtahanah",
+    "total_ayat": 13
+  },
+  {
+    "nomor_surah": 61,
+    "nama_surah": "As-Saff",
+    "total_ayat": 14
+  },
+  {
+    "nomor_surah": 62,
+    "nama_surah": "Al-Jumu'ah",
+    "total_ayat": 11
+  },
+  {
+    "nomor_surah": 63,
+    "nama_surah": "Al-Munafiqun",
+    "total_ayat": 11
+  },
+  {
+    "nomor_surah": 64,
+    "nama_surah": "At-Taghabun",
+    "total_ayat": 18
+  },
+  {
+    "nomor_surah": 65,
+    "nama_surah": "At-Talaq",
+    "total_ayat": 12
+  },
+  {
+    "nomor_surah": 66,
+    "nama_surah": "At-Tahrim",
+    "total_ayat": 12
+  },
+  {
+    "nomor_surah": 67,
+    "nama_surah": "Al-Mulk",
+    "total_ayat": 30
+  },
+  {
+    "nomor_surah": 68,
+    "nama_surah": "Al-Qalam",
+    "total_ayat": 52
+  },
+  {
+    "nomor_surah": 69,
+    "nama_surah": "Al-Haqqah",
+    "total_ayat": 52
+  },
+  {
+    "nomor_surah": 70,
+    "nama_surah": "Al-Ma'arij",
+    "total_ayat": 44
+  },
+  {
+    "nomor_surah": 71,
+    "nama_surah": "Nuh",
+    "total_ayat": 28
+  },
+  {
+    "nomor_surah": 72,
+    "nama_surah": "Al-Jinn",
+    "total_ayat": 28
+  },
+  {
+    "nomor_surah": 73,
+    "nama_surah": "Al-Muzzammil",
+    "total_ayat": 20
+  },
+  {
+    "nomor_surah": 74,
+    "nama_surah": "Al-Muddaththir",
+    "total_ayat": 56
+  },
+  {
+    "nomor_surah": 75,
+    "nama_surah": "Al-Qiyamah",
+    "total_ayat": 40
+  },
+  {
+    "nomor_surah": 76,
+    "nama_surah": "Al-Insan",
+    "total_ayat": 31
+  },
+  {
+    "nomor_surah": 77,
+    "nama_surah": "Al-Mursalat",
+    "total_ayat": 50
+  },
+  {
+    "nomor_surah": 78,
+    "nama_surah": "An-Naba'",
+    "total_ayat": 40
+  },
+  {
+    "nomor_surah": 79,
+    "nama_surah": "An-Nazi'at",
+    "total_ayat": 46
+  },
+  {
+    "nomor_surah": 80,
+    "nama_surah": "'Abasa",
+    "total_ayat": 42
+  },
+  {
+    "nomor_surah": 81,
+    "nama_surah": "At-Takwir",
+    "total_ayat": 29
+  },
+  {
+    "nomor_surah": 82,
+    "nama_surah": "Al-Infitar",
+    "total_ayat": 19
+  },
+  {
+    "nomor_surah": 83,
+    "nama_surah": "Al-Mutaffifin",
+    "total_ayat": 36
+  },
+  {
+    "nomor_surah": 84,
+    "nama_surah": "Al-Inshiqaq",
+    "total_ayat": 25
+  },
+  {
+    "nomor_surah": 85,
+    "nama_surah": "Al-Buruj",
+    "total_ayat": 22
+  },
+  {
+    "nomor_surah": 86,
+    "nama_surah": "At-Tariq",
+    "total_ayat": 17
+  },
+  {
+    "nomor_surah": 87,
+    "nama_surah": "Al-A'la",
+    "total_ayat": 19
+  },
+  {
+    "nomor_surah": 88,
+    "nama_surah": "Al-Ghashiyah",
+    "total_ayat": 26
+  },
+  {
+    "nomor_surah": 89,
+    "nama_surah": "Al-Fajr",
+    "total_ayat": 30
+  },
+  {
+    "nomor_surah": 90,
+    "nama_surah": "Al-Balad",
+    "total_ayat": 20
+  },
+  {
+    "nomor_surah": 91,
+    "nama_surah": "Ash-Shams",
+    "total_ayat": 15
+  },
+  {
+    "nomor_surah": 92,
+    "nama_surah": "Al-Layl",
+    "total_ayat": 21
+  },
+  {
+    "nomor_surah": 93,
+    "nama_surah": "Ad-Duhaa",
+    "total_ayat": 11
+  },
+  {
+    "nomor_surah": 94,
+    "nama_surah": "Ash-Sharh",
+    "total_ayat": 8
+  },
+  {
+    "nomor_surah": 95,
+    "nama_surah": "At-Tin",
+    "total_ayat": 8
+  },
+  {
+    "nomor_surah": 96,
+    "nama_surah": "Al-'Alaq",
+    "total_ayat": 19
+  },
+  {
+    "nomor_surah": 97,
+    "nama_surah": "Al-Qadr",
+    "total_ayat": 5
+  },
+  {
+    "nomor_surah": 98,
+    "nama_surah": "Al-Bayyinah",
+    "total_ayat": 8
+  },
+  {
+    "nomor_surah": 99,
+    "nama_surah": "Az-Zalzalah",
+    "total_ayat": 8
+  },
+  {
+    "nomor_surah": 100,
+    "nama_surah": "Al-'Adiyat",
+    "total_ayat": 11
+  },
+  {
+    "nomor_surah": 101,
+    "nama_surah": "Al-Qari'ah",
+    "total_ayat": 11
+  },
+  {
+    "nomor_surah": 102,
+    "nama_surah": "At-Takathur",
+    "total_ayat": 8
+  },
+  {
+    "nomor_surah": 103,
+    "nama_surah": "Al-'Asr",
+    "total_ayat": 3
+  },
+  {
+    "nomor_surah": 104,
+    "nama_surah": "Al-Humazah",
+    "total_ayat": 9
+  },
+  {
+    "nomor_surah": 105,
+    "nama_surah": "Al-Fil",
+    "total_ayat": 5
+  },
+  {
+    "nomor_surah": 106,
+    "nama_surah": "Quraysh",
+    "total_ayat": 4
+  },
+  {
+    "nomor_surah": 107,
+    "nama_surah": "Al-Ma'un",
+    "total_ayat": 7
+  },
+  {
+    "nomor_surah": 108,
+    "nama_surah": "Al-Kawthar",
+    "total_ayat": 3
+  },
+  {
+    "nomor_surah": 109,
+    "nama_surah": "Al-Kafirun",
+    "total_ayat": 6
+  },
+  {
+    "nomor_surah": 110,
+    "nama_surah": "An-Nasr",
+    "total_ayat": 3
+  },
+  {
+    "nomor_surah": 111,
+    "nama_surah": "Al-Masad",
+    "total_ayat": 5
+  },
+  {
+    "nomor_surah": 112,
+    "nama_surah": "Al-Ikhlas",
+    "total_ayat": 4
+  },
+  {
+    "nomor_surah": 113,
+    "nama_surah": "Al-Falaq",
+    "total_ayat": 5
+  },
+  {
+    "nomor_surah": 114,
+    "nama_surah": "An-Nas",
+    "total_ayat": 6
+  }
+]

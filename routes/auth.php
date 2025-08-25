@@ -11,13 +11,13 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'handleLogin'])->name('login.action');
 
+Route::get('logout', function (Request $request) {
+    auth()->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect()->route('splash');
+})->name('logout');
 Route::middleware('auth')->group(function () {
-    Route::get('logout', function (Request $request) {
-        auth()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('splash');
-    })->name('logout');
 });
 
 Route::middleware('guest')->group(function () {
