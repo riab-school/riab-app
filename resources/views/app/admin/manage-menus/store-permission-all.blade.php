@@ -1,5 +1,27 @@
 @extends('_layouts.app-layouts.index')
 
+@push('styles')
+    <style>
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px) !important; /* Tinggi seperti form-control bootstrap */
+            padding: 0.375rem 0.75rem !important;
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+            border-radius: 0.25rem !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 1.5 !important;
+            padding-left: 0 !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
+            right: 0.75rem !important;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -20,8 +42,8 @@
         <div class="collapse mb-2" id="collapseExample">
             <form class="row row-cols-md-auto g-3 align-items-center" action="{{ route('admin.manage-menu.permission.save') }}" method="POST" onsubmit="return processData(this)">
                 @csrf
-                <div class="col-md-3">
-                    <select class="form-control form-control-sm" id="user_id" name="user_id" required>
+                <div class="col-6">
+                    <select class="form-control w-100" id="user_id" name="user_id" required>
                         <option selected="">Pilih User...</option>
                         @foreach ($userList as $item)
                         <option value="{{ $item->id }}">{{ $item->username }} - {{ $item->user_level == 'staff' ? $item->staffDetail->name : $item->adminDetail->name }}</option>    
@@ -107,7 +129,9 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('assets/js/plugins/select2.full.min.js') }}"></script>
     <script>
+        $("#user_id").select2();
         $(document).ready(function () {
             var table = $('#dataTable').DataTable({
                 "lengthMenu": [ [50, -1], [50, "All"] ],

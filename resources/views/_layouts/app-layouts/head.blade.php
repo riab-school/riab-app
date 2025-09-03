@@ -11,10 +11,11 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<link rel="icon" href="{{ asset(appSet('SCHOOL_ICON')) }}" type="image/x-icon">
+	<link rel="stylesheet" href="{{ asset('assets/css/plugins/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/plugins/animation/css/animate.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/plugins/data-tables/css/datatables.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
 	@stack('styles')
 
