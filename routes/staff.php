@@ -43,6 +43,7 @@ use App\Http\Controllers\Staff\Tahfidz\DashboardController;
 use App\Http\Controllers\Staff\Tahfidz\ListController;
 
 Route::get('/', [HomeController::class, 'homePageStaff'])->name('staff.home');
+Route::get('search', [HomeController::class, 'searchList'])->name('staff.search.student');
 
 //Group Middleware
 Route::middleware([EnsureCanAccessMenu::class])->group(function() {
@@ -127,6 +128,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::get('add', [PerizinanListController::class, 'createPagePermission'])->name('staff.perizinan.create');
             Route::post('add', [PerizinanListController::class, 'handleCreatePermission'])->name('staff.perizinan.handle.create');
             Route::get('search', [PerizinanListController::class, 'searchData'])->name('staff.perizinan.search');
+            Route::get('search/list', [PerizinanListController::class, 'searchList'])->name('staff.perizinan.search.list');
             Route::post('status', [PerizinanListController::class, 'handleUpdateStatus'])->name('staff.perizinan.status');
         });
         Route::prefix('laporan')->group(function() {

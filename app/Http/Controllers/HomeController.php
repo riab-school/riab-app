@@ -132,4 +132,28 @@ class HomeController extends Controller
         return view('sample');
     }
 
+    public function searchList(Request $request)
+    {
+        if($request->ajax()){
+            $search = $request->q;
+            $data = StudentDetail::with(['studentPermissionHistory'])
+                    ->where('nis', 'like', "%{$search}%")
+                    ->orWhere('nisn', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->select('nis', 'nisn', 'name')
+                    ->limit(10)
+                    ->get();
+            if ($data->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data not found'
+                ], 404);
+            }
+            return response()->json([
+                'status' => true,
+                'data' => $data
+            ], 200);
+        }
+    }
+
 }

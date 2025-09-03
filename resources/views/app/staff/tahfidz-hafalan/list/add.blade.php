@@ -11,12 +11,9 @@
                 <form action="{{ route('staff.tahfidz.list.create.store') }}" method="POST" onsubmit="return processData(this)" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="nis">NIS / NISN</label>
+                        <label for="nis_or_nisn">NIS / NISN / Nama</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="nis_or_nisn" name="nis_or_nisn" placeholder="Masukkan NIS / NISN" required>
-                            <button type="button" class="btn btn-primary" id="search-button">
-                                <i class="feather icon-search"></i> Cari
-                            </button>
+                            <select class="form-control" id="nis_or_nisn" name="nis_or_nisn" required></select>
                         </div>
                     </div>
                     <div class="d-none" id="input-section">
@@ -111,12 +108,12 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Riwayat Hafalan</h5>
-                <form action="#" method="POST" onsubmit="processData(this);" id="form-report" class="d-none">
+                {{-- <form action="#" method="POST" onsubmit="processData(this);" id="form-report" class="d-none">
                     @csrf
                     <input type="hidden" class="form-control" id="report_by" name="report_by" value="nis_nisn" required>
                     <input type="hidden" class="form-control" id="id_siswa" name="id_siswa" value="" required>
                     <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-print"></i> Cetak Laporan</button>
-                </form>
+                </form> --}}
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -154,77 +151,98 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('assets/js/plugins/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/chart-chartjs/js/Chart.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#search-button').on('click', function() {
-                var nisOrNisn = $('#nis_or_nisn').val();
-                if (nisOrNisn.length >= 3) {
-                    $.ajax({
-                        url: '{{ route('staff.tahfidz.list.serach') }}',
-                        type: 'GET',
-                        data: { nis_or_nisn: nisOrNisn },
-                        success: function(response) {
-                            if (response.status) {
-                                $('#dataTable').DataTable().destroy();
-                                $('#dataTable tbody').empty();
-                                showSwal('success', 'Data ditemukan');
-                                $('#input-section').removeClass('d-none').show();
-                                $('#user_id').val(response.data.user_id);
-                                $('#nama').val(response.data.name);
+            $('#nis_or_nisn').select2({
+                placeholder: 'Ketik NIS, NISN, atau Nama...',
+                ajax: {
+                    url: '{{ route("staff.search.student") }}', // route untuk search dropdown
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return { q: params.term };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data.data.map(function (item) { // akses data.data
+                                return {
+                                    id: item.nis, // untuk value yang dikirim
+                                    text: item.name + ' (' + item.nis + ')'
+                                };
+                            })
+                        };
+                    }
+                },
+                minimumInputLength: 2,
+                width: '100%'
+            });
 
-                                $('#id_siswa').val(response.data.nis);
-                                $('#report_by').val('nis_nisn');
-                                $('#form-report').removeClass('d-none').show();
+            // Ketika user memilih siswa di dropdown
+            $('#nis_or_nisn').on('select2:select', function(e) {
+                var nisOrNisn = e.params.data.id;
 
-                                renderChart(response.data.progress);
-
-                                // Populate the table with the user's izin history
-                                var tableBody = $('#dataTable tbody');
-                                tableBody.empty(); // Clear previous data
-                                $.each(response.data.student_tahfidz_history, function(index, item) {
-                                    tableBody.append(`
-                                        <tr>
-                                            <td>${index + 1}</td>
-                                            <td>${item.juz}</td>
-                                            <td>${item.surah_name}</td>
-                                            <td>${item.ayat}</td>
-                                            <td>${item.point_tahsin}</td>
-                                            <td>${item.point_tahfidz}</td>
-                                            <td>${item.process_by}</td>
-                                            <td>${item.created_date}</td>
-                                        </tr>
-                                    `);
-                                });
-                                $('#dataTable').DataTable({
-                                    destroy: true,
-                                    paging: true,
-                                    searching: true,
-                                    ordering: true,
-                                    info: true,
-                                    lengthChange: true,
-                                    pageLength: 10,
-                                    drawCallback: function() {
-                                        $('.pagination').addClass('pagination-sm');
-                                    },
-                                });
-                                $('#dataTable').DataTable().draw();
-                                $('#dataTable').DataTable().columns.adjust().responsive.recalc();
-                            }
-                        },
-                        error: function() {
-                            $('#form-report').addClass('d-none').hide();
+                $.ajax({
+                    url: '{{ route("staff.tahfidz.list.serach") }}',
+                    type: 'GET',
+                    data: { nis_or_nisn: nisOrNisn },
+                    success: function(response) {
+                        if (response.status) {
                             $('#dataTable').DataTable().destroy();
                             $('#dataTable tbody').empty();
-                            $('#input-section').addClass('d-none').hide();
-                            showSwal('error', 'Terjadi kesalahan saat mencari data, atau data tidak ditemukan.');
+                            showSwal('success', 'Data ditemukan');
+                            $('#input-section').removeClass('d-none').show();
+                            $('#user_id').val(response.data.user_id);
+                            $('#nama').val(response.data.name);
+
+                            $('#id_siswa').val(response.data.nis);
+                            $('#report_by').val('nis_nisn');
+                            $('#form-report').removeClass('d-none').show();
+
+                            renderChart(response.data.progress);
+
+                            // Populate the table with the user's izin history
+                            var tableBody = $('#dataTable tbody');
+                            tableBody.empty(); // Clear previous data
+                            $.each(response.data.student_tahfidz_history, function(index, item) {
+                                tableBody.append(`
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${item.juz}</td>
+                                        <td>${item.surah_name}</td>
+                                        <td>${item.ayat}</td>
+                                        <td>${item.point_tahsin}</td>
+                                        <td>${item.point_tahfidz}</td>
+                                        <td>${item.process_by}</td>
+                                        <td>${item.created_date}</td>
+                                    </tr>
+                                `);
+                            });
+                            $('#dataTable').DataTable({
+                                destroy: true,
+                                paging: true,
+                                searching: true,
+                                ordering: true,
+                                info: true,
+                                lengthChange: true,
+                                pageLength: 10,
+                                drawCallback: function() {
+                                    $('.pagination').addClass('pagination-sm');
+                                },
+                            });
+                            $('#dataTable').DataTable().draw();
+                            $('#dataTable').DataTable().columns.adjust().responsive.recalc();
                         }
-                    });
-                } else {
-                    $('#form-report').addClass('d-none').hide();
-                    $('#input-section').hide();
-                    showSwal('error', 'Jumlah NIS / NISN yang ada masukkan tidak cukup.');
-                }
+                    },
+                    error: function() {
+                        $('#form-report').addClass('d-none').hide();
+                        $('#dataTable').DataTable().destroy();
+                        $('#dataTable tbody').empty();
+                        $('#input-section').addClass('d-none').hide();
+                        showSwal('error', 'Terjadi kesalahan saat mencari data, atau data tidak ditemukan.');
+                    }
+                });
             });
         });
 
