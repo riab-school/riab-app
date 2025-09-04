@@ -40,13 +40,15 @@
                     </div>
                     <div class="d-none" id="by_nis_nisn">
                         <div class="form-group">
-                            <label for="id_siswa">NIS / NISN</label>
-                            <input type="text" class="form-control @error('id_siswa') is-invalid @enderror" id="id_siswa" name="id_siswa">
-                            @error('id_siswa')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                            <label for="id_siswa">NIS / NISN / Nama</label>
+                            <div class="input-group">
+                                <select class="form-control @error('id_siswa') is-invalid @enderror" id="id_siswa" name="id_siswa"></select>
+                                @error('id_siswa')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="from_date2">Tanggal Awal <span class="text-danger">(Optional)</span></label>
@@ -79,8 +81,32 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('assets/js/plugins/select2.full.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            $('#id_siswa').select2({
+                placeholder: 'Ketik NIS, NISN, atau Nama...',
+                ajax: {
+                    url: '{{ route("staff.search.student") }}', // route untuk search dropdown
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return { q: params.term };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data.data.map(function (item) { // akses data.data
+                                return {
+                                    id: item.nis, // untuk value yang dikirim
+                                    text: item.name + ' (' + item.nis + ')'
+                                };
+                            })
+                        };
+                    }
+                },
+                minimumInputLength: 2,
+                width: '100%'
+            });
             $('#report_by').change(function() {
                 if ($(this).val() == 'date') {
                     $('#by_date').removeClass('d-none');

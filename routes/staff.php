@@ -36,11 +36,12 @@ use App\Http\Controllers\Staff\Kesehatan\DashboardController as KesehatanDashboa
 use App\Http\Controllers\Staff\Kesehatan\ListController as KesehatanListController;
 use App\Http\Controllers\Staff\Kesehatan\ReportController as KesehatanReportController;
 
-
 use App\Http\Controllers\Staff\MasterClassrooms\ClassroomController as ListClassroomController;
-use App\Http\Controllers\Staff\Tahfidz\CreateController;
-use App\Http\Controllers\Staff\Tahfidz\DashboardController;
-use App\Http\Controllers\Staff\Tahfidz\ListController;
+
+use App\Http\Controllers\Staff\Tahfidz\CreateController as TahfidzCreateController;
+use App\Http\Controllers\Staff\Tahfidz\DashboardController as TahfidzDashboardController;
+use App\Http\Controllers\Staff\Tahfidz\ListController as TahfidzListController;
+use App\Http\Controllers\Staff\Tahfidz\ReportController as TahfidzReportController;
 
 Route::get('/', [HomeController::class, 'homePageStaff'])->name('staff.home');
 Route::get('search', [HomeController::class, 'searchList'])->name('staff.search.student');
@@ -169,18 +170,24 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
 
     Route::prefix('hafalan-tahfidz')->group(function() {
         Route::prefix('dashboard')->group(function() {
-            Route::get('/', [DashboardController::class, 'showDashboard'])->name('staff.tahfidz.dashboard');
-            Route::get('card', [DashboardController::class, 'cardData'])->name('staff.tahfidz.dashboard.card');
-            Route::get('chart1', [DashboardController::class, 'getStudentCountPerJuz'])->name('staff.tahfidz.dashboard.chart-1');
+            Route::get('/', [TahfidzDashboardController::class, 'showDashboard'])->name('staff.tahfidz.dashboard');
+            Route::get('card', [TahfidzDashboardController::class, 'cardData'])->name('staff.tahfidz.dashboard.card');
+            Route::get('chart1', [TahfidzDashboardController::class, 'getStudentCountPerJuz'])->name('staff.tahfidz.dashboard.chart-1');
         });
         Route::prefix('list')->group(function() {
-            Route::get('/', [ListController::class, 'showListPage'])->name('staff.tahfidz.list');
-            Route::get('create', [CreateController::class, 'showCreatePage'])->name('staff.tahfidz.list.create');
-            Route::post('store', [CreateController::class, 'handleStoreTahfidz'])->name('staff.tahfidz.list.create.store');
-            Route::get('search', [ListController::class, 'searchData'])->name('staff.tahfidz.list.serach');
+            Route::get('/', [TahfidzListController::class, 'showListPage'])->name('staff.tahfidz.list');
+            Route::get('create', [TahfidzCreateController::class, 'showCreatePage'])->name('staff.tahfidz.list.create');
+            Route::post('store', [TahfidzCreateController::class, 'handleStoreTahfidz'])->name('staff.tahfidz.list.create.store');
+            Route::get('search', [TahfidzListController::class, 'searchData'])->name('staff.tahfidz.list.serach');
         });
-        Route::get('laporan', function() {
-            return view('coming-soon');
+        Route::prefix('wali')->group(function() {
+            Route::get('/', function() {
+                return view('coming-soon');
+            });
+        });
+        Route::prefix('laporan')->group(function() {
+            Route::get('/', [TahfidzReportController::class, 'showReportFilterPage'])->name('staff.tahfidz.laporan');
+            Route::post('handleCreateReport', [TahfidzReportController::class, 'handleReportPrint'])->name('staff.tahfidz.laporan.handle');
         });
     });
 

@@ -71,6 +71,15 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="ket_juz_halaman">Keterangan Juz Halaman</label>
+                            <input type="text" class="form-control @error('ket_juz_halaman') is-invalid @enderror" id="ket_juz_halaman" name="ket_juz_halaman" placeholder="Keterangan Juz dan Halaman" required>
+                            @error('ket_juz_halaman')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="note">Catatan</label>
                             <textarea class="form-control @error('note') is-invalid @enderror" id="note" name="note" rows="3" placeholder="Catatan penguji" required></textarea>
                             @error('note')
@@ -108,12 +117,12 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Riwayat Hafalan</h5>
-                {{-- <form action="#" method="POST" onsubmit="processData(this);" id="form-report" class="d-none">
+                <form action="{{ route('staff.tahfidz.laporan.handle') }}" method="POST" onsubmit="processData(this);" id="form-report" class="d-none">
                     @csrf
                     <input type="hidden" class="form-control" id="report_by" name="report_by" value="nis_nisn" required>
                     <input type="hidden" class="form-control" id="id_siswa" name="id_siswa" value="" required>
                     <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-print"></i> Cetak Laporan</button>
-                </form> --}}
+                </form>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -126,6 +135,7 @@
                                 <th>Ayat</th>
                                 <th>Point Tahsin</th>
                                 <th>Point Tahfidz</th>
+                                <th>Catatan Juz & Halaman</th>
                                 <th>Tasmik Oleh</th>
                                 <th>Tanggal</th>
                             </tr>
@@ -214,6 +224,7 @@
                                         <td>${item.ayat}</td>
                                         <td>${item.point_tahsin}</td>
                                         <td>${item.point_tahfidz}</td>
+                                        <td>${item.ket_juz_halaman ?? '-'}</td>
                                         <td>${item.process_by}</td>
                                         <td>${item.created_date}</td>
                                     </tr>

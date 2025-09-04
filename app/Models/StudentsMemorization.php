@@ -16,6 +16,7 @@ class StudentsMemorization extends Model
         'to_ayat',
         'point_tahsin',
         'point_tahfidz',
+        'ket_juz_halaman',
         'status',
         'note',
         'evidence',

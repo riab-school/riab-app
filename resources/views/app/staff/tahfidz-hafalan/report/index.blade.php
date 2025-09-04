@@ -7,7 +7,7 @@
             <div class="card-header">
                 <h5>Filter Laporan</h5>
             </div>
-            <form action="{{ route('staff.perizinan.laporan.handle') }}" method="POST" onsubmit="processData(this);">
+            <form action="{{ route('staff.tahfidz.laporan.handle') }}" method="POST" onsubmit="processData(this);">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -32,23 +32,6 @@
                             <label for="to_date">Tanggal Akhir</label>
                             <input type="date" class="form-control @error('to_date') is-invalid @enderror" id="to_date" name="to_date">
                             @error('to_date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="nama">Berdasarkan Status</label>
-                            <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
-                                <option value="all" selected>Semua Status</option>
-                                <option value="approved">Di setujui</option>
-                                <option value="rejected">Di tolak</option>
-                                <option value="canceled">Di batalkan</option>
-                                <option value="check_in">Sudah Kembali</option>
-                                <option value="check_out">Sudah Keluar</option>
-                                <option value="requested">Dalam Permohonan</option>
-                            </select>
-                            @error('status')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

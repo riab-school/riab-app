@@ -43,6 +43,7 @@ class CreateController extends Controller
                 'to_ayat'           => $request->to_ayat,
                 'point_tahsin'      => $request->point_tahsin,
                 'point_tahfidz'     => $request->point_tahfidz,
+                'ket_juz_halaman'   => $request->ket_juz_halaman,
                 'note'              => $request->note,
                 'status'            => 'done',
                 'evidence'          => $fullPath ?? null,
@@ -108,8 +109,8 @@ class CreateController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal menambah hafalan alquran untuk : '.$request->nama);
             return redirect()->back()->with([
                 'status'    => 'error',
-                'message'   => $th->getMessage(),
-                // 'message'   => 'Hafalan gagal ditambahkan',
+                // 'message'   => $th->getMessage(),
+                'message'   => 'Hafalan gagal ditambahkan',
             ]);
         }
     }
