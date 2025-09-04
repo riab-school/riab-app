@@ -58,7 +58,7 @@
                     </div>
                     <div class="form-group mb-3 d-none" id="roles">
                         <label class="form-label">Select Role</label>
-                        <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required>
+                        <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id">
                             <option></option>
                             @foreach (\App\Models\Roles::all() as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -85,8 +85,10 @@
             var user_level = $('#user_level').val();
             if(user_level == 'staff'){
                 $('#roles').removeClass('d-none');
+                $('role_id').attr('required');
             } else {
                 $('#roles').addClass('d-none');
+                $('role_id').attr('');
             }
 
         });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Parent\CardController;
 use App\Http\Controllers\Parent\ChatController;
 use App\Http\Controllers\Parent\DocumentController;
 use App\Http\Controllers\Parent\KesehatanController;
+use App\Http\Controllers\Parent\LaundryController;
 use App\Http\Controllers\Parent\PelanggaranController;
 use App\Http\Controllers\Parent\PerizinanController;
 use App\Http\Controllers\Parent\PrestasiController;
@@ -76,6 +77,8 @@ Route::prefix('kesehatan')->group(function() {
 
 Route::prefix('tahfidz')->group(function() {
     Route::get('/', [TahfidzController::class, 'showPage'])->name('parent.tahfidz');
+    Route::get('get-data', [TahfidzController::class, 'getData'])->name('parent.tahfidz.history');
+    Route::get('get-detail', [TahfidzController::class, 'getDetail'])->name('parent.tahfidz.detail');
 });
 
 Route::prefix('spp')->group(function() {
@@ -90,8 +93,8 @@ Route::prefix('raport-sekolah')->group(function() {
     Route::get('/', [RaportController::class, 'showPageRaportSekolah'])->name('parent.raport.sekolah');
 });
 
-Route::prefix('raport-dayah')->group(function() {
-    Route::get('/', [RaportController::class, 'showPageRaportDayah'])->name('parent.raport.dayah');
+Route::prefix('laundry')->group(function() {
+    Route::get('/', [LaundryController::class, 'showPageRaport'])->name('parent.laundry');
 });
 
 Route::prefix('document')->group(function() {

@@ -121,7 +121,7 @@
                     <div class="card-body px-2">
                         <a href="{{ route('parent.raport.sekolah') }}">
                             <img src="{{ asset('mobile-assets') }}/img/icons/certificate.png" alt="">
-                            <span>Raport Sekolah</span>
+                            <span>Rapor Siswa</span>
                         </a>
                     </div>
                 </div>
@@ -129,9 +129,9 @@
             <div class="col-3">
                 <div class="card catagory-card h-100">
                     <div class="card-body px-2">
-                        <a href="{{ route('parent.raport.dayah') }}">
-                            <img src="{{ asset('mobile-assets') }}/img/icons/certificate2.png" alt="">
-                            <span>Raport Dayah</span>
+                        <a href="{{ route('parent.laundry') }}">
+                            <img src="{{ asset('mobile-assets') }}/img/icons/laundry.png" alt="">
+                            <span>Laporan Laundry</span>
                         </a>
                     </div>
                 </div>

@@ -18,20 +18,9 @@ class RaportController extends Controller
                 'code'      => 200,                
                 'data'      => $detail->first(),
             ];
+        } else {
+            return redirect()->route('parent.anandaku');
         }
         return view('app.parent.raport-sekolah', $data);
-    }
-
-    public function showPageRaportDayah()
-    {
-        $check = ParentClaimStudent::where('parent_user_id', auth()->user()->id)->first();
-        if ($check && $check->student_user_id !== null) {
-            $detail = StudentsDocument::where('user_id', $check->student_user_id);
-            $data = [
-                'code'      => 200,                
-                'data'      => $detail->first(),
-            ];
-        }
-        return view('app.parent.raport-dayah', $data);
     }
 }
