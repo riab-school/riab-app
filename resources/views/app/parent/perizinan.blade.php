@@ -97,7 +97,10 @@
                                         </a>
                                         <div class="product-title d-block">${item.reason}</div>
                                         <div class="product-rating">
-                                            ${item.from_date} s/d ${item.to_date}
+                                            Dari Tgl : ${item.from_date}
+                                        </div>
+                                        <div class="product-rating">
+                                            Hingga Tgl : ${item.to_date}
                                         </div>
                                         <button class="btn btn-sm btn-danger mt-1" id="btnModalDetail" data-id="${item.id}"><i class="fas fa-magnifying-glass"></i> Lihat Selengkapnya</button>
                                     </div>

@@ -52,8 +52,8 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="from_date">Dari Tanggal</label>
-                            <input type="date" class="form-control @error('from_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="from_date" name="from_date" required>
+                            <label for="from_date">Dari Tanggal & Jam</label>
+                            <input type="datetime-local" class="form-control @error('from_date') is-invalid @enderror" id="from_date" name="from_date" required>
                             @error('from_date')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -61,8 +61,8 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="to_date">Hingga Tanggal</label>
-                            <input type="date" class="form-control @error('to_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" id="to_date" name="to_date" required>
+                            <label for="to_date">Hingga Tanggal & Jam</label>
+                            <input type="datetime-local" class="form-control @error('to_date') is-invalid @enderror" id="to_date" name="to_date" required>
                             @error('to_date')
                             <div class="invalid-feedback">
                                 {{ $message }}

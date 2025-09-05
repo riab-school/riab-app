@@ -25,6 +25,12 @@ class ListController extends Controller
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->format('d-m-Y H:i:s');
                 })
+                ->editColumn('from_date', function ($row) {
+                    return \Carbon\Carbon::parse($row->from_date)->format('d-m-Y H:i');
+                })
+                ->editColumn('to_date', function ($row) {
+                    return \Carbon\Carbon::parse($row->to_date)->format('d-m-Y H:i');
+                })
                 ->make(true);
         }
         return view('app.staff.perizinan.list.index');

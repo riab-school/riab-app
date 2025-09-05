@@ -34,8 +34,8 @@ class PerizinanController extends Controller
                     ->paginate($limit, ['*'], 'page', $page);
 
                 $history->getCollection()->transform(function ($item) {
-                    $item->from_date = $item->from_date !== NULL ? dateIndo($item->from_date) : '-';
-                    $item->to_date = $item->to_date !== NULL ? dateIndo($item->to_date) : '-';
+                    $item->from_date = $item->from_date !== NULL ? \Carbon\Carbon::parse($item->from_date)->format('d-m-Y H:i') : '-';
+                    $item->to_date = $item->to_date !== NULL ? \Carbon\Carbon::parse($item->to_date)->format('d-m-Y H:i') : '-';
                     $item->rejected_by = $item->rejected_by !== NULL ? $item->rejectedBy->staffDetail->name : '-';
                     $item->approved_by = $item->approved_by !== NULL ? $item->approvedBy->staffDetail->name : '-';
                     $item->checked_in_by = $item->checked_in_by !== NULL ? $item->checkedInBy->staffDetail->name : '-';

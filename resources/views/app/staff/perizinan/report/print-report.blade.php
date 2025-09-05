@@ -127,8 +127,8 @@
                         @endif
                         <td style="padding: 5px; text-align: center;">{{ ucfirst($item->requested_by) }}</td>   
                         <td style="padding: 5px; text-align: center;">{{ $item->approvedBy->staffDetail->name }}</td>
-                        <td style="padding: 5px; text-align: center;">{{ dateIndoShort($item->from_date) }}</td>
-                        <td style="padding: 5px; text-align: center;">{{ dateIndoShort($item->to_date) }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ \Carbon\Carbon::parse($item->from_date)->format('d-m-Y H:i') }}</td>
+                        <td style="padding: 5px; text-align: center;">{{ \Carbon\Carbon::parse($item->to_date)->format('d-m-Y H:i') }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->reason }}</td>
                         <td style="padding: 5px; text-align: center;">{{ $item->pickup_by }}</td>
                         <td style="padding: 5px; text-align: center;">
