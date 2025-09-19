@@ -146,8 +146,8 @@ class ListController extends Controller
                     'token'             => NULL,
                     'reason'            => 'Sakit, tidak bisa mengikuti kegiatan belajar mengajar',
                     'pickup_by'         => 'Orang Tua/Wali',
-                    'from_date'         => NULL,
-                    'to_date'           => NULL,
+                    'from_date'         => now(),
+                    'to_date'           => now(),
                     'is_notify_parent'  => 0,
                     'status'            => 'requested',
                 ]);
@@ -162,7 +162,8 @@ class ListController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal menambah rekam kesehatan untuk : '.$request->nama);
             return redirect()->back()->with([
                 'status'    => 'error',
-                'message'   => 'Rekam kesehatan gagal ditambahkan',
+                // 'message'   => 'Rekam kesehatan gagal ditambahkan',
+                'message'   => $th->getMessage(),
             ]);
         }
     }
