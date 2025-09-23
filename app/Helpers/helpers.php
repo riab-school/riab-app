@@ -225,9 +225,9 @@ if(!function_exists('isWaServerOnline')) {
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERPWD, appSet('WHATSAPP_API_KEY'));
         curl_exec($ch);
         $health = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $time = curl_getinfo($ch, CURLINFO_CONNECT_TIME_T);
         curl_close($ch);
         if ($health == 200) {
             $response = true;
@@ -244,9 +244,10 @@ if(!function_exists('waStatus')){
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/api/sessions/'.appSet('WHATSAPP_SESSION_ID'),
+            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/app/devices',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
+            CURLOPT_USERPWD=> appSet('WHATSAPP_API_KEY'),
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 5,
             CURLOPT_FOLLOWLOCATION => true,
@@ -254,7 +255,6 @@ if(!function_exists('waStatus')){
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . appSet('WHATSAPP_API_KEY')
             ),
         ));
         $response = curl_exec($curl);
@@ -269,9 +269,10 @@ if(!function_exists('sendText')) {
         // Do curl to send text
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/api/messages/text',
+            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/send/message',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
+            CURLOPT_USERPWD=> appSet('WHATSAPP_API_KEY'),
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
@@ -280,87 +281,103 @@ if(!function_exists('sendText')) {
             CURLOPT_POSTFIELDS => json_encode($payload),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . appSet('WHATSAPP_API_KEY')
             ),
         ));
 
         $response = curl_exec($curl);
-        // Ambil HTTP response code
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
 
+        $status = json_decode($response);
+
+        if($status->code == "SUCCESS"){
+            $statusReport = "success";
+        } elseif($status == "INVALID_JID"){
+            $statusReport = "failed";
+        } else {
+            $statusReport = "failed";
+        }
+
         // Store to DB
-        WhatsappChatHistory::create([
-            'type'              => $payload['type'],
+        WhatsappChatHistory::insert([
+            'type'              => 'text',
             'category'          => $payload['category'] ?? NULL,
             'name'              => $payload['name'] ?? NULL,
-            'phone'             => $payload['jid'],
-            'message'           => $payload['text'],
-            'response_id'       => json_decode($response)->data->id ?? NULL,
-            'response_status'   => $httpCode,
-            'response_message'  => json_decode($response)->message ?? NULL,
-            'process_status'    => $httpCode == 200 ? 'success' : 'failed',
+            'phone'             => $payload['phone'],
+            'message'           => $payload['message'],
+            'response_id'       => $status->results->message_id ?? NULL,
+            'response_status'   => $status->code,
+            'response_message'  => $status->message ?? NULL,
+            'process_status'    => $statusReport,
             'created_at'        => now(),
             'updated_at'        => now(),
         ]);
 
-        return response()->json([
-            'status'    => $httpCode == 200 ? 'success' : 'failed',
-            'code'      => $httpCode,
-            'response'  => json_decode($response)
-        ]);
+        if($statusReport == 'success'){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
-if(!function_exists('sendMedia')) {
-    function sendMedia($payload)
+if(!function_exists('sendImage')) {
+    function sendImage($payload)
     {
+        $payload['image_url'] = $payload['media_url'];
+        $payload['view_once'] = false;
+        $payload['compress'] = false;
+        $payload['is_forwarded'] = false;
+        
         // Do curl to send text
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/api/messages/media',
+            CURLOPT_URL => appSet('WHATSAPP_SERVER') . '/send/image',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
+            CURLOPT_USERPWD=> appSet('WHATSAPP_API_KEY'),
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($payload),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Authorization: Bearer ' . appSet('WHATSAPP_API_KEY')
-            ),
+            CURLOPT_POSTFIELDS => $payload,
         ));
 
         $response = curl_exec($curl);
-        // Ambil HTTP response code
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
+
+        $status = json_decode($response);
+        if($status->code == "SUCCESS"){
+            $statusReport = "success";
+        } elseif($status == "INVALID_JID"){
+            $statusReport = "failed";
+        } else {
+            $statusReport = "failed";
+        }
 
         // Store to DB
         WhatsappChatHistory::create([
             'type'              => $payload['type'],
             'category'          => $payload['category'] ?? NULL,
             'name'              => $payload['name'] ?? NULL,
-            'phone'             => $payload['jid'],
+            'phone'             => $payload['phone'],
             'message'           => $payload['caption'] ?? NULL,
             'media_url'         => $payload['media_url'] ?? NULL,
             'media_mime'        => $payload['media_mime'] ?? NULL,
-            'response_id'       => json_decode($response)->data->id ?? NULL,
-            'response_status'   => $httpCode,
-            'response_message'  => json_decode($response)->message ?? NULL,
-            'process_status'    => $httpCode == 200 ? 'success' : 'failed',
+            'response_id'       => $status->results->message_id ?? NULL,
+            'response_status'   => $status->code,
+            'response_message'  => $status->message ?? NULL,
+            'process_status'    => $statusReport,
             'created_at'        => now(),
             'updated_at'        => now(),
         ]);
 
         return response()->json([
-            'status'    => $httpCode == 200 ? 'success' : 'failed',
-            'code'      => $httpCode,
-            'response'  => json_decode($response)
+            'status'    => $status->code == "SUCCESS" ? 'success' : 'failed',
+            'code'      => $status->code,
+            'response'  => $status
         ]);
     }
 }

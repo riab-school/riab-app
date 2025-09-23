@@ -23,6 +23,8 @@ class ResetPasswordController extends Controller
             'password.confirmed' => 'Password tidak sama.'
         ]);
 
+        
+
         $user = User::where('reset_pass_token', $request->token)->first();
         $user->password = bcrypt($request->password);
         $user->reset_pass_token = null;

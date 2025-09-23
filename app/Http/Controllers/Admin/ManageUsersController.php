@@ -103,7 +103,6 @@ class ManageUsersController extends Controller
                 'message'   => 'User berhasil dibuat',
             ]);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             appLog(auth()->user()->id, 'error', 'Gagal menambah user baru : '.$request->username);
             return redirect()->back()->withInput()->withErrors([
                 'status'    => 'error',

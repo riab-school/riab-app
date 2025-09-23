@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ParentClaimStudent;
 use App\Models\StudentDetail;
 use App\Models\StudentPermissionHistory;
+use Carbon\Carbon;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,10 +27,10 @@ class ListController extends Controller
                     return $row->created_at->format('d-m-Y H:i:s');
                 })
                 ->editColumn('from_date', function ($row) {
-                    return \Carbon\Carbon::parse($row->from_date)->format('d-m-Y H:i');
+                    return Carbon::parse($row->from_date)->format('d-m-Y H:i');
                 })
                 ->editColumn('to_date', function ($row) {
-                    return \Carbon\Carbon::parse($row->to_date)->format('d-m-Y H:i');
+                    return Carbon::parse($row->to_date)->format('d-m-Y H:i');
                 })
                 ->make(true);
         }
@@ -125,20 +126,18 @@ class ListController extends Controller
                     $message .= "*Ananda :*\n*".$request->nama."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
                     $message .= "*Tujuan/Alasan :*\n".$request->reason."\n\n";
                     $message .= "*Di jemput oleh :*\n".$request->pickup_by."\n\n";
-                    $message .= "*Dari Tgl  :*\n".dateIndo($request->from_date)."\n\n";
-                    $message .= "*Hingga Tgl  :*\n".dateIndo($request->to_date)."\n\n";
+                    $message .= "*Dari Tgl  :*\n".Carbon::parse($request->from_date)->format('d-m-Y H:i')."\n\n";
+                    $message .= "*Hingga Tgl  :*\n".Carbon::parse($request->to_date)->format('d-m-Y H:i')."\n\n";
                     $message .= "----------------\n";
                     $message .= "*Di setujui oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n\n";
                     $message .= "*Token Izin :*\n".$token."\n\n";
                     $message .= "Terima kasih. \nWassalamualaikum.";
                 
-                    $payloadText = [
-                        'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                        'type'      => 'text',
-                        'category'  => 'permission_request',
+                    $payloadText = [                        
+                        'phone'     => whatsappNumber($parentNumber),
                         'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                        'jid'       => whatsappNumber($parentNumber),
-                        'text'      => $message
+                        'message'   => $message,
+                        'category'  => 'permission_request',
                     ];
                     sendText($payloadText);
                 }
@@ -161,7 +160,6 @@ class ListController extends Controller
 
     public function handleUpdateStatus(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'id'            => 'required|exists:student_permission_histories,id',
             'status'        => 'required|string',
@@ -185,20 +183,18 @@ class ListController extends Controller
                         $message .= "*Ananda :*\n*".$data->detail->studentDetail->name."*\n\n_Telah melakukan permohonan izin keluar sekolah/dayah._ \n\n";
                         $message .= "*Tujuan/Alasan :*\n".$data->reason."\n\n";
                         $message .= "*Di jemput oleh :*\n".$data->pickup_by."\n\n";
-                        $message .= "*Dari Tgl  :*\n".dateIndo($request->from_date)."\n\n";
-                        $message .= "*Hingga Tgl  :*\n".dateIndo($request->to_date)."\n\n";
+                        $message .= "*Dari Tgl  :*\n".Carbon::parse($request->from_date)->format('d-m-Y H:i')."\n\n";
+                        $message .= "*Hingga Tgl  :*\n".Carbon::parse($request->to_date)->format('d-m-Y H:i')."\n\n";
                         $message .= "----------------\n";
                         $message .= "*Di setujui oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n\n";
                         $message .= "*Token Izin :*\n".$token."\n\n";
                         $message .= "Terima kasih. \nWassalamualaikum.";
 
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
                             'category'  => 'permission_request',
                             'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
+                            'phone'     => whatsappNumber($parentNumber),
+                            'message'   => $message
                         ];
                         sendText($payloadText);
                     }
@@ -232,12 +228,10 @@ class ListController extends Controller
                         $message .= "Terima kasih. Wassalamualaikum.";
                     
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
                             'category'  => 'permission_request',
                             'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
+                            'phone'     => whatsappNumber($parentNumber),
+                            'message'   => $message
                         ];
                         sendText($payloadText);
                     }
@@ -266,12 +260,10 @@ class ListController extends Controller
                         $message .= "Terima kasih. Wassalamualaikum.";
                     
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
                             'category'  => 'permission_request',
                             'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
+                            'phone'     => whatsappNumber($parentNumber),
+                            'message'   => $message
                         ];
                         sendText($payloadText);
                     }
@@ -300,12 +292,10 @@ class ListController extends Controller
                         $message .= "Terima kasih. Wassalamualaikum.";
                     
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
                             'category'  => 'permission_request',
                             'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
+                            'phone'     => whatsappNumber($parentNumber),
+                            'message'   => $message
                         ];
                         sendText($payloadText);
                     }

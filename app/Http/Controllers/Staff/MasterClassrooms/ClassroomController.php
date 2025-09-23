@@ -97,7 +97,6 @@ class ClassroomController extends Controller
                 'message'   => 'Ruang kelas berhasil ditambahkan',
             ]);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             appLog(auth()->user()->id, 'error', 'Gagal menambah kelas baru');
             return redirect()->back()->with([
                 'status'    => 'error',

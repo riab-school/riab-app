@@ -10,6 +10,7 @@ class WhatsappChatHistory extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'type',
         'category',
         'media_url',

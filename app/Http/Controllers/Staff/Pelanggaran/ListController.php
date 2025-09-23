@@ -98,30 +98,22 @@ class ListController extends Controller
                     
                     if($request->has('evidence')) {
                         $message .= "\n\n_Berikut kami sertakan bukti pelanggaran serta tindakan yang dilakukan_";
-                        $payloadImage = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'image',
-                            'category'  => 'parent_notification',
-                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'media_url' => Storage::disk('s3')->url($fullPath),
-                            'media_mime'=> 'image/jpg',
-                            "media" => [
-                                        "image" => [
-                                            "url" => Storage::disk('s3')->url($fullPath) 
-                                        ]
-                                    ], 
-                            "caption" => $message 
+                        $payloadImage = [                            
+                            'type'          => 'image',
+                            'category'      => 'parent_notification',
+                            'name'          => $studentParent->parentDetail->name !== NULL ? $studentParent->parentDetail->name : ($studentParent->dad_name ? $studentParent->mom_name : NULL),
+                            'phone'         => whatsappNumber($parentNumber),
+                            'media_url'     => Storage::disk('s3')->url($fullPath),
+                            'media_mime'    => 'image/jpg',
+                            "caption"       => $message 
                         ];
-                        sendMedia($payloadImage);
+                        sendImage($payloadImage);
                     } else {
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
+                            'phone'     => whatsappNumber($parentNumber),
+                            'name'      => $studentParent->parentDetail->name !== NULL ? $studentParent->parentDetail->name : ($studentParent->dad_name ? $studentParent->mom_name : NULL),
+                            'message'   => $message,
                             'category'  => 'parent_notification',
-                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
                         ];
                         sendText($payloadText);
                     }

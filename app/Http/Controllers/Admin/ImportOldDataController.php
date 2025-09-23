@@ -45,7 +45,7 @@ class ImportOldDataController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal Import Data Kelas');
             return redirect()->back()->with([
                 'status' => 'error',
-                'message' => $th->getMessage()
+                'message' => 'Gagal mengimport data kelas'
             ]);
         }
     }
@@ -88,7 +88,7 @@ class ImportOldDataController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal Import Data Asrama');
             return redirect()->back()->with([
                 'status' => 'error',
-                'message' => $th->getMessage()
+                'message' => 'Gagal mengimport data asrama'
             ]);
         }
     }
@@ -117,7 +117,7 @@ class ImportOldDataController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal Import Akun Staff');
             return redirect()->back()->with([
                 'status' => 'error',
-                'message' => $th->getMessage()
+                'message' => 'Gagal mengimport data staff'
             ]);
         }
     }
@@ -153,7 +153,7 @@ class ImportOldDataController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal Import Akun Siswa Lama');
             return redirect()->back()->with([
                 'status' => 'error',
-                'message' => $th->getMessage()
+                'message' => 'Gagal mengimport data siswa lama'
             ]);
         }
     }

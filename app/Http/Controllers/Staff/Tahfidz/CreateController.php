@@ -63,7 +63,8 @@ class CreateController extends Controller
                     $message .= "*Ananda :*\n*".$data->userDetail->studentDetail->name."*\n\nTelah menyetorkan hafalan Alquran\n\n";
                     $message .= "*Surah :*\n".MasterAlquran::where('id', $request->surah)->first()->nama_surah."\n\n";
                     $message .= "*Ayat :*\n".$request->from_ayat." s/d ".$request->to_ayat."\n\n";
-                    $message .= "*Catatan :*\n".$request->action_taked."\n\n";
+                    $message .= "*Keterangan Juz/Halaman :*\n".$request->ket_juz_halaman."\n\n";
+                    $message .= "*Catatan :*\n".$request->note."\n\n";
                     $message .= "------------------\n";
                     $message .= "*Tasmik oleh :*\nUstd/Ustzh *".auth()->user()->staffDetail->name."*\n";
                     $message .= "Terima kasih. Wassalamualaikum.";
@@ -71,29 +72,21 @@ class CreateController extends Controller
                     if($request->has('evidence')) {
                         $message .= "\n\n_Berikut kami sertakan bukti setoran hafalan ananda_";
                         $payloadImage = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'image',
-                            'category'  => 'parent_notification',
-                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'media_url' => Storage::disk('s3')->url($fullPath),
-                            'media_mime'=> 'image/jpg',
-                            "media" => [
-                                        "image" => [
-                                            "url" => Storage::disk('s3')->url($fullPath) 
-                                        ]
-                                    ], 
-                            "caption" => $message 
+                            'type'          => 'image',
+                            'category'      => 'parent_notification',
+                            'name'          => $studentParent->parentDetail->name !== NULL ? $studentParent->parentDetail->name : ($studentParent->dad_name ? $studentParent->mom_name : NULL),
+                            'phone'         => whatsappNumber($parentNumber),
+                            'media_url'     => Storage::disk('s3')->url($fullPath),
+                            'media_mime'    => 'image/jpg',
+                            "caption"       => $message 
                         ];
-                        sendMedia($payloadImage);
+                        sendImage($payloadImage);
                     } else {
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
                             'category'  => 'parent_notification',
-                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
+                            'name'      => $studentParent->parentDetail->name !== NULL ? $studentParent->parentDetail->name : ($studentParent->dad_name ? $studentParent->mom_name : NULL),
+                            'phone'     => whatsappNumber($parentNumber),
+                            'message'   => $message
                         ];
                         sendText($payloadText);
                     }
@@ -109,7 +102,6 @@ class CreateController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal menambah hafalan alquran untuk : '.$request->nama);
             return redirect()->back()->with([
                 'status'    => 'error',
-                // 'message'   => $th->getMessage(),
                 'message'   => 'Hafalan gagal ditambahkan',
             ]);
         }

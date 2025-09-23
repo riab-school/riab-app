@@ -152,7 +152,7 @@ class ConfigController extends Controller
             DB::rollBack();
             return redirect()->back()->with([
                 'status' => 'error',
-                'message' => $th->getMessage()
+                'message' => 'Gagal menambahkan data konfigurasi PSB'
             ]);
         }
     }

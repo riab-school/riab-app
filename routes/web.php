@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if(auth()->check()) {
+
+        if(auth()->user()->user_level == 'student' && auth()->user()->myDetail->status == 'new') {
+            return redirect()->route('student.home.new');
+        }
+
+        if(auth()->user()->user_level == 'student' && auth()->user()->myDetail->status == 'active') {
+            return redirect()->route('student.home.active');
+        }
+
         $route = auth()->user()->user_level.".home";
         return redirect()->route($route);
     }

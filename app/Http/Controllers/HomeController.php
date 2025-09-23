@@ -21,11 +21,13 @@ class HomeController extends Controller
 {
     public function homePageAdmin(Request $request)
     {
+        // dd(waStatus());
         if($request->ajax()){
             $status = waStatus();
-            if($status->session->isConnected){
+            // check code and result array if has array
+            if ($status->code === 'SUCCESS' && !empty($status->results) && is_array($status->results)) {
                 $waStatus = "Connected";  
-            } else{
+            } else {
                 $waStatus = "Disconnect";
             }
 
@@ -124,7 +126,7 @@ class HomeController extends Controller
 
     public function homePageStudentActive()
     {
-        return view('sample');
+        return view('app.student.active.dashboard');
     }
     
     public function homePageStudentNew()

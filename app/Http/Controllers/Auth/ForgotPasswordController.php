@@ -53,11 +53,12 @@ class ForgotPasswordController extends Controller
                     break;
             }
             $payload = [
-                'Phone'     => indoNumber($detail->phone),
-                'Body'      => $message,
-                'Category'  => 'password_reset'
+                'phone'     => whatsappNumber($detail->phone),
+                'name'      => $detail->name,
+                'message'   => $message,
+                'category'  => 'password_reset',
             ];
-            $send = sendText($payload, false);
+            $send = sendText($payload);
             if($send){
                 return redirect()->route('reset-password')->with([
                     'status'    => 'success',
@@ -73,7 +74,7 @@ class ForgotPasswordController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with([
                 'status'    => 'error',
-                'message'   => 'Gagal melakukan reset password.'
+                'message'   => $th->getMessage()
             ]);
         }
     }

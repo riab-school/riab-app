@@ -105,31 +105,23 @@ class ListController extends Controller
                     $message .= "Terima kasih. Wassalamualaikum.";
                     
                     if($request->has('evidence')) {
-                        $message .= "\n\n_Berikut kami sertakan bukti kunjungan ananda serta kondisi ananda saat ini_";
-                        $payloadImage = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'image',
-                            'category'  => 'parent_notification',
-                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'media_url' => Storage::disk('s3')->url($fullPath),
-                            'media_mime'=> 'image/jpg',
-                            "media" => [
-                                        "image" => [
-                                            "url" => Storage::disk('s3')->url($fullPath) 
-                                        ]
-                                    ], 
-                            "caption" => $message 
+                        $message .= "\n\n_Berikut kami sertakan bukti kunjungan ananda ke poskestren serta kondisi ananda saat ini_";
+                        $payloadImage = [                            
+                            'type'          => 'image',
+                            'category'      => 'parent_notification',
+                            'name'          => $studentParent->parentDetail->name !== NULL ? $studentParent->parentDetail->name : ($studentParent->dad_name ? $studentParent->mom_name : NULL),
+                            'phone'         => whatsappNumber($parentNumber),
+                            'media_url'     => Storage::disk('s3')->url($fullPath),
+                            'media_mime'    => 'image/jpg',
+                            "caption"       => $message 
                         ];
-                        sendMedia($payloadImage);
+                        sendImage($payloadImage);
                     } else {
                         $payloadText = [
-                            'sessionId' => appSet('WHATSAPP_SESSION_ID'),
-                            'type'      => 'text',
+                            'phone'     => whatsappNumber($parentNumber),
+                            'name'      => $studentParent->parentDetail->name !== NULL ? $studentParent->parentDetail->name : ($studentParent->dad_name ? $studentParent->mom_name : NULL),
+                            'message'   => $message,
                             'category'  => 'parent_notification',
-                            'name'      => $studentParent->dad_name != null ? $studentParent->dad_name : $studentParent->mom_name,
-                            'jid'       => whatsappNumber($parentNumber),
-                            'text'      => $message
                         ];
                         sendText($payloadText);
                     }
@@ -162,8 +154,7 @@ class ListController extends Controller
             appLog(auth()->user()->id, 'error', 'Gagal menambah rekam kesehatan untuk : '.$request->nama);
             return redirect()->back()->with([
                 'status'    => 'error',
-                // 'message'   => 'Rekam kesehatan gagal ditambahkan',
-                'message'   => $th->getMessage(),
+                'message'   => 'Rekam kesehatan gagal ditambahkan',
             ]);
         }
     }
