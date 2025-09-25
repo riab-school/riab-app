@@ -9,18 +9,21 @@ use App\Models\PsbConfig;
 
 class CleanOrphanS3 extends Command
 {
-    protected $signature = 's3:clean-orphan {prefix=student} {--dry-run}';
-    protected $description = 'Delete orphan user folders in S3 (student/staff/users or psb/psb_configs)';
+    protected $signature = 's3:clean-orphan {prefix=student} {--dry-run} {--force}';
+    protected $description = 'Delete orphan folders in S3 (student/staff → users, psb → psb_configs)';
 
     public function handle()
     {
         $prefix = $this->argument('prefix'); // student / staff / psb
         $dryRun = $this->option('dry-run');
+        $force  = $this->option('force');
 
         $this->info("Scanning S3 prefix: {$prefix}");
 
-        // ambil daftar folder di prefix
+        // ambil semua folder di prefix
         $folders = Storage::disk('s3')->directories($prefix);
+
+        $orphanFolders = [];
 
         foreach ($folders as $folder) {
             // contoh: "student/123_docs"
@@ -49,18 +52,48 @@ class CleanOrphanS3 extends Command
             }
 
             if (!$exists) {
-                $this->warn("Orphan folder found: {$folder}");
-
-                if ($dryRun) {
-                    $this->line("Dry run → would delete {$folder}");
-                } elseif ($this->confirm("Delete ALL files in {$folder}?")) {
-                    Storage::disk('s3')->deleteDirectory($folder);
-                    $this->info("Deleted: {$folder}");
-                }
+                $orphanFolders[] = $folder;
             }
         }
 
-        $this->info("Scan finished for prefix: {$prefix}");
+        // hasil scan
+        if (empty($orphanFolders)) {
+            $this->info("No orphan folders found.");
+            return Command::SUCCESS;
+        }
+
+        $this->warn("Found " . count($orphanFolders) . " orphan folders:");
+        foreach ($orphanFolders as $f) {
+            $this->line(" - {$f}");
+        }
+
+        // opsi dry-run → hanya tampil
+        if ($dryRun) {
+            $this->info("Dry run → no folders deleted.");
+            return Command::SUCCESS;
+        }
+
+        // opsi force → langsung hapus semua
+        if ($force) {
+            foreach ($orphanFolders as $f) {
+                Storage::disk('s3')->deleteDirectory($f);
+                $this->info("Deleted: {$f}");
+            }
+            $this->info("All orphan folders deleted (forced).");
+            return Command::SUCCESS;
+        }
+
+        // default → konfirmasi sekali untuk semua
+        if ($this->confirm("Delete ALL these " . count($orphanFolders) . " folders?")) {
+            foreach ($orphanFolders as $f) {
+                Storage::disk('s3')->deleteDirectory($f);
+                $this->info("Deleted: {$f}");
+            }
+            $this->info("Cleanup finished.");
+        } else {
+            $this->info("Aborted. No folders deleted.");
+        }
+
         return Command::SUCCESS;
     }
 }
