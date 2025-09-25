@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudentsGuardianDetail extends Model
 {
     use HasFactory, Uuid;
+    
     protected $fillable = [
         'user_id',
         'name',

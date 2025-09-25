@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\WhatsappChatHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
 
 class HomeController extends Controller
 {
@@ -109,7 +110,6 @@ class HomeController extends Controller
                                                             ->get(),
                     
                     'byPermission'          => $chartPermission,
-                    'byMemorization'        => '', // Todo
 
                 ];
                 return response()->json($data);
@@ -124,8 +124,17 @@ class HomeController extends Controller
         return view('app.parent.dashboard');
     }
 
-    public function homePageStudentActive()
+    public function homePageStudentActive(Request $request)
     {
+        if ($request->ajax()) {
+            $data  = AppLog::where('user_id', auth()->user()->id)->with(['user'])->orderBy('created_at', 'DESC')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->make(true);
+        }
         return view('app.student.active.dashboard');
     }
     

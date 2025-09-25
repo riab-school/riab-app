@@ -25,6 +25,7 @@ class StudentsParentDetail extends Model
         'dad_village_id',
         'dad_postal_code',
         'dad_is_alive',
+        'status_with_dad',
         'mom_name',
         'mom_nik_ktp',
         'mom_phone',
@@ -39,6 +40,7 @@ class StudentsParentDetail extends Model
         'mom_village_id',
         'mom_postal_code',
         'mom_is_alive',
+        'status_with_mom',
         'marital_status',
         'is_completed'
     ];

@@ -141,7 +141,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    {{-- <div class="col-md-6">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Grafik Hafalan & Tahfidz</h5>
@@ -151,9 +151,9 @@
                 <canvas id="chart-bar-3" style="width: 100%; height: 300px"></canvas>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>Grafik Perizinan</h5>

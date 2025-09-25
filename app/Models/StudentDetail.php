@@ -32,7 +32,6 @@ class StudentDetail extends Model
         'from_child_order',
         'hobby',
         'ambition',
-        'is_biological',
         'is_completed',
         'generation_id',
         'status'
@@ -60,7 +59,7 @@ class StudentDetail extends Model
 
     public function studentOriginDetail()
     {
-        return $this->hasOne(StudentOriginSchool::class, 'user_id', 'user_id');
+        return $this->hasOne(StudentsOriginSchool::class, 'user_id', 'user_id');
     }
 
     public function studentPermissionHistory()
@@ -91,5 +90,10 @@ class StudentDetail extends Model
     public function studentTahfidzHistory()
     {
         return $this->hasMany(StudentsMemorization::class, 'user_id', 'user_id');
+    }
+
+    public function studentHealthDetail()
+    {
+        return $this->hasOne(StudentsHealth::class, 'user_id', 'user_id');
     }
 }
