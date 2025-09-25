@@ -15,7 +15,7 @@ class EnsureActiveStudentAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->user_level !== 'student' && auth()->user()->myDetail->status !== 'active'){
+        if(auth()->user()->user_level !== 'student' || auth()->user()->myDetail->status !== 'active'){
             auth()->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

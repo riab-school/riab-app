@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\PsbConfig;
 use App\Models\PsbHistory;
 use Closure;
 use Illuminate\Http\Request;
@@ -40,14 +41,18 @@ class EnsureNewStudentAccess
         $registrationMethod = match (true) {
             $history->registration_method === 'invited' && !$history->is_moved_to_non_invited => 'invited',
             $history->registration_method === 'invited' && $history->is_moved_to_non_invited => 'invited-reguler',
-            $history->registration_method === 'reguler' && is_null($history->is_moved_to_non_invited) => 'reguler',
+            $history->registration_method === 'reguler' && !$history->is_moved_to_non_invited => 'reguler',
             default => null,
         };
+
+        // Ambil konfigurasi PSB dari session atau database
+        $psbConfig = PsbConfig::where('is_active', true)->first();
 
         // Tambahkan data ke request
         $request->merge([
             'registration_history' => $history,
             'registration_method' => $registrationMethod,
+            'psb_config' => $psbConfig,
             'home_url' => route('student.home.new'),
         ]);
 

@@ -7,6 +7,7 @@
     </a>
 </li>
 
+@if(request()->registration_method !== 'invited')
 <li data-username="animations" class="nav-item">
     <a href="#" class="nav-link">
         <span class="pcoded-micon">
@@ -15,9 +16,10 @@
         <span class="pcoded-mtext">Pembayaran PSB</span>
     </a>
 </li>
+@endif
 
 <li data-username="animations" class="nav-item">
-    <a href="#" class="nav-link">
+    <a href="{{ route('student.new.data-diri') }}" class="nav-link">
         <span class="pcoded-micon">
             <i class="feather icon-align-justify"></i>
         </span>
