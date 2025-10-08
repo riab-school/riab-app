@@ -1,8 +1,7 @@
-@extends('_layouts.app-layouts.index')
+@extends('_layouts.app-layouts.index') @push('styles')
 
 @php
-    $health = auth()->user()->myDetail->studentHealthDetail ?? null;
-    $disabled = $health && $health->is_completed ? 'disabled' : '';
+    $documents = auth()->user()->myDetail->studentDocument ?? null;
 @endphp
 @section('content')
 @include('app.student.new.data-diri.running-text')
@@ -13,117 +12,90 @@
     <div class="col-md-10">
         <div class="card">
             <div class="card-header">
-                <h5>Informasi Data Kesehatan</h5>
+                <h5>Dokumen & Berkas</h5>
             </div>
             <div class="card-body">
-                @if($health && $health->is_completed)
+                @if($documents && $documents->is_completed)
                     <div class="alert alert-danger" role="alert">
-                        Data kesehatan Anda sudah diverifikasi, anda dapat melakukan perubahan data dengan menghubungi admin atau panitia.
+                        Data dokumen dan berkas anda sudah diverifikasi, anda dapat melakukan perubahan data dengan menghubungi admin atau panitia.
                     </div>
                 @endif
-                <form action="{{ route('student.new.data-diri.store-page-5') }}" method="POST" onsubmit="return processData(this)">
-                    @if(!$health || !$health->is_completed)
+                <form id="form-berkas" action="{{ route('student.new.data-diri.store-page-6') }}" method="POST" enctype="multipart/form-data" class="repeater">
+                    @if(!$documents || !$documents->is_completed)
                     @csrf
                     @endif
-                    <div class="row">
-                        <div class="col-md-4 text-center mx-auto mb-3">
-                            <label for="blood" class="form-label">Golongan Darah</label>
-                            <select name="blood" id="blood" class="form-control @error('blood') is-invalid @enderror" required {{ $disabled }}>
-                                @php
-                                    $bloodGroups = ['A+', 'B+', 'AB+', 'O+', 'A-', 'B-', 'AB-', 'O-'];
-                                @endphp
-                                <option value="">Pilih Golongan Darah</option>
-                                @foreach($bloodGroups as $group)
-                                    <option value="{{ $group }}" {{ old('blood', $health->blood ?? '') == $group ? 'selected' : '' }}>
-                                        {{ $group }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('blood')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div>
 
-                    </div>
-
-
-                    <div class="row">
-    
-                        <div class="col-md-6 mb-3">
-                            <label for="food_alergic" class="form-label">Alergi Makanan</label>
-                            <input type="text" name="food_alergic" id="food_alergic" placeholder="Pisahkan dengan koma" class="form-control @error('food_alergic') is-invalid @enderror" value="{{ old('food_alergic', $health->food_alergic ?? '') }}" {{ $disabled }}>
-                            @error('food_alergic')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="drug_alergic" class="form-label">Alergi Obat</label>
-                            <input type="text" name="drug_alergic" id="drug_alergic" placeholder="Pisahkan dengan koma" class="form-control @error('drug_alergic') is-invalid @enderror" value="{{ old('drug_alergic', $health->drug_alergic ?? '') }}" {{ $disabled }}>
-                            @error('drug_alergic')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="other_alergic" class="form-label">Alergi Lainnya</label>
-                        <input type="text" name="other_alergic" id="other_alergic" placeholder="Pisahkan dengan koma" class="form-control @error('other_alergic') is-invalid @enderror" value="{{ old('other_alergic', $health->other_alergic ?? '') }}" {{ $disabled }}>
-                        @error('other_alergic')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="disease_history" class="form-label">Riwayat Penyakit</label>
-                        <textarea name="disease_history" id="disease_history" placeholder="Pisahkan dengan koma" class="form-control @error('disease_history') is-invalid @enderror" {{ $disabled }}>{{ old('disease_history', $health->disease_history ?? '') }}</textarea>
-                        @error('disease_history')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="disease_ongoing" class="form-label">Penyakit yang Sedang Dialami</label>
-                        <textarea name="disease_ongoing" id="disease_ongoing" placeholder="Pisahkan dengan koma" class="form-control @error('disease_ongoing') is-invalid @enderror" {{ $disabled }}>{{ old('disease_ongoing', $health->disease_ongoing ?? '') }}</textarea>
-                        @error('disease_ongoing')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="drug_consumption" class="form-label">Obat yang Dikonsumsi</label>
-                        <textarea name="drug_consumption" id="drug_consumption" placeholder="Pisahkan dengan koma" class="form-control @error('drug_consumption') is-invalid @enderror" {{ $disabled }}>{{ old('drug_consumption', $health->drug_consumption ?? '') }}</textarea>
-                        @error('drug_consumption')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6 mb-3">
-                            <label for="weight" class="form-label">Berat Badan (kg)</label>
-                            <div class="input-group">
-                                <input type="number" name="weight" id="weight" class="form-control @error('weight') is-invalid @enderror" value="{{ old('weight', $health->weight ?? '') }}" {{ $disabled }}>
-                                <span class="input-group-text">kg</span>
+                        <h3>Pas Photo</h3>
+                        <section>
+                            <div class="row row align-items-center">
+                                <div class="col-md-6">
+                                    <label>Upload Pas Photo <small class="text-danger"> *Wajib</small></label>
+                                    <input type="file" class="form-control" id="photo" name="photo" onchange="initPreview('photo', 'photo-preview');" required accept="image/*">
+                                    <small>Format: JPG, PNG. Max size: 1MB</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Preview Pas Photo</label>
+                                    <div id="photo-preview">
+                                        <img src="{{ auth()->user()->myDetail->studentDocument && auth()->user()->myDetail->studentDocument->photo
+                                        ? Storage::disk('s3')->url(auth()->user()->myDetail->studentDocument->photo)
+                                        : asset('assets/images/sample-image/photo.jpg') }}" class="" alt="sample" style="max-width: 200px;">
+                                    </div>
+                                </div>
                             </div>
-                            @error('weight')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-    
-                        <div class="col-6 mb-3">
-                            <label for="height" class="form-label">Tinggi Badan (cm)</label>
-                            <div class="input-group">
-                                <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $health->height ?? '') }}" {{ $disabled }}>
-                                <span class="input-group-text">cm</span>
-                            </div>
-                            @error('height')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                        </section>
 
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary" {{ $disabled }}>Simpan dan Lanjutkan</button>
+                        <h3>Surat Keterangan Rangking</h3>
+                        <section>
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <label>Upload Berkas</label>
+                                    <input type="file" class="form-control" id="rank_certificate" name="rank_certificate" accept="application/pdf">
+                                    <small>Format: PDF. Max size: 2MB</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Silahkan Download Contoh Surat</label>
+                                    <div class="">
+                                        <a href="#" class="btn btn-outline-primary btn-sm">Download Contoh</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <h3>Surat Rekom Kepala Sekolah</h3>
+                        <section>
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <label>Upload Berkas <small class="text-danger"> *Wajib</small></label>
+                                    <input type="file" class="form-control" id="origin_head_recommendation" name="origin_head_recommendation" accept="application/pdf" required>
+                                    <small>Format: PDF. Max size: 2MB</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Silahkan Download Contoh Surat</label>
+                                    <div class="">
+                                        <a href="#" class="btn btn-outline-primary btn-sm">Download Contoh</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <h3>Surat Keterangan Sehat</h3>
+                        <section>
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <label>Upload Berkas <small class="text-danger"> *Wajib</small></label>
+                                    <input type="file" class="form-control" id="certificate_of_health" name="certificate_of_health" accept="application/pdf" required>
+                                    <small>Format: PDF. Max size: 2MB</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Silahkan Download Contoh Surat</label>
+                                    <div class="">
+                                        <a href="#" class="btn btn-outline-primary btn-sm">Download Contoh</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        
                     </div>
                 </form>
             </div>
@@ -131,3 +103,145 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('assets/js/plugins/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/jquery.repeater.min.js') }}"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $('#form-berkas').repeater({
+            initEmpty: true,
+            defaultValues: {
+                'text-input': 'foo'
+            },
+            show: function () {
+                $(this).slideDown();
+            },
+            hide: function (deleteElement) {
+                if (confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            isFirstItemUndeletable: true
+        })
+    });
+    
+    $(function () {
+        const form = $("#form-berkas");
+
+        @if(auth()->user()->myDetail->studentDocument && auth()->user()->myDetail->studentDocument->is_completed)
+            // Hapus masing masing field input dan jadikan col-md-12 untuk file previewnya
+            form.find(".col-md-6:first-child").remove();
+            form.find(".col-md-6:last-child").removeClass("col-md-6").addClass("col-md-12 text-center");
+            // Disable semua input
+            form.find("input").prop("disabled", true); // ubah ke true untuk disable semua input
+        @else
+            form.find("input").prop("disabled", false); // ubah ke false untuk enable semua input
+        @endif
+
+        // 🔹 Tambahkan method custom validator
+        jQuery.validator.addMethod("filesize", function (value, element, param) {
+            if (element.files.length === 0) {
+                return true;
+            }
+            return this.optional(element) || (element.files[0].size <= param);
+        }, "Ukuran file terlalu besar.");
+
+        jQuery.validator.addMethod("extension", function (value, element, param) {
+            if (value === "") {
+                return true;
+            }
+            param = typeof param === "string" ? param.replace(/,/g, "|") : "png|jpe?g|pdf";
+            return this.optional(element) || value.match(new RegExp("\\.(" + param + ")$", "i"));
+        }, "Format file tidak diizinkan.");
+
+        // 🔹 Setup validate
+        form.validate({
+            errorPlacement: function (error, element) {
+                element.after(error);
+            },
+            rules: {
+                photo: { required: true, extension: "jpg|jpeg|png", filesize: 1048576 },
+                rank_certificate: { extension: "pdf", filesize: 2097152 },
+                origin_head_recommendation: { required: true, extension: "pdf", filesize: 2097152 },
+                certificate_of_health: { required: true, extension: "pdf", filesize: 2097152 },
+            },
+            messages: {
+                photo: { required: "Pas foto wajib diunggah.", extension: "Hanya JPG/PNG.", filesize: "Maks 1 MB." },
+                rank_certificate: { extension: "Hanya File PDF.", filesize: "Maks 1 MB." },
+                origin_head_recommendation: { required: "Surat Rekomendasi Kepala Sekolah wajib diunggah.", extension: "Hanya PDF.", filesize: "Maks 2 MB." },
+                certificate_of_health: { required: "Surat Keterangan Sehat wajib diunggah.", extension: "Hanya PDF.", filesize: "Maks 2 MB." },
+            }
+        });
+
+        // 🔹 Setup jQuery Steps
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "fade",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                return form.valid();
+            },
+            onFinishing: function (event, currentIndex) {
+                if (form.find("input[type='file']").length === 0) {
+                    showSwal("info", "Tidak ada berkas untuk diunggah.");
+                    return;
+                }
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex) {
+                // if no input file is find just send alert
+                if (form.find("input[type='file']").length === 0) {
+                    showSwal("info", "Tidak ada berkas untuk diunggah.");
+                    return;
+                }
+                // Disable the button to prevent multiple submits
+                $("#form-berkas button").prop("disabled", true);
+                // Submit the form
+                $.LoadingOverlay('show');
+                form.submit();
+            }
+        });
+    });
+</script>
+<script>
+    function initPreview(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+
+        if (!input || !preview) return;
+
+        preview.innerHTML = ""; // reset preview
+
+        const files = input.files;
+        if (!files || files.length === 0) return;
+
+        const file = files[0]; // ambil file pertama
+
+        const fileType = file.type;
+
+        if (fileType.startsWith("image/")) {
+            // preview gambar
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file); // ini URL sementara
+            img.style.maxWidth = "200px";
+            preview.appendChild(img);
+        } else if (fileType === "application/pdf") {
+            // preview PDF
+            const embed = document.createElement("embed");
+            embed.src = URL.createObjectURL(file);
+            embed.type = "application/pdf";
+            embed.width = "100%";
+            embed.height = "200px";
+            preview.appendChild(embed);
+        } else {
+            // fallback: hanya tampilkan nama file
+            preview.textContent = "File: " + file.name;
+        }
+    }
+</script>
+@endpush
+

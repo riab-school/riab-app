@@ -30,15 +30,6 @@
 <li data-username="animations" class="nav-item">
     <a href="#" class="nav-link">
         <span class="pcoded-micon">
-            <i class="feather icon-calendar"></i>
-        </span>
-        <span class="pcoded-mtext">Pilih Jadwal Ujian</span>
-    </a>
-</li>
-
-<li data-username="animations" class="nav-item">
-    <a href="#" class="nav-link">
-        <span class="pcoded-micon">
             <i class="feather icon-printer"></i>
         </span>
         <span class="pcoded-mtext">Cetak Berkas dan Kartu</span>

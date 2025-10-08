@@ -35,7 +35,6 @@ class DataDiriController extends Controller
                 break;
             case '6':
                 return view('app.student.new.data-diri.page-6');
-                break;
             default:
                 return view('app.student.new.data-diri.page-1');
                 break;

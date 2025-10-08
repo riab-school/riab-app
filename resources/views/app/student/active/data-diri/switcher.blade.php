@@ -1,5 +1,14 @@
 <div class="row mb-3">
     <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-start">
+                    <span class="text-success fas fa-check"></span> Sudah Lengkap
+                    <hr>
+                    <span class="text-danger fas fa-times"></span> Belum Lengkap
+                </div>
+            </div>
+        </div>
         <ul class="nav flex-column nav-pills rounded" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <li>
                 <a class="nav-link text-start @if(request()->page == '1' || !request()->page) active @endif d-flex justify-content-between align-items-center" href="{{ route('student.active.data-diri', ['page' => 1]) }}">
@@ -53,7 +62,7 @@
             </li>
             <li>
                 <a class="nav-link text-start @if(request()->page == '6') active @endif d-flex justify-content-between align-items-center" href="{{ route('student.active.data-diri', ['page' => 6]) }}">
-                    <div>Dokumen dan Berkas Pendukung</div>
+                    <div>Dokumen dan Berkas</div>
                     @if(auth()->user()->myDetail && auth()->user()->myDetail->studentDocument && auth()->user()->myDetail->studentDocument->is_completed)
                     <span class="text-success fas fa-check"></span>
                     @else

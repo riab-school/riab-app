@@ -1,5 +1,5 @@
 <div class="row mb-3">
-    <div class="col-12">
+    <div class="col-mb-12">
         <ul class="nav flex-column nav-pills rounded" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <li>
                 <a class="nav-link text-start @if(request()->page == '1' || !request()->page) active @endif d-flex justify-content-between align-items-center" href="{{ route('student.new.data-diri', ['page' => 1]) }}">
@@ -43,17 +43,7 @@
             </li>
             <li>
                 <a class="nav-link text-start @if(request()->page == '5') active @endif d-flex justify-content-between align-items-center" href="{{ route('student.new.data-diri', ['page' => 5]) }}">
-                    <div>Informasi Kesehatan</div>
-                    @if(auth()->user()->myDetail && auth()->user()->myDetail->studentHealthDetail && auth()->user()->myDetail->studentHealthDetail->is_completed)
-                    <span class="text-success fas fa-check"></span>
-                    @else
-                    <span class="text-danger fas fa-times"></span>
-                    @endif
-                </a>
-            </li>
-            <li>
-                <a class="nav-link text-start @if(request()->page == '6') active @endif d-flex justify-content-between align-items-center" href="{{ route('student.new.data-diri', ['page' => 6]) }}">
-                    <div>Dokumen dan Berkas Pendukung</div>
+                    <div>Dokumen dan Berkas</div>
                     @if(auth()->user()->myDetail && auth()->user()->myDetail->studentDocument && auth()->user()->myDetail->studentDocument->is_completed)
                     <span class="text-success fas fa-check"></span>
                     @else
@@ -62,12 +52,14 @@
                 </a>
             </li>
             <li>
-                <div class="nav-link text-start disabled">
-                    <span class="text-success fas fa-check"></span> Sudah diverifikasi
-                    <br>
-                    <span class="text-danger fas fa-times"></span> Belum Selesai / Menunggu Verifikasi
-                </div>
+                <a class="nav-link text-start @if(request()->page == '6') active @endif d-flex justify-content-between align-items-center" href="{{ route('student.new.data-diri', ['page' => 6]) }}">
+                    <div>Prestasi</div>
+                </a>
             </li>
         </ul>
+        <div class="text-start m-2">
+            <div class="text-success fas fa-check"> Sudah diverifikasi</div> 
+            <div class="text-danger fas fa-times"> Belum / Menunggu verifikasi</div>
+        </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ use App\Models\AppLog;
 use App\Models\AppSettings;
 use App\Models\WhatsappChatHistory;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 if(!function_exists('appSet')){
     function appSet($key){
@@ -466,4 +467,32 @@ function getTotalAyatInSurah($surah)
         ->where('nomor_surah', $surah)
         ->value('total_ayat');
 }
+
+function eventStatus($start = null, $end = null, $single = null)
+    {
+        $today = Carbon::today();
+
+        // Jika event punya rentang tanggal
+        if ($start && $end) {
+            $start = Carbon::parse($start);
+            $end   = Carbon::parse($end);
+
+            return [
+                'is_ongoing' => $today->between($start, $end),
+                'is_pass'    => $today->greaterThan($end),
+            ];
+        }
+
+        // Jika event hanya 1 tanggal (pengumuman dsb.)
+        if ($single) {
+            $date = Carbon::parse($single);
+
+            return [
+                'is_ongoing' => $today->isSameDay($date),
+                'is_pass'    => $today->greaterThan($date),
+            ];
+        }
+
+        return ['is_ongoing' => false, 'is_pass' => false];
+    }
 

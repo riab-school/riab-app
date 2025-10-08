@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                     <label class="form-label" for="nisn">NISN</label>
                                     <input type="text" class="form-control @error('nisn') is-invalid @enderror"
@@ -80,13 +80,6 @@
                                     @error('nisn')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="nis">NIS</label>
-                                        <input type="text" class="form-control" value="{{ old('nis', auth()->user()->myDetail->nis ?? '') }}" disabled>
-                                        <span class="text-muted small">NIS akan di dapat setelah menjadi siswa</span>
                                     </div>
                                 </div>
                             </div>
