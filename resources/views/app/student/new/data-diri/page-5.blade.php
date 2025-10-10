@@ -2,7 +2,16 @@
 
 @php
     $documents = auth()->user()->myDetail->studentDocument ?? null;
+    $statusPhoto = getRejectedFile('photo');
+    $statusCertificateOfHealth = getRejectedFile('certificate_of_health');
+    $statusOriginHeadRecommendation = getRejectedFile('origin_head_recommendation');
+    $statusCertificateOfLetter = getRejectedFile('certificate_of_letter');
+    $statusReport11 = getRejectedFile('report_1_1');
+    $statusReport12 = getRejectedFile('report_1_2');
+    $statusReport21 = getRejectedFile('report_2_1');
+    $statusReport22 = getRejectedFile('report_2_2');
 @endphp
+
 @section('content')
 @include('app.student.new.data-diri.running-text')
 <div class="row">
@@ -17,85 +26,340 @@
             <div class="card-body">
                 @if($documents && $documents->is_completed)
                     <div class="alert alert-danger" role="alert">
-                        Data dokumen dan berkas anda sudah diverifikasi, anda dapat melakukan perubahan data dengan menghubungi admin atau panitia.
+                        Dokumen dan berkas anda sudah diverifikasi, anda dapat melakukan perubahan data dengan menghubungi admin atau panitia.
                     </div>
                 @endif
-                <form id="form-berkas" action="{{ route('student.new.data-diri.store-page-6') }}" method="POST" enctype="multipart/form-data" class="repeater">
+                <form id="form-berkas" action="{{ route('student.new.data-diri.store-page-5') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
                     @if(!$documents || !$documents->is_completed)
-                    @csrf
+                        @csrf
                     @endif
-                    <div>
 
-                        <h3>Pas Photo</h3>
-                        <section>
-                            <div class="row row align-items-center">
-                                <div class="col-md-6">
-                                    <label>Upload Pas Photo <small class="text-danger"> *Wajib</small></label>
-                                    <input type="file" class="form-control" id="photo" name="photo" onchange="initPreview('photo', 'photo-preview');" required accept="image/*">
-                                    <small>Format: JPG, PNG. Max size: 1MB</small>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Preview Pas Photo</label>
-                                    <div id="photo-preview">
-                                        <img src="{{ auth()->user()->myDetail->studentDocument && auth()->user()->myDetail->studentDocument->photo
-                                        ? Storage::disk('s3')->url(auth()->user()->myDetail->studentDocument->photo)
-                                        : asset('assets/images/sample-image/photo.jpg') }}" class="" alt="sample" style="max-width: 200px;">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+                    <div class="table-responsive">
+                        <table class="table w-100">
+                            <thead>
+                                <tr>
+                                    <th>Jenis Dokumen</th>
+                                    <th>Status</th>
+                                    <th>File Dokumen</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- PAS FOTO --}}
+                                <tr>
+                                    <td>Pas Foto
+                                        <div class="small">3x4 Background Merah/Biru</div>
+                                    </td>
+                                    <td class="text-danger">
+                                        @if($statusPhoto)
+                                            <span class="badge bg-danger">Ditolak</span><br>
+                                            <small>{{ $statusPhoto->rejection_reason }}</small>
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->photo !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="photo" 
+                                                class="form-control mt-2"
+                                                accept="image/*"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusPhoto) && 
+                                                    (auth()->user()->myDetail->studentDocument->photo == NULL || $statusPhoto) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: JPG, JPEG, PNG | Max: 1 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->photo)
+                                            <a href="{{ Storage::disk('s3')->url($documents->photo) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                {{-- SURAT KESEHATAN --}}
+                                <tr>
+                                    <td>Surat Keterangan Sehat
+                                        <div class="small">
+                                            <a href="#">Lihat Contoh</a>
+                                        </div>
+                                    </td>
+                                    <td class="text-danger">
+                                        @if($statusCertificateOfHealth)
+                                            <span class="badge bg-danger">Ditolak</span><br>
+                                            <small>{{ $statusCertificateOfHealth->rejection_reason }}</small>
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->certificate_of_health !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="certificate_of_health" 
+                                                class="form-control mt-2"
+                                                accept="application/pdf"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusCertificateOfHealth) && 
+                                                    (auth()->user()->myDetail->studentDocument->certificate_of_health == NULL || $statusCertificateOfHealth) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->certificate_of_health)
+                                            <a href="{{ Storage::disk('s3')->url($documents->certificate_of_health) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                {{-- SURAT REKOMENDASI --}}
+                                <tr>
+                                    <td>Surat Rekomendasi Kepala Sekolah
+                                        <div class="small">
+                                            <a href="#">Lihat Contoh</a>
+                                        </div>
+                                    </td>
+                                    <td class="text-danger">
+                                        @if($statusOriginHeadRecommendation)
+                                            <span class="badge bg-danger">Ditolak</span><br>
+                                            <small>{{ $statusOriginHeadRecommendation->rejection_reason }}</small>
+                                            <div class="small">Silahkan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->origin_head_recommendation !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="origin_head_recommendation" 
+                                                class="form-control mt-2"
+                                                accept="application/pdf"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusOriginHeadRecommendation) && 
+                                                    (auth()->user()->myDetail->studentDocument->origin_head_recommendation == NULL || $statusOriginHeadRecommendation) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->origin_head_recommendation)
+                                            <a href="{{ Storage::disk('s3')->url($documents->origin_head_recommendation) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                {{-- SURAT KETERANGAN RANGKING --}}
+                                <tr>
+                                    <td>Surat Keterangan Rangking
+                                        <div class="small">
+                                            <a href="#">Lihat Contoh</a>
+                                        </div>
+                                    </td>
+                                    <td class="text-danger">
+                                        @if($statusCertificateOfLetter)
+                                            <span class="badge bg-danger">Ditolak</span><br>
+                                            <small>{{ $statusCertificateOfLetter->rejection_reason }}</small>
+                                            <div class="small">Silahkan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->certificate_of_letter !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Opsional
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input type="file" name="certificate_of_letter" class="form-control mt-2" accept="application/pdf">
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->certificate_of_letter)
+                                            <a href="{{ Storage::disk('s3')->url($documents->certificate_of_letter) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                {{-- RAPOR / NILAI --}}
+                                <tr>
+                                    <td>Rapor Kelas 7 (Semeseter 1)</td>
+                                    <td class="text-danger">
+                                        @if($statusReport11)
+                                            <span class="badge bg-danger">Ditolak</span>
+                                            <br>
+                                            <small>{{ $statusReport11->rejection_reason }}</small>
+                                            <div class="small">Silahkan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_1_1 !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="report_1_1" 
+                                                class="form-control mt-2"
+                                                accept="application/pdf"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusReport11) && 
+                                                    (auth()->user()->myDetail->studentDocument->report_1_1 == NULL || $statusReport11) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->report_1_1)
+                                            <a href="{{ Storage::disk('s3')->url($documents->report_1_1) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rapor Kelas 7 (Semeseter 2)</td>
+                                    <td class="text-danger">
+                                        @if($statusReport12)
+                                            <span class="badge bg-danger">Ditolak</span>
+                                            <br>
+                                            <small>{{ $statusReport12->rejection_reason }}</small>
+                                            <div class="small">Silahkan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_1_2 !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="report_1_2" 
+                                                class="form-control mt-2"
+                                                accept="application/pdf"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusReport12) && 
+                                                    (auth()->user()->myDetail->studentDocument->report_1_2 == NULL || $statusReport12) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->report_1_2)
+                                            <a href="{{ Storage::disk('s3')->url($documents->report_1_2) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rapor Kelas 8 (Semeseter 1)</td>
+                                    <td class="text-danger">
+                                        @if($statusReport21)
+                                            <span class="badge bg-danger">Ditolak</span>
+                                            <br>
+                                            <small>{{ $statusReport21->rejection_reason }}</small>
+                                            <div class="small">Silahkan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_2_1 !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="report_2_1" 
+                                                class="form-control mt-2"
+                                                accept="application/pdf"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusReport21) && 
+                                                    (auth()->user()->myDetail->studentDocument->report_2_1 == NULL || $statusReport21) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->report_2_1)
+                                            <a href="{{ Storage::disk('s3')->url($documents->report_2_1) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rapor Kelas 8 (Semeseter 2)</td>
+                                    <td class="text-danger">
+                                        @if($statusReport22)
+                                            <span class="badge bg-danger">Ditolak</span>
+                                            <br>
+                                            <small>{{ $statusReport22->rejection_reason }}</small>
+                                            <div class="small">Silahkan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_2_1 !== NULL && !$documents->is_completed)
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        @elseif($documents->is_completed)
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        @else
+                                            Wajib Upload
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$documents || !$documents->is_completed)
+                                            <input 
+                                                type="file" 
+                                                name="report_2_2" 
+                                                class="form-control mt-2"
+                                                accept="application/pdf"
+                                                {{ 
+                                                    (!$documents || !$documents->is_completed || $statusReport22) && 
+                                                    (auth()->user()->myDetail->studentDocument->report_2_2 == NULL || $statusReport22) 
+                                                        ? 'required' 
+                                                        : '' 
+                                            }}>
+                                            <small>Format: PDF | Max: 2 MB</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($documents && $documents->report_2_2)
+                                            <a href="{{ Storage::disk('s3')->url($documents->report_2_2) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <h3>Surat Keterangan Rangking</h3>
-                        <section>
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <label>Upload Berkas</label>
-                                    <input type="file" class="form-control" id="rank_certificate" name="rank_certificate" accept="application/pdf">
-                                    <small>Format: PDF. Max size: 2MB</small>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Silahkan Download Contoh Surat</label>
-                                    <div class="">
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Download Contoh</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <h3>Surat Rekom Kepala Sekolah</h3>
-                        <section>
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <label>Upload Berkas <small class="text-danger"> *Wajib</small></label>
-                                    <input type="file" class="form-control" id="origin_head_recommendation" name="origin_head_recommendation" accept="application/pdf" required>
-                                    <small>Format: PDF. Max size: 2MB</small>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Silahkan Download Contoh Surat</label>
-                                    <div class="">
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Download Contoh</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <h3>Surat Keterangan Sehat</h3>
-                        <section>
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <label>Upload Berkas <small class="text-danger"> *Wajib</small></label>
-                                    <input type="file" class="form-control" id="certificate_of_health" name="certificate_of_health" accept="application/pdf" required>
-                                    <small>Format: PDF. Max size: 2MB</small>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Silahkan Download Contoh Surat</label>
-                                    <div class="">
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Download Contoh</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        
+                    <div class="text-end mt-3">
+                        <button type="submit" class="btn btn-primary {{ $documents->is_completed ? 'disabled' : '' }}">Upload Berkas</button>
                     </div>
                 </form>
             </div>
@@ -105,143 +369,6 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('assets/js/plugins/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('assets/js/plugins/jquery.steps.min.js') }}"></script>
-<script src="{{ asset('assets/js/plugins/jquery.repeater.min.js') }}"></script>
 
-<script>
-
-    $(document).ready(function () {
-        $('#form-berkas').repeater({
-            initEmpty: true,
-            defaultValues: {
-                'text-input': 'foo'
-            },
-            show: function () {
-                $(this).slideDown();
-            },
-            hide: function (deleteElement) {
-                if (confirm('Are you sure you want to delete this element?')) {
-                    $(this).slideUp(deleteElement);
-                }
-            },
-            isFirstItemUndeletable: true
-        })
-    });
-    
-    $(function () {
-        const form = $("#form-berkas");
-
-        @if(auth()->user()->myDetail->studentDocument && auth()->user()->myDetail->studentDocument->is_completed)
-            // Hapus masing masing field input dan jadikan col-md-12 untuk file previewnya
-            form.find(".col-md-6:first-child").remove();
-            form.find(".col-md-6:last-child").removeClass("col-md-6").addClass("col-md-12 text-center");
-            // Disable semua input
-            form.find("input").prop("disabled", true); // ubah ke true untuk disable semua input
-        @else
-            form.find("input").prop("disabled", false); // ubah ke false untuk enable semua input
-        @endif
-
-        // 🔹 Tambahkan method custom validator
-        jQuery.validator.addMethod("filesize", function (value, element, param) {
-            if (element.files.length === 0) {
-                return true;
-            }
-            return this.optional(element) || (element.files[0].size <= param);
-        }, "Ukuran file terlalu besar.");
-
-        jQuery.validator.addMethod("extension", function (value, element, param) {
-            if (value === "") {
-                return true;
-            }
-            param = typeof param === "string" ? param.replace(/,/g, "|") : "png|jpe?g|pdf";
-            return this.optional(element) || value.match(new RegExp("\\.(" + param + ")$", "i"));
-        }, "Format file tidak diizinkan.");
-
-        // 🔹 Setup validate
-        form.validate({
-            errorPlacement: function (error, element) {
-                element.after(error);
-            },
-            rules: {
-                photo: { required: true, extension: "jpg|jpeg|png", filesize: 1048576 },
-                rank_certificate: { extension: "pdf", filesize: 2097152 },
-                origin_head_recommendation: { required: true, extension: "pdf", filesize: 2097152 },
-                certificate_of_health: { required: true, extension: "pdf", filesize: 2097152 },
-            },
-            messages: {
-                photo: { required: "Pas foto wajib diunggah.", extension: "Hanya JPG/PNG.", filesize: "Maks 1 MB." },
-                rank_certificate: { extension: "Hanya File PDF.", filesize: "Maks 1 MB." },
-                origin_head_recommendation: { required: "Surat Rekomendasi Kepala Sekolah wajib diunggah.", extension: "Hanya PDF.", filesize: "Maks 2 MB." },
-                certificate_of_health: { required: "Surat Keterangan Sehat wajib diunggah.", extension: "Hanya PDF.", filesize: "Maks 2 MB." },
-            }
-        });
-
-        // 🔹 Setup jQuery Steps
-        form.children("div").steps({
-            headerTag: "h3",
-            bodyTag: "section",
-            transitionEffect: "fade",
-            onStepChanging: function (event, currentIndex, newIndex) {
-                return form.valid();
-            },
-            onFinishing: function (event, currentIndex) {
-                if (form.find("input[type='file']").length === 0) {
-                    showSwal("info", "Tidak ada berkas untuk diunggah.");
-                    return;
-                }
-                return form.valid();
-            },
-            onFinished: function (event, currentIndex) {
-                // if no input file is find just send alert
-                if (form.find("input[type='file']").length === 0) {
-                    showSwal("info", "Tidak ada berkas untuk diunggah.");
-                    return;
-                }
-                // Disable the button to prevent multiple submits
-                $("#form-berkas button").prop("disabled", true);
-                // Submit the form
-                $.LoadingOverlay('show');
-                form.submit();
-            }
-        });
-    });
-</script>
-<script>
-    function initPreview(inputId, previewId) {
-        const input = document.getElementById(inputId);
-        const preview = document.getElementById(previewId);
-
-        if (!input || !preview) return;
-
-        preview.innerHTML = ""; // reset preview
-
-        const files = input.files;
-        if (!files || files.length === 0) return;
-
-        const file = files[0]; // ambil file pertama
-
-        const fileType = file.type;
-
-        if (fileType.startsWith("image/")) {
-            // preview gambar
-            const img = document.createElement("img");
-            img.src = URL.createObjectURL(file); // ini URL sementara
-            img.style.maxWidth = "200px";
-            preview.appendChild(img);
-        } else if (fileType === "application/pdf") {
-            // preview PDF
-            const embed = document.createElement("embed");
-            embed.src = URL.createObjectURL(file);
-            embed.type = "application/pdf";
-            embed.width = "100%";
-            embed.height = "200px";
-            preview.appendChild(embed);
-        } else {
-            // fallback: hanya tampilkan nama file
-            preview.textContent = "File: " + file.name;
-        }
-    }
-</script>
 @endpush
 

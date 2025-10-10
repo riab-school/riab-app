@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Student\New;
 
 use App\Http\Controllers\Controller;
+use App\Models\PsbDocumentRejection;
 use App\Models\StudentDetail;
+use App\Models\StudentsAchievement;
 use App\Models\StudentsDocument;
 use App\Models\StudentsGuardianDetail;
 use App\Models\StudentsHealth;
@@ -336,63 +338,8 @@ class DataDiriController extends Controller
 
     public function handleStorePage5(Request $request)
     {
-        $studentHealth = StudentsHealth::where('user_id', auth()->id())->first();
-
-        // Cek kalau sudah complete tidak boleh update lagi
-        if ($studentHealth && $studentHealth->is_completed) {
-            return redirect()->back()->withInput()->with([
-                'status'  => 'error',
-                'message' => 'Data wali sudah diverifikasi, tidak dapat diubah kembali. Hubungi admin atau panitia untuk bantuan lebih lanjut.',
-            ]);
-        }
-
-        try {
-            $request->validate([
-                'blood'             => 'required|string|in:A+,B+,AB+,O+,A-,B-,AB-,O-',
-                'food_alergic'      => 'nullable|string|max:255',
-                'drug_alergic'      => 'nullable|string|max:255',
-                'other_alergic'     => 'nullable|string|max:255',
-                'disease_history'   => 'nullable|string|max:500',
-                'disease_ongoing'   => 'nullable|string|max:500',
-                'drug_consumption'  => 'nullable|string|max:500',
-                'weight'            => 'nullable|numeric|min:1|max:300',
-                'height'            => 'nullable|numeric|min:30|max:250',
-            ]);
-
-            StudentsHealth::updateOrCreate(
-                [
-                    'user_id' => auth()->user()->id,
-                ],
-                [
-                    'blood'             => $request->blood,
-                    'food_alergic'      => $request->food_alergic,
-                    'drug_alergic'      => $request->drug_alergic,
-                    'other_alergic'     => $request->other_alergic,
-                    'disease_history'   => $request->disease_history,
-                    'disease_ongoing'   => $request->disease_ongoing,
-                    'drug_consumption'  => $request->drug_consumption,
-                    'weight'            => $request->weight,
-                    'height'            => $request->height,
-                ]
-            );
-
-            appLog(auth()->id(), 'success', 'Berhasil update data kesehatan');
-            return redirect()->back()->with([
-                'status'  => 'success',
-                'message' => 'Data kesehatan berhasil diperbarui',
-            ]);
-        } catch (\Throwable $th) {
-            appLog(auth()->id(), 'error', 'Gagal update data kesehatan', $th->getMessage());
-            return redirect()->back()->withInput()->with([
-                'status'  => 'error',
-                'message' => 'Terjadi kesalahan saat memperbarui data kesehatan',
-            ]);
-        }
-    }
-
-    public function handleStorePage6(Request $request)
-    {
         $StudentDocument = StudentsDocument::where('user_id', auth()->id())->first();
+        $StudentDocumentRejected = PsbDocumentRejection::where('user_id', auth()->id())->get();
 
         // Cek kalau sudah complete tidak boleh update lagi
         if ($StudentDocument && $StudentDocument->is_completed) {
@@ -404,29 +351,80 @@ class DataDiriController extends Controller
 
         try {
             $request->validate([
-                'photo'             => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'ktp_file'          => 'required|mimes:jpeg,png,jpg|max:2048',
-                'kk_file'           => 'required|mimes:jpeg,png,jpg,pdf|max:2048',
-                'akte_file'         => 'required|mimes:jpeg,png,jpg,pdf|max:2048',
-                'nisn_file'         => 'required|mimes:jpeg,png,jpg|max:2048',
-                'dad_ktp_file'      => 'nullable|mimes:jpeg,png,jpg|max:2048',
-                'mom_ktp_file'      => 'nullable|mimes:jpeg,png,jpg|max:2048',
-                'guardian_ktp_file' => 'required|mimes:jpeg,png,jpg|max:2048',
-                'bpjs'              => 'required|mimes:jpeg,png,jpg|max:2048',
-                'kis'               => 'nullable|mimes:jpeg,png,jpg|max:2048',
-                'kip'               => 'nullable|mimes:jpeg,png,jpg|max:2048',
+                'photo' => [
+                    getRejectedFile('photo') || auth()->user()->myDetail->studentDocument->photo == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'image',
+                    'mimes:jpeg,png,jpg',
+                    'max:1024',
+                ],
+                'certificate_of_letter' => [
+                    'mimes:pdf',
+                    'max:2048',
+                ],
+                'origin_head_recommendation' => [
+                    getRejectedFile('origin_head_recommendation') || auth()->user()->myDetail->studentDocument->origin_head_recommendation == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'mimes:pdf',
+                    'max:2048',
+                ],
+                'certificate_of_health' => [
+                    getRejectedFile('certificate_of_health') || auth()->user()->myDetail->studentDocument->certificate_of_health == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'mimes:pdf',
+                    'max:2048',
+                ],
+                'report_1_1' => [
+                    getRejectedFile('report_1_1') || auth()->user()->myDetail->studentDocument->report_1_1 == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'mimes:pdf',
+                    'max:2048',
+                ],
+                'report_1_2' => [
+                    getRejectedFile('report_1_2') || auth()->user()->myDetail->studentDocument->report_1_2 == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'mimes:pdf',
+                    'max:2048',
+                ],
+                'report_2_1' => [
+                    getRejectedFile('report_2_1') || auth()->user()->myDetail->studentDocument->report_2_1 == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'mimes:pdf',
+                    'max:2048',
+                ],
+                'report_2_2' => [
+                    getRejectedFile('report_2_2') || auth()->user()->myDetail->studentDocument->report_2_2 == NULL
+                        ? 'required'
+                        : 'nullable',
+                    'mimes:pdf',
+                    'max:2048',
+                ],
             ]);
 
+
             $fileFields = [
-                'photo', 'ktp_file', 'kk_file', 'akte_file', 'nisn_file',
-                'dad_ktp_file', 'mom_ktp_file', 'guardian_ktp_file',
-                'bpjs', 'kis', 'kip'
+                'photo', 'certificate_of_letter', 'origin_head_recommendation', 'certificate_of_health',
+                'report_1_1', 'report_1_2', 'report_2_1', 'report_2_2'
             ];
 
             // kalau StudentDocument belum ada, buat baru
             if (!$StudentDocument) {
                 $StudentDocument = new StudentsDocument();
                 $StudentDocument->user_id = auth()->id();
+            }
+
+            // Kalau ada $StudentDocumentRejected maka update semuanya berdasarkan user_id itu menjadi resolved
+            if ($StudentDocumentRejected && $StudentDocumentRejected->count() > 0) {
+                foreach ($StudentDocumentRejected as $rejected) {
+                    $rejected->status = 'resolved';
+                    $rejected->save();
+                }
             }
 
             foreach ($fileFields as $field) {
@@ -463,4 +461,113 @@ class DataDiriController extends Controller
             ]);
         }
     }
+
+    public function handleStorePage6(Request $request)
+    {
+        // Cek kalau sudah complete tidak boleh update lagi
+        $StudentDocument = StudentsDocument::where('user_id', auth()->id())->first();
+        if ($StudentDocument && $StudentDocument->is_completed) {
+            return redirect()->back()->withInput()->with([
+                'status'  => 'error',
+                'message' => 'Dokumen anda sudah diverifikasi, tidak dapat diubah kembali. Hubungi admin atau panitia untuk bantuan lebih lanjut.',
+            ]);
+        }
+
+        try {
+            $request->validate([
+                'evidence.*' => ['nullable', 'mimes:pdf,jpg,jpeg,png', 'max:1024'],
+                'detail.*'   => ['required', 'string', 'max:255'],
+            ]);
+
+            foreach ($request->detail as $index => $detail) {
+                if (empty($detail)) continue;
+
+                $achievementId = $request->id[$index] ?? null;
+
+                // cari existing, kalau gak ada buat baru langsung
+                $achievement = StudentsAchievement::where('user_id', auth()->id())
+                    ->where('id', $achievementId)
+                    ->first() ?? new StudentsAchievement();
+
+                // pastikan user_id selalu terisi
+                $achievement->user_id = auth()->id();
+
+                $achievement->detail  = $detail;
+                $achievement->action_taked = '-';
+                $achievement->process_by = auth()->id();
+                $achievement->is_notify_parent = false;
+
+                // kalau ada file baru, upload dan hapus lama
+                if ($request->hasFile("evidence.$index")) {
+                    // hapus file lama di s3
+                    if ($achievement->evidence) {
+                        Storage::disk('s3')->delete($achievement->evidence);
+                    }
+
+                    $file     = $request->file("evidence.$index");
+                    $folder   = "student/" . auth()->id() . "/achievements";
+                    $filename = "evidence_" . time() . "_$index." . $file->getClientOriginalExtension();
+                    $fullPath = $folder . '/' . $filename;
+
+                    Storage::disk('s3')->put($fullPath, file_get_contents($file));
+                    $achievement->evidence = $fullPath;
+                }
+
+                $achievement->save();
+            }
+
+
+            appLog(auth()->id(), 'success', 'Berhasil upload sertifikat atau penghargaan');
+            return redirect()->back()->with([
+                'status'  => 'success',
+                'message' => 'Data sertifikat berhasil diperbarui',
+            ]);
+        } catch (\Throwable $th) {
+            appLog(auth()->id(), 'error', 'Gagal upload sertifikat atau penghargaan', $th->getMessage());
+            return redirect()->back()->withInput()->with([
+                'status'  => 'error',
+                'message' => $th->getMessage(),
+            ]);
+        }
+
+
+    }
+
+    public function handleDeleteCertificate(Request $request)
+    {
+        try {
+            $achievement = StudentsAchievement::where('id', $request->id)
+                ->where('user_id', auth()->id())
+                ->first();
+
+            if (!$achievement) {
+                return redirect()->back()->with([
+                    'status' => 'error',
+                    'message' => 'Data sertifikat tidak ditemukan.',
+                ]);
+            }
+
+            // Hapus file di S3
+            if ($achievement->evidence && Storage::disk('s3')->exists($achievement->evidence)) {
+                Storage::disk('s3')->delete($achievement->evidence);
+            }
+
+            // Hapus record
+            $achievement->delete();
+
+            appLog(auth()->id(), 'success', 'Berhasil menghapus sertifikat prestasi');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Sertifikat berhasil dihapus.',
+            ]);
+
+        } catch (\Throwable $th) {
+            appLog(auth()->id(), 'error', 'Gagal menghapus sertifikat', $th->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+
 }

@@ -469,30 +469,46 @@ function getTotalAyatInSurah($surah)
 }
 
 function eventStatus($start = null, $end = null, $single = null)
-    {
-        $today = Carbon::today();
+{
+    $today = Carbon::today();
 
-        // Jika event punya rentang tanggal
-        if ($start && $end) {
-            $start = Carbon::parse($start);
-            $end   = Carbon::parse($end);
+    // Jika event punya rentang tanggal
+    if ($start && $end) {
+        $start = Carbon::parse($start);
+        $end   = Carbon::parse($end);
 
-            return [
-                'is_ongoing' => $today->between($start, $end),
-                'is_pass'    => $today->greaterThan($end),
-            ];
-        }
-
-        // Jika event hanya 1 tanggal (pengumuman dsb.)
-        if ($single) {
-            $date = Carbon::parse($single);
-
-            return [
-                'is_ongoing' => $today->isSameDay($date),
-                'is_pass'    => $today->greaterThan($date),
-            ];
-        }
-
-        return ['is_ongoing' => false, 'is_pass' => false];
+        return [
+            'is_ongoing' => $today->between($start, $end),
+            'is_pass'    => $today->greaterThan($end),
+        ];
     }
+
+    // Jika event hanya 1 tanggal (pengumuman dsb.)
+    if ($single) {
+        $date = Carbon::parse($single);
+
+        return [
+            'is_ongoing' => $today->isSameDay($date),
+            'is_pass'    => $today->greaterThan($date),
+        ];
+    }
+
+    return ['is_ongoing' => false, 'is_pass' => false];
+}
+
+if (!function_exists('getRejectedFile')) {
+    function getRejectedFile($field)
+    {
+        $myDetail = auth()->user()->myDetail ?? null;
+
+        if (!$myDetail || !method_exists($myDetail, 'studentDocumentRejection')) {
+            return null;
+        }
+
+        return $myDetail->studentDocumentRejection()
+            ->where('document_field_key', $field)
+            ->where('status', 'rejected')
+            ->first();
+    }
+}
 

@@ -19,6 +19,7 @@ Route::group(['middleware' => EnsurePsbPaid::class], function () {
         Route::post('page-4', [DataDiriController::class, 'handleStorePage4'])->name('student.new.data-diri.store-page-4');
         Route::post('page-5', [DataDiriController::class, 'handleStorePage5'])->name('student.new.data-diri.store-page-5');
         Route::post('page-6', [DataDiriController::class, 'handleStorePage6'])->name('student.new.data-diri.store-page-6');
+        Route::post('delete-certificate', [DataDiriController::class, 'handleDeleteCertificate'])->name('student.new.data-diri.delete-certificate');
     });
 });
 

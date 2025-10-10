@@ -35,3 +35,12 @@
         <span class="pcoded-mtext">Cetak Berkas dan Kartu</span>
     </a>
 </li>
+
+<li data-username="animations" class="nav-item">
+    <a href="#" class="nav-link">
+        <span class="pcoded-micon">
+            <i class="fas fa-bullhorn"></i>
+        </span>
+        <span class="pcoded-mtext">Pengumuman</span>
+    </a>
+</li>
