@@ -450,7 +450,7 @@ new-task label input[type=checkbox] {
 /* ===================== Invoice page start ===================================== */
 .invoice-contact {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     padding-top: 30px;
     align-items: center;
 }
@@ -466,26 +466,26 @@ new-task label input[type=checkbox] {
     padding: 4px 0;
 }
 
-.invoive-info {
+.invoice-info {
     display: flex;
     margin-bottom: 30px;
 }
 
-.invoive-info h6 {
+.invoice-info h6 {
     margin-bottom: 20px;
     text-transform: uppercase;
 }
 
-.invoive-info .invoice-order.table {
+.invoice-info .invoice-order.table {
     padding-left: 0;
 }
 
-.invoive-info .invoice-order.table th {
+.invoice-info .invoice-order.table th {
     border: 0;
     padding: 4px 0;
 }
 
-.invoive-info .invoice-order.table th:first-child {
+.invoice-info .invoice-order.table th:first-child {
     padding-left: 0;
     width: 80px;
 }

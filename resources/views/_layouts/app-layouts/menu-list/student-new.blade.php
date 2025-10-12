@@ -9,7 +9,7 @@
 
 @if(request()->registration_method !== 'invited')
 <li data-username="animations" class="nav-item">
-    <a href="#" class="nav-link">
+    <a href="{{ route('student.payment.new') }}" class="nav-link">
         <span class="pcoded-micon">
             <i class="feather icon-tag"></i>
         </span>

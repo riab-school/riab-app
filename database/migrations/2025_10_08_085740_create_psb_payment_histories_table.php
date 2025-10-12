@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('psb_config_id')->references('id')->on('psb_configs')->onUpdate('cascade')->onDelete('cascade');
 
             $table->enum('payment_method', ['qris', 'payment-gateway', 'manual', 'others']);
+            $table->longText('evidence')->nullable();
             $table->string('transaction_id')->nullable();
             $table->string('amount')->nullable();
             $table->dateTime('request_at')->nullable();

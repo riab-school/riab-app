@@ -3,10 +3,13 @@
 use App\Http\Controllers\Student\New\AnnouncementController;
 use App\Http\Controllers\Student\New\DashboardController;
 use App\Http\Controllers\Student\New\DataDiriController;
+use App\Http\Controllers\Student\New\PaymentController;
 use App\Http\Middleware\EnsurePsbPaid;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('student.home.new');
+Route::get('payment', [PaymentController::class, 'index'])->name('student.payment.new');
+Route::post('payment', [PaymentController::class, 'handleVerification'])->name('student.payment.new.action');
 
 // Wajib Bayar jika reguler atau invited-reguler baru bisa akses data diri dan seterusnya
 Route::group(['middleware' => EnsurePsbPaid::class], function () {

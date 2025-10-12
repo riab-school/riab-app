@@ -140,7 +140,7 @@ if(!function_exists('dateIndoShort')){
 if (!function_exists('rupiah')) {
     function rupiah($angka)
     {
-        return "Rp. " . number_format($angka, 0, ',', '.');
+        return "Rp " . number_format($angka, 0, ',', '.');
     }
 }
 
