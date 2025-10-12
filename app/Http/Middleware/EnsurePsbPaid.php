@@ -16,13 +16,13 @@ class EnsurePsbPaid
     public function handle(Request $request, Closure $next): Response
     {
         if($request->registration_method == 'reguler' && $request->registration_history->is_paid == false) {
-            return redirect()->back()->with([
+            return redirect()->route('student.home.new')->with([
                 'status'    => 'error',
                 'message'   => 'Pendaftaran belum lunas, silahkan selesaikan pembayaran terlebih dahulu'
             ]);
         }
         if($request->registration_method == 'invited-reguler' && $request->registration_history->is_paid == false) {
-            return redirect()->back()->with([
+            return redirect()->route('student.home.new')->with([
                 'status'    => 'error',
                 'message'   => 'Pendaftaran belum lunas, silahkan selesaikan pembayaran terlebih dahulu'
             ]);

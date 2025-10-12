@@ -19,6 +19,15 @@
 @endif
 
 <li data-username="animations" class="nav-item">
+    <a href="{{ route('student.new.announcement') }}" class="nav-link">
+        <span class="pcoded-micon">
+            <i class="fas fa-bullhorn"></i>
+        </span>
+        <span class="pcoded-mtext">Pengumuman</span>
+    </a>
+</li>
+
+<li data-username="animations" class="nav-item">
     <a href="{{ route('student.new.data-diri') }}" class="nav-link">
         <span class="pcoded-micon">
             <i class="feather icon-align-justify"></i>
@@ -33,14 +42,5 @@
             <i class="feather icon-printer"></i>
         </span>
         <span class="pcoded-mtext">Cetak Berkas dan Kartu</span>
-    </a>
-</li>
-
-<li data-username="animations" class="nav-item">
-    <a href="#" class="nav-link">
-        <span class="pcoded-micon">
-            <i class="fas fa-bullhorn"></i>
-        </span>
-        <span class="pcoded-mtext">Pengumuman</span>
     </a>
 </li>

@@ -12,6 +12,9 @@
 </div>
 @if(!empty($events))
 <div class="cd-timeline js-cd-timeline">
+    <div class="text-start text-md-center">
+        <img src="{{ asset('assets/images/calon.png') }}" alt="calon">
+    </div>
     <div class="cd-timeline__container">
         @foreach ($events as $event)
         <div class="cd-timeline__block js-cd-block">
@@ -34,6 +37,9 @@
             </div>
         </div>    
         @endforeach
+    </div>
+    <div class="text-start text-md-center">
+        <img src="{{ asset('assets/images/menjadi.png') }}" alt="calon">
     </div>
 </div>
 @else

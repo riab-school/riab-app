@@ -38,7 +38,7 @@ class DashboardController extends Controller
                 'title' => 'Verifikasi Berkas',
                 'date'  => $config->buka_verifikasi_berkas_undangan .' s/d '. $config->tutup_verifikasi_berkas_undangan,
                 'color' => 'bg-c-blue',
-                'desc'  => 'Berkas calon santri akan diverifikasi oleh panitia',
+                'desc'  => 'Berkas calon santri akan diverifikasi oleh panitia dan akan di umumkan pada jadwal yang telah ditentukan',
                 'button'=> [],
             ] + eventStatus($config->buka_verifikasi_berkas_undangan, $config->tutup_verifikasi_berkas_undangan),
 
@@ -48,7 +48,10 @@ class DashboardController extends Controller
                 'date'  => $config->pengumuman_administrasi_undangan,
                 'color' => 'bg-c-yellow',
                 'desc'  => 'Calon santri dapat melihat hasil verifikasi berkas untuk penentuan kelulusan seleksi undangan',
-                'button'=> [],
+                'button'=> [
+                    'text' => 'Lihat Pengumuman',
+                    'url'  => route('student.new.announcement'),
+                ],
             ] + eventStatus(null, null, $config->pengumuman_administrasi_undangan),
 
             [
@@ -85,43 +88,52 @@ class DashboardController extends Controller
                 'title' => 'Pendaftaran',
                 'date'  => $config->buka_daftar_reguler .' s/d '. $config->tutup_daftar_reguler,
                 'color' => 'bg-c-green',
-                'desc'  => 'Calon santri harus mendaftarkan akun, dan mengisi form yang telah disediakan'
-            ],
+                'desc'  => 'Calon santri harus mendaftarkan akun, dan mengisi form yang telah disediakan',
+                'button'=> [
+                    'text' => 'Lengkapi Form',
+                    'url'  => route('student.new.data-diri'),
+                ],
+            ] + eventStatus($config->buka_daftar_reguler, $config->tutup_daftar_reguler),
             [
                 'order' => 2,
                 'title' => 'Verifikasi Berkas',
                 'date'  => $config->buka_verifikasi_berkas_reguler .' s/d '. $config->tutup_verifikasi_berkas_reguler,
                 'color' => 'bg-c-blue',
-                'desc'  => 'Berkas calon santri akan diverifikasi oleh panitia'
-            ],
+                'desc'  => 'Berkas calon santri akan diverifikasi oleh panitia',
+                'button'=> [],
+            ] + eventStatus($config->buka_verifikasi_berkas_reguler, $config->tutup_verifikasi_berkas_reguler),
             [
                 'order' => 3,
                 'title' => 'Cetak Berkas',
                 'date'  => $config->buka_cetak_berkas .' s/d '. $config->tutup_cetak_berkas,
                 'color' => 'bg-c-yellow',
-                'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mencetak berkas untuk ujian CAT dan wawancara'
-            ],
+                'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mencetak berkas untuk ujian CAT dan wawancara',
+                'button'=> [],
+            ] + eventStatus($config->buka_cetak_berkas, $config->tutup_cetak_berkas),
             [
                 'order' => 4,
                 'title' => 'Ujian CAT dan Wawancara',
                 'date'  => $config->buka_tes_reguler .' s/d '. $config->tutup_tes_reguler,
                 'color' => 'bg-c-purple',
-                'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mengikuti ujian CAT dan wawancara'
-            ],
+                'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mengikuti ujian CAT dan wawancara',
+                'button'=> [],
+            ] + eventStatus($config->buka_tes_reguler, $config->tutup_tes_reguler),
             [
                 'order' => 5,
                 'title' => 'Pengumuman Hasil Akhir',
                 'date'  => $config->pengumuman_reguler,
                 'color' => 'bg-c-red',
-                'desc'  => 'Calon santri dapat melihat hasil akhir seleksi reguler'
-            ],
+                'desc'  => 'Calon santri dapat melihat hasil akhir seleksi reguler',
+                'button'=> [],
+            ] + eventStatus(null, null, $config->pengumuman_reguler),
             [
                 'order' => 6,
                 'title' => 'Daftar Ulang',
                 'date'  => $config->buka_daftar_ulang_reguler .' s/d '. $config->tutup_daftar_ulang_reguler,
                 'color' => 'bg-success',
-                'desc'  => 'Calon santri yang dinyatakan lulus dapat melakukan daftar ulang'
-            ]
+                'desc'  => 'Calon santri yang dinyatakan lulus dapat melakukan daftar ulang',
+                'button'=> [],
+            ] + eventStatus($config->buka_daftar_ulang_reguler, $config->tutup_daftar_ulang_reguler)
         ];
 
         if($request->registration_method == 'invited'){
