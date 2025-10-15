@@ -2,6 +2,8 @@
 
 use App\Models\AppLog;
 use App\Models\AppSettings;
+use App\Models\PsbConfig;
+use App\Models\PsbHistory;
 use App\Models\WhatsappChatHistory;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -393,107 +395,115 @@ if (!function_exists('getTotalAyatInSurah')) {
     }
 }
 
-function getJuzProgress($userId)
-{
-    $memorizedAyats = DB::table('students_memorizations')
-        ->where('user_id', $userId)
-        ->get();
+if (!function_exists('getJuzProgress')) {
+    function getJuzProgress($userId)
+    {
+        $memorizedAyats = DB::table('students_memorizations')
+            ->where('user_id', $userId)
+            ->get();
 
-    $memorizedAyatKeys = [];
+        $memorizedAyatKeys = [];
 
-    foreach ($memorizedAyats as $memorization) {
-        for ($i = $memorization->from_ayat; $i <= $memorization->to_ayat; $i++) {
-            $key = $memorization->surah . ':' . $i;
-            $memorizedAyatKeys[$key] = true;
-        }
-    }
-
-    $juzList = DB::table('master_juzs')->get();
-
-    $progress = [];
-
-    foreach ($juzList as $juz) {
-        $matchedAyats = 0;
-        $totalAyats = 0;
-
-        for (
-            $surah = $juz->from_surah;
-            $surah <= $juz->to_surah;
-            $surah++
-        ) {
-            $startAyat = ($surah == $juz->from_surah) ? $juz->from_ayat : 1;
-            $endAyat = ($surah == $juz->to_surah) ? $juz->to_ayat : getTotalAyatInSurah($surah); // Helper
-
-            for ($i = $startAyat; $i <= $endAyat; $i++) {
-                $totalAyats++;
-                if (isset($memorizedAyatKeys["$surah:$i"])) {
-                    $matchedAyats++;
-                }
+        foreach ($memorizedAyats as $memorization) {
+            for ($i = $memorization->from_ayat; $i <= $memorization->to_ayat; $i++) {
+                $key = $memorization->surah . ':' . $i;
+                $memorizedAyatKeys[$key] = true;
             }
         }
 
-        $percent = ($totalAyats > 0) ? round(($matchedAyats / $totalAyats) * 100, 2) : 0;
+        $juzList = DB::table('master_juzs')->get();
 
-        $progress[] = [
-            'juz' => $juz->juz,
-            'percent' => $percent,
-        ];
-    }
+        $progress = [];
 
-    return $progress;
-}
+        foreach ($juzList as $juz) {
+            $matchedAyats = 0;
+            $totalAyats = 0;
 
-function getAyatRange($fromSurah, $fromAyat, $toSurah, $toAyat)
-{
-    $ayatList = [];
+            for (
+                $surah = $juz->from_surah;
+                $surah <= $juz->to_surah;
+                $surah++
+            ) {
+                $startAyat = ($surah == $juz->from_surah) ? $juz->from_ayat : 1;
+                $endAyat = ($surah == $juz->to_surah) ? $juz->to_ayat : getTotalAyatInSurah($surah); // Helper
 
-    for ($surah = $fromSurah; $surah <= $toSurah; $surah++) {
-        $totalAyat = getTotalAyatInSurah($surah);
+                for ($i = $startAyat; $i <= $endAyat; $i++) {
+                    $totalAyats++;
+                    if (isset($memorizedAyatKeys["$surah:$i"])) {
+                        $matchedAyats++;
+                    }
+                }
+            }
 
-        $start = ($surah == $fromSurah) ? $fromAyat : 1;
-        $end = ($surah == $toSurah) ? $toAyat : $totalAyat;
+            $percent = ($totalAyats > 0) ? round(($matchedAyats / $totalAyats) * 100, 2) : 0;
 
-        for ($ayat = $start; $ayat <= $end; $ayat++) {
-            $ayatList[] = "{$surah}:{$ayat}";
+            $progress[] = [
+                'juz' => $juz->juz,
+                'percent' => $percent,
+            ];
         }
-    }
 
-    return $ayatList;
+        return $progress;
+    }
 }
 
-function getTotalAyatInSurah($surah)
-{
-    return DB::table('master_alqurans')
-        ->where('nomor_surah', $surah)
-        ->value('total_ayat');
+if (!function_exists('getAyatRange')) {
+    function getAyatRange($fromSurah, $fromAyat, $toSurah, $toAyat)
+    {
+        $ayatList = [];
+
+        for ($surah = $fromSurah; $surah <= $toSurah; $surah++) {
+            $totalAyat = getTotalAyatInSurah($surah);
+
+            $start = ($surah == $fromSurah) ? $fromAyat : 1;
+            $end = ($surah == $toSurah) ? $toAyat : $totalAyat;
+
+            for ($ayat = $start; $ayat <= $end; $ayat++) {
+                $ayatList[] = "{$surah}:{$ayat}";
+            }
+        }
+
+        return $ayatList;
+    }
 }
 
-function eventStatus($start = null, $end = null, $single = null)
-{
-    $today = Carbon::today();
-
-    // Jika event punya rentang tanggal
-    if ($start && $end) {
-        $start = Carbon::parse($start);
-        $end   = Carbon::parse($end);
-
-        return [
-            'is_ongoing' => $today->between($start, $end),
-            'is_pass'    => $today->greaterThan($end),
-        ];
+if (!function_exists('getTotalAyatInSurah')) {
+    function getTotalAyatInSurah($surah)
+    {
+        return DB::table('master_alqurans')
+            ->where('nomor_surah', $surah)
+            ->value('total_ayat');
     }
+}
 
-    // Jika event hanya 1 tanggal (pengumuman dsb.)
-    if ($single) {
-        $date = Carbon::parse($single);
+if (!function_exists('eventStatus')) {
+    function eventStatus($start = null, $end = null, $single = null)
+    {
+        $today = Carbon::today();
 
-        return [
-            'is_ongoing' => $today->isSameDay($date),
-            'is_pass'    => $today->greaterThan($date),
-        ];
+        // Jika event punya rentang tanggal
+        if ($start && $end) {
+            $start = Carbon::parse($start);
+            $end   = Carbon::parse($end);
+
+            return [
+                'is_ongoing' => $today->between($start, $end),
+                'is_pass'    => $today->greaterThan($end),
+            ];
+        }
+
+        // Jika event hanya 1 tanggal (pengumuman dsb.)
+        if ($single) {
+            $date = Carbon::parse($single);
+
+            return [
+                'is_ongoing' => $today->isSameDay($date),
+                'is_pass'    => $today->greaterThan($date),
+            ];
+        }
+
+        return ['is_ongoing' => false, 'is_pass' => false];
     }
-
-    return ['is_ongoing' => false, 'is_pass' => false];
 }
 
 if (!function_exists('getRejectedFile')) {
@@ -511,4 +521,143 @@ if (!function_exists('getRejectedFile')) {
             ->first();
     }
 }
+
+if (!function_exists('getJadwal')) {
+    /**
+     * Hitung jadwal ruang & sesi berdasarkan counter peserta.
+     * Akan mengembalikan false jika kapasitas per hari sudah penuh.
+     *
+     * @param int $counter       urutan peserta yang sudah lolos administrasi
+     * @param string|null $exam_date tanggal yang dipilih user (optional)
+     * @return array|false
+     */
+    function getJadwal($counter, $exam_date = null)
+    {
+        $method  = request()->registration_method;
+        $history = request()->registration_history;
+        $config  = request()->psb_config;
+
+        // === 0. Jalur efektif ===
+        if ($method === 'invited' && $history?->is_moved_to_non_invited) {
+            $method = 'reguler'; // invited-reguler ikut CAT + interview
+        }
+
+        // === 1. Tentukan tanggal dasar ===
+        if (!$exam_date) {
+            $exam_date = ($method === 'reguler')
+                ? $config->buka_tes_reguler
+                : $config->buka_tes_undangan;
+        }
+        $exam_date = \Carbon\Carbon::parse($exam_date)->format('Y-m-d');
+
+        // === 2. Hitung kapasitas maksimum per hari ===
+        if ($method === 'reguler') {
+            $kapasitasPerHari =
+                ($config->kapasitas_ruang_cat ?? 33) *
+                ($config->jumlah_ruang_cat ?? 3) *
+                ($config->jumlah_sesi_sehari ?? 3);
+        } else {
+            // Jalur undangan: hanya interview santri & orang tua
+            $kapasitasPerHari =
+                ($config->kapasitas_ruang_interview ?? 9) *
+                ($config->jumlah_ruang_interview ?? 11) *
+                ($config->jumlah_sesi_sehari ?? 3);
+        }
+
+        // === 3. Cek limit harian ===
+        if ($counter > $kapasitasPerHari) {
+            // Hari penuh, user tidak bisa pilih tanggal ini
+            return false;
+        }
+
+        // === 4. Pengaturan CAT (khusus reguler & invited-reguler) ===
+        $ruangCat = $sesiCat = null;
+        if ($method === 'reguler') {
+            $kapasitasCat     = $config->kapasitas_ruang_cat ?? 33;
+            $jumlahRuangCat   = $config->jumlah_ruang_cat ?? 3;
+            $prefixCat        = $config->prefix_ruang_cat ?? 'Ruang CAT ';
+
+            $ruangCatNumber   = ceil($counter / $kapasitasCat);
+            $ruangCatNumber   = (($ruangCatNumber - 1) % $jumlahRuangCat) + 1;
+            $sesiIndex        = ceil($counter / ($kapasitasCat * $jumlahRuangCat));
+            $sesiCat          = "Sesi " . $sesiIndex;
+            $ruangCat         = $prefixCat . $ruangCatNumber;
+        }
+
+        // === 5. Pengaturan Interview Santri (semua jalur) ===
+        $kapasitasInterview     = $config->kapasitas_ruang_interview ?? 9;
+        $jumlahRuangInterview   = $config->jumlah_ruang_interview ?? 11;
+        $prefixInterview         = $config->prefix_ruang_interview ?? 'Ruang Interview ';
+
+        $ruangInterviewNumber   = ceil($counter / $kapasitasInterview);
+        $ruangInterviewNumber   = (($ruangInterviewNumber - 1) % $jumlahRuangInterview) + 1;
+        $sesiIndexInterview     = ceil($counter / ($kapasitasInterview * $jumlahRuangInterview));
+        $sesiInterview          = "Sesi " . $sesiIndexInterview;
+        $ruangInterview         = $prefixInterview . $ruangInterviewNumber;
+
+        // === 6. Pengaturan Interview Orang Tua (semua jalur) ===
+        $kapasitasOrtu     = $config->kapasitas_ruang_interview_orangtua ?? 33;
+        $jumlahRuangOrtu   = $config->jumlah_ruang_interview_orangtua ?? 3;
+        $prefixOrtu         = $config->prefix_ruang_interview_orangtua ?? 'Ruang Orang Tua ';
+
+        $ruangOrtuNumber   = ceil($counter / $kapasitasOrtu);
+        $ruangOrtuNumber   = (($ruangOrtuNumber - 1) % $jumlahRuangOrtu) + 1;
+        $sesiIndexOrtu     = ceil($counter / ($kapasitasOrtu * $jumlahRuangOrtu));
+        $sesiOrtu          = "Sesi " . $sesiIndexOrtu;
+        $ruangOrtu         = $prefixOrtu . $ruangOrtuNumber;
+
+        // === 7. Return hasil ===
+        return [
+            'exam_date' => $exam_date,
+            'ruang_cat' => $ruangCat,
+            'sesi_cat' => $sesiCat,
+            'ruang_interview' => $ruangInterview,
+            'sesi_interview' => $sesiInterview,
+            'ruang_interview_orangtua' => $ruangOrtu,
+            'sesi_interview_orangtua' => $sesiOrtu,
+        ];
+    }
+}
+
+
+
+if (!function_exists('getCounter')) {
+    function getCounter($user_id)
+    {
+        return DB::transaction(function () use ($user_id) {
+            $history = PsbHistory::where('user_id', $user_id)
+                ->where('is_paid', 1)
+                ->where('is_administration_confirmed', 1)
+                ->lockForUpdate()
+                ->first();
+
+            if (!$history) {
+                return null;
+            }
+
+            // ambil konfigurasi PSB aktif langsung dari DB (bukan dari request)
+            $config = PsbConfig::where('is_active', true)->first();
+
+            // kalau history belum punya exam_number, generate baru
+            if (!$history->exam_number) {
+                $lastNumber = PsbHistory::lockForUpdate()
+                    ->whereNotNull('exam_number')
+                    ->orderBy('exam_number', 'desc')
+                    ->value('exam_number');
+
+                $nextNumber = str_pad(((int) ($lastNumber ?? 0)) + 1, 3, '0', STR_PAD_LEFT);
+
+                $history->update(['exam_number' => $nextNumber]);
+            }
+
+            return $history->exam_number;
+        });
+    }
+}
+
+
+
+
+
+
 

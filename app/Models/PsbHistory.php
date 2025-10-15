@@ -40,4 +40,24 @@ class PsbHistory extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function psbConfig()
+    {
+        return $this->belongsTo(PsbConfig::class, 'psb_config_id', 'id');
+    }
+
+    public function studentCatRoom()
+    {
+        return $this->hasOne(PsbCatRoom::class, 'user_id', 'user_id');
+    }
+
+    public function studentInterviewRoom()
+    {
+        return $this->hasOne(PsbInterviewRoom::class, 'user_id', 'user_id');
+    }
+
+    public function parentInterviewRoom()
+    {
+        return $this->hasOne(PsbParentInterviewRoom::class, 'user_id', 'user_id');
+    }
 }

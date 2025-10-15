@@ -16,12 +16,17 @@ class TahunAjaranSeeder extends Seeder
 
         MasterTahunAjaran::create([
             'tahun_ajaran'  => '2024',
-            'is_active'     => false
+            'is_active'     => date('Y') == '2024' ? true : false,
         ]);
 
         MasterTahunAjaran::create([
             'tahun_ajaran'  => '2025',
-            'is_active'     => false
+            'is_active'     => date('Y') == '2025' ? true : false,
+        ]);
+
+        MasterTahunAjaran::create([
+            'tahun_ajaran'  => '2026',
+            'is_active'     => date('Y') == '2026' ? true : false,
         ]);
     }
 }

@@ -37,7 +37,7 @@
 </li>
 
 <li data-username="animations" class="nav-item">
-    <a href="#" class="nav-link">
+    <a href="{{ route('student.new.cetak-berkas') }}" class="nav-link">
         <span class="pcoded-micon">
             <i class="feather icon-printer"></i>
         </span>

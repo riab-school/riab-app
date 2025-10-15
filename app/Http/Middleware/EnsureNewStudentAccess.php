@@ -30,7 +30,7 @@ class EnsureNewStudentAccess
             ]);
         }
 
-        $history = PsbHistory::where('user_id', $user->id)->first();
+        $history = PsbHistory::where('user_id', $user->id)->with('studentDetail', 'userDetail', 'psbConfig', 'studentCatRoom', 'studentInterviewRoom', 'parentInterviewRoom')->first();
 
         // Validasi keberadaan data siswa
         if (!$history) {
@@ -54,6 +54,7 @@ class EnsureNewStudentAccess
             'registration_method' => $registrationMethod,
             'psb_config' => $psbConfig,
             'home_url' => route('student.home.new'),
+            'counter' => getCounter($history),
         ]);
 
         return $next($request);

@@ -31,6 +31,10 @@
                             <br>
                             <a href="{{ $event['button']['url'] }}" class="btn btn-sm btn-warning mt-2">{{ $event['button']['text'] }}</a>
                         @endif
+
+                        @if ($event['button_2'] && !empty($event['button_2']))
+                            <a href="{{ $event['button_2']['url'] }}" class="btn btn-sm btn-info mt-2">{{ $event['button_2']['text'] }}</a>
+                        @endif
                     </p>
                     <span class="cd-timeline__date" style="{{ $event['is_pass'] ? 'text-decoration: line-through;' : '' }}">{{ $event['date'] }}</span>
                 </div>

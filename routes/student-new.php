@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Student\New\AnnouncementController;
+use App\Http\Controllers\Student\New\CetakBerkasController;
 use App\Http\Controllers\Student\New\DashboardController;
 use App\Http\Controllers\Student\New\DataDiriController;
 use App\Http\Controllers\Student\New\PaymentController;
+use App\Http\Middleware\EnsurePsbAdmChecingkIsPassed;
 use App\Http\Middleware\EnsurePsbPaid;
 use Illuminate\Support\Facades\Route;
 
@@ -27,18 +29,29 @@ Route::group(['middleware' => EnsurePsbPaid::class], function () {
     Route::prefix('pengumuman')->group(function () {
         Route::get('/', [AnnouncementController::class, 'index'])->name('student.new.announcement');
     });
-    Route::prefix('pilih-jadwal')->group(function () {
-    
-    });
-    Route::prefix('cetak-kartu')->group(function () {
-    
+
+    Route::group(['middleware' => EnsurePsbAdmChecingkIsPassed::class], function() {
+        Route::prefix('cetak-kartu')->group(function () {
+            Route::get('/', [CetakBerkasController::class, 'index'])->name('student.new.cetak-berkas');
+        });
+        Route::prefix('pilih-jadwal')->group(function () {
+            Route::get('/', [CetakBerkasController::class, 'getAvailabilitySchedule'])->name('student.new.get-availability-schedule');
+            Route::post('/', [CetakBerkasController::class, 'handlePilihJadwal'])->name('student.new.set-schedule');
+            Route::post('cetak', [CetakBerkasController::class, 'handleCetak'])->name('student.new.handle.cetak-berkas');
+        });
     });
 });
 
+// Delete Soon
 Route::get('test', function () {
     dd([
         'registration_history' => request()->registration_history,
         'registration_method' => request()->registration_method,
         'psb_config' => request()->psb_config,
+        'home_url' => request()->home_url,
     ]);
+});
+// Give exam_number
+Route::get('exam', function () {
+    return getCounter(auth()->user()->id);
 });

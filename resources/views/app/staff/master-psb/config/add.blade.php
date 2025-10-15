@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="popup_psb">File Iklan / Popup</label>
-                        <input type="file" class="form-control" name="popup_psb" id="popup_psb" required>
+                        <input type="file" class="form-control" name="popup_psb" id="popup_psb">
                     </div>
                     <hr>
                     <p class="lead">B. Informasi Biaya Dan Rekening</p>
