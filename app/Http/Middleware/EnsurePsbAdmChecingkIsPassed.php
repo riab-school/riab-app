@@ -20,6 +20,11 @@ class EnsurePsbAdmChecingkIsPassed
                 'status'    => 'error',
                 'message'   => 'Anda belum dapat melanjutkan, silahkan tunggu verifikasi berkas dan administrasi dari panitia.',
             ]);
+        } elseif($request->registration_history->is_administration_confirmed == 1 && $request->registration_history->is_administration_pass == NULL) {
+            return redirect()->route('student.home.new')->with([
+                'status'    => 'error',
+                'message'   => 'Anda belum dapat melanjutkan, silahkan tunggu verifikasi berkas dan administrasi dari panitia.',
+            ]);
         } elseif($request->registration_history->is_administration_confirmed == 1 && $request->registration_history->is_administration_pass == 0) {
             return redirect()->route('student.home.new')->with([
                 'status'    => 'error',

@@ -94,8 +94,6 @@ class UserTestSeeder extends Seeder
             'tutup_daftar_reguler'              => now()->addDays(21),
             'buka_verifikasi_berkas_reguler'    => now()->addDays(22),
             'tutup_verifikasi_berkas_reguler'   => now()->addDays(23),
-            'buka_cetak_berkas'                 => now()->addDays(24),
-            'tutup_cetak_berkas'                => now()->addDays(25),
             'buka_tes_reguler'                  => now()->addDays(26),
             'tutup_tes_reguler'                 => now()->addDays(28),
             'pengumuman_reguler'                => now()->addDays(29),

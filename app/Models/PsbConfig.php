@@ -40,8 +40,7 @@ class PsbConfig extends Model
         'tutup_daftar_reguler',
         'buka_verifikasi_berkas_reguler',
         'tutup_verifikasi_berkas_reguler',
-        'buka_cetak_berkas',
-        'tutup_cetak_berkas',
+
         'buka_tes_reguler',
         'tutup_tes_reguler',
         'pengumuman_reguler',

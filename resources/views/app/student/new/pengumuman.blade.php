@@ -35,13 +35,16 @@
                                 <div class="fs-5">
                                     Anda dinyatakan Lulus Verifikasi Berkas, silahkan melanjutkan ke tahap cetak kartu ujian dan memilih jadwal ujian dan cetak berkas
                                 </div>
-                                <a href="#" class="btn btn-primary btn-sm mt-2">Cetak Berkas dan Kartu</a>
+                                <a href="{{ route('student.new.cetak-berkas') }}" class="btn btn-primary btn-sm mt-2">Cetak Berkas dan Kartu</a>
                             </div>
                         @elseif($history->is_administration_confirmed && !$history->is_administration_pass)
                             <div class="text-danger">
                                 <div class="fs-4">Mohon Maaf!!</div>
                                 <div class="fs-5">Anda dinyatakan Tidak Lulus Verifikasi Berkas, silahkan pindah jalur pendaftaran menjadi Reguler</div>
-                                <a href="#" class="btn btn-primary btn-sm mt-2">Pindah Ke Reguler</a>
+                                <form action="{{ route('student.new.announcement.pindah-reguler') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Pindah Ke Reguler</button>
+                                </form>
                             </div>
                         @else
                             <div class="text-warning fs-4">

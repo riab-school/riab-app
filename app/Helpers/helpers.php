@@ -538,8 +538,8 @@ if (!function_exists('getJadwal')) {
         $config  = request()->psb_config;
 
         // === 0. Jalur efektif ===
-        if ($method === 'invited' && $history?->is_moved_to_non_invited) {
-            $method = 'reguler'; // invited-reguler ikut CAT + interview
+        if (in_array($method, ['reguler', 'invited-reguler'])) {
+            $method = 'reguler';
         }
 
         // === 1. Tentukan tanggal dasar ===
@@ -618,8 +618,6 @@ if (!function_exists('getJadwal')) {
         ];
     }
 }
-
-
 
 if (!function_exists('getCounter')) {
     function getCounter($user_id)

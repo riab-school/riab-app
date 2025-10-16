@@ -195,14 +195,6 @@
                         <input type="date" class="form-control" name="tutup_daftar_reguler" id="tutup_daftar_reguler" value="{{ $dataConfig->tutup_daftar_reguler }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="buka_cetak_berkas">Buka Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="buka_cetak_berkas" id="buka_cetak_berkas" value="{{ $dataConfig->buka_cetak_berkas }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tutup_cetak_berkas">Tutup Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="tutup_cetak_berkas" id="tutup_cetak_berkas" value="{{ $dataConfig->tutup_cetak_berkas }}" required>
-                    </div>
-                    <div class="form-group">
                         <label for="buka_tes_reguler">Buka Tes Reguler</label>
                         <input type="date" class="form-control" name="buka_tes_reguler" id="buka_tes_reguler" value="{{ $dataConfig->buka_tes_reguler }}" required>
                     </div>

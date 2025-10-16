@@ -133,7 +133,7 @@
                                     @if(request()->registration_method == "invited")
                                     <td>Tidak ada ujian Komputer / CAT</td>
                                     @else
-                                    <td><b>{{ request()->registration_history->studentCatRoom->exam_date }}</b></td>
+                                    <td><b>{{ dateIndo(request()->registration_history->studentCatRoom->exam_date) }}</b></td>
                                     @endif
                                 </tr>
                                 <tr>

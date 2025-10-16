@@ -64,7 +64,10 @@ class DashboardController extends Controller
                 'date'  => $config->buka_tes_undangan .' s/d '. $config->tutup_tes_undangan,
                 'color' => 'bg-c-purple',
                 'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mengikuti test wawancara',
-                'button'=> [],
+                'button'=> [
+                    'text' => 'Pilih Jadwal dan Cetak Berkas',
+                    'url'  => route('student.new.cetak-berkas'),
+                ],
                 'button_2' => [],
             ] + eventStatus($config->buka_tes_undangan, $config->tutup_tes_undangan),
 
@@ -74,7 +77,10 @@ class DashboardController extends Controller
                 'date'  => $config->pengumuman_undangan,
                 'color' => 'bg-c-red',
                 'desc'  => 'Calon santri dapat melihat hasil akhir seleksi undangan',
-                'button'=> [],
+                'button'=> [
+                    'text' => 'Lihat Pengumuman',
+                    'url'  => route('student.new.announcement'),
+                ],
                 'button_2' => [],
             ] + eventStatus(null, null, $config->pengumuman_undangan),
 
@@ -116,15 +122,6 @@ class DashboardController extends Controller
             ] + eventStatus($config->buka_verifikasi_berkas_reguler, $config->tutup_verifikasi_berkas_reguler),
             [
                 'order' => 3,
-                'title' => 'Cetak Berkas',
-                'date'  => $config->buka_cetak_berkas .' s/d '. $config->tutup_cetak_berkas,
-                'color' => 'bg-c-yellow',
-                'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mencetak berkas untuk ujian CAT dan wawancara',
-                'button'=> [],
-                'button_2' => [],
-            ] + eventStatus($config->buka_cetak_berkas, $config->tutup_cetak_berkas),
-            [
-                'order' => 4,
                 'title' => 'Ujian CAT dan Wawancara',
                 'date'  => $config->buka_tes_reguler .' s/d '. $config->tutup_tes_reguler,
                 'color' => 'bg-c-purple',
@@ -133,7 +130,7 @@ class DashboardController extends Controller
                 'button_2' => [],
             ] + eventStatus($config->buka_tes_reguler, $config->tutup_tes_reguler),
             [
-                'order' => 5,
+                'order' => 4,
                 'title' => 'Pengumuman Hasil Akhir',
                 'date'  => $config->pengumuman_reguler,
                 'color' => 'bg-c-red',
@@ -142,7 +139,7 @@ class DashboardController extends Controller
                 'button_2' => [],
             ] + eventStatus(null, null, $config->pengumuman_reguler),
             [
-                'order' => 6,
+                'order' => 5,
                 'title' => 'Daftar Ulang',
                 'date'  => $config->buka_daftar_ulang_reguler .' s/d '. $config->tutup_daftar_ulang_reguler,
                 'color' => 'bg-success',

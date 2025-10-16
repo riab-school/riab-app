@@ -23,8 +23,6 @@ class CetakBerkasController extends Controller
         if ($request->ajax()) {
 
             $method  = request()->registration_method;
-            $history = request()->registration_history;
-            $config  = request()->psb_config;
             $exam_date = $request->exam_date;
 
             // --- 1. Hitung jumlah peserta yang sudah terdaftar di tanggal itu ---

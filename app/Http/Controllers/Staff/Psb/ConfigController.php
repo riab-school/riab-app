@@ -155,8 +155,6 @@ class ConfigController extends Controller
                     'tutup_daftar_ulang_undangan' => $request->tutup_daftar_ulang_undangan,
                     'buka_daftar_reguler' => $request->buka_daftar_reguler,
                     'tutup_daftar_reguler' => $request->tutup_daftar_reguler,
-                    'buka_cetak_berkas' => $request->buka_cetak_berkas,
-                    'tutup_cetak_berkas' => $request->tutup_cetak_berkas,
                     'buka_tes_reguler' => $request->buka_tes_reguler,
                     'tutup_tes_reguler' => $request->tutup_tes_reguler,
                     'pengumuman_reguler' => $request->pengumuman_reguler,

@@ -11,9 +11,6 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-
-        // dd($request->all());
-
         $checkHistory = PsbPaymentHistory::where('user_id', auth()->user()->id)->first();
         if (!$checkHistory) {   
             PsbPaymentHistory::create([
