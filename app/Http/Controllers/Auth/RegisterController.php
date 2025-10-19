@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterGenerationList;
 use App\Models\ParentDetail;
 use App\Models\PsbConfig;
 use App\Models\PsbHistory;
@@ -25,7 +26,7 @@ class RegisterController extends Controller
     {
         $request->validate([
             'method'        => 'required|in:reg,inv',
-            'username'      => 'required|unique:users,username|Username hanya boleh berisi huruf kecil dan angka.',
+            'username'      => 'required|unique:users,username,regex:/^[0-9]+$/i',
             'name'          => 'required',
             'whatsapp'      => 'required',
             'password'      => 'required|confirmed',
@@ -34,7 +35,7 @@ class RegisterController extends Controller
         [
             'invite_code.exists'        => 'Kode undangan tidak valid.',
             'invite_code.required_if'   => 'Kode undangan tidak boleh kosong.',
-            'username.regex'        => 'Username hanya boleh berisi huruf kecil dan angka.',
+            'username.regex'            => 'Username hanya boleh berisi angka.',
         ]);
 
         try {
@@ -50,10 +51,11 @@ class RegisterController extends Controller
             ]);
     
             StudentDetail::create([
-                'user_id' => $studentNew->id,
-                'name'    => $request->name,
-                'phone'   => indoNumber($request->whatsapp),
-                'status'  => 'new',
+                'user_id'       => $studentNew->id,
+                'name'          => $request->name,
+                'phone'         => indoNumber($request->whatsapp),
+                'generation_id' => MasterGenerationList::where('year', $psbConfig->tahun_ajaran)->first()->id ?? null,
+                'status'    => 'new',
             ]);
             if($request->method == 'inv'){
                 PsbHistory::create([
@@ -84,7 +86,8 @@ class RegisterController extends Controller
             DB::rollBack();
             return redirect()->back()->with([
                 'status'    => 'error',
-                'message'   => 'Gagal mendaftar, silahkan coba lagi.'
+                'message'   => $th->getMessage(),
+                // 'message'   => 'Gagal mendaftar, silahkan coba lagi.'
             ]);
         }
     }

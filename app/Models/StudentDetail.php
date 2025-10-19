@@ -96,4 +96,9 @@ class StudentDetail extends Model
     {
         return $this->hasOne(StudentsHealth::class, 'user_id', 'user_id');
     }
+
+    public function studentDocumentRejection()
+    {
+        return $this->hasMany(PsbDocumentRejection::class, 'user_id', 'user_id');
+    }
 }

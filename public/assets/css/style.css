@@ -14029,8 +14029,9 @@ table.dataTable tbody > tr > .selected td {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background: linear-gradient(-45deg, #19BCBF, #149698);
+  color: #000;
+  border: 2px dotted #19BCBF;
+  background-color: #ffffff;
 }
 
 /* ==================== Justified variants ===================*/

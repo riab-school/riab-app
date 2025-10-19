@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="popup_psb">File Iklan / Popup</label>
-                        <input type="file" class="form-control" name="popup_psb" id="popup_psb" required>
+                        <input type="file" class="form-control" name="popup_psb" id="popup_psb">
                     </div>
                     <hr>
                     <p class="lead">B. Informasi Biaya Dan Rekening</p>
@@ -151,14 +151,6 @@
                     <div class="form-group">
                         <label for="tutup_daftar_reguler">Tutup Pendaftaran Reguler</label>
                         <input type="date" class="form-control" name="tutup_daftar_reguler" id="tutup_daftar_reguler" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="buka_cetak_berkas">Buka Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="buka_cetak_berkas" id="buka_cetak_berkas" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tutup_cetak_berkas">Tutup Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="tutup_cetak_berkas" id="tutup_cetak_berkas" required>
                     </div>
                     <div class="form-group">
                         <label for="buka_tes_reguler">Buka Tes Reguler</label>

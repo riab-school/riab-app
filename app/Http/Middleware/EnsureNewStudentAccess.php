@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\PsbConfig;
 use App\Models\PsbHistory;
+use App\Models\PsbReRegisterHistory;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +31,7 @@ class EnsureNewStudentAccess
             ]);
         }
 
-        $history = PsbHistory::where('user_id', $user->id)->first();
+        $history = PsbHistory::where('user_id', $user->id)->with('studentDetail', 'userDetail', 'psbConfig', 'studentCatRoom', 'studentInterviewRoom', 'parentInterviewRoom')->first();
 
         // Validasi keberadaan data siswa
         if (!$history) {
@@ -40,15 +42,25 @@ class EnsureNewStudentAccess
         $registrationMethod = match (true) {
             $history->registration_method === 'invited' && !$history->is_moved_to_non_invited => 'invited',
             $history->registration_method === 'invited' && $history->is_moved_to_non_invited => 'invited-reguler',
-            $history->registration_method === 'reguler' && is_null($history->is_moved_to_non_invited) => 'reguler',
+            $history->registration_method === 'reguler' && !$history->is_moved_to_non_invited => 'reguler',
             default => null,
         };
 
+        $historyPaymentReRegister = PsbReRegisterHistory::where('user_id', $user->id)->first();
+
+
+
+        // Ambil konfigurasi PSB dari session atau database
+        $psbConfig = PsbConfig::where('is_active', true)->first();
+
         // Tambahkan data ke request
         $request->merge([
-            'registration_history' => $history,
-            'registration_method' => $registrationMethod,
-            'home_url' => route('student.home.new'),
+            'registration_history'  => $history,
+            'registration_method'   => $registrationMethod,
+            'psb_config'            => $psbConfig,
+            'home_url'              => route('student.home.new'),
+            'counter'               => getCounter($history),
+            'psb_reregister'        => $historyPaymentReRegister,
         ]);
 
         return $next($request);

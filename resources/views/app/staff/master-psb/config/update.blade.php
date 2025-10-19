@@ -6,8 +6,26 @@
         <h5>Edit Psb Config</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('staff.master-psb.add-config.update') }}" method="POST" enctype="multipart/form-data" onsubmit="return processData(this)">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        @if (session('status') == 'error')
+        <div class="alert alert-danger">{{ session('message') }}</div>
+        @endif
+
+        @if (session('status') == 'success')
+        <div class="alert alert-success">{{ session('message') }}</div>
+        @endif
+        <form action="{{ route('staff.master-psb.add-config.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="id" value="{{ $dataConfig->id }}">
             <div class="row">
                 <div class="col-md-3">
                     <p class="lead">A. Informasi Umum</p>
@@ -26,19 +44,43 @@
                     </div>
                     <div class="form-group">
                         <label for="tanda_tangan_ketua_panitia">Tanda Tangan Ketua Panitia</label>
-                        <input type="file" class="form-control" name="tanda_tangan_ketua_panitia" id="tanda_tangan_ketua_panitia" required>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="tanda_tangan_ketua_panitia" id="tanda_tangan_ketua_panitia" @if($dataConfig->tanda_tangan_ketua_panitia == null) required @endif accept="image/png">
+                            @if($dataConfig->tanda_tangan_ketua_panitia != null)
+                            <a href="{{ Storage::disk('s3')->url($dataConfig->tanda_tangan_ketua_panitia) }}" class="btn btn-primary">Lihat File</a>
+                            @endif
+                            <input type="hidden" name="old_tanda_tangan_ketua_panitia" value="{{ $dataConfig->tanda_tangan_ketua_panitia }}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="brosur_link">File Brosur</label>
-                        <input type="file" class="form-control" name="brosur_link" id="brosur_link" required>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="brosur_link" id="brosur_link" @if($dataConfig->brosur_link == null) required @endif accept="application/pdf">
+                            @if($dataConfig->brosur_link != null)
+                            <a href="{{ Storage::disk('s3')->url($dataConfig->brosur_link) }}" class="btn btn-primary">Lihat File</a>
+                            @endif
+                            <input type="hidden" name="old_brosur_link" value="{{ $dataConfig->brosur_link }}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="booklet_link">File Booklet</label>
-                        <input type="file" class="form-control" name="booklet_link" id="booklet_link" required>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="booklet_link" id="booklet_link" @if($dataConfig->booklet_link == null) required @endif accept="application/pdf">
+                            @if($dataConfig->booklet_link != null)
+                            <a href="{{ Storage::disk('s3')->url($dataConfig->booklet_link) }}" class="btn btn-primary">Lihat File</a>
+                            @endif
+                            <input type="hidden" name="old_booklet_link" value="{{ $dataConfig->booklet_link }}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="popup_psb">File Iklan / Popup</label>
-                        <input type="file" class="form-control" name="popup_psb" id="popup_psb" required>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="popup_psb" id="popup_psb" accept="image/*">
+                            @if($dataConfig->popup_psb != null)
+                            <a href="{{ Storage::disk('s3')->url($dataConfig->popup_psb) }}" class="btn btn-primary">Lihat File</a>
+                            @endif
+                            <input type="hidden" name="old_popup_psb" value="{{ $dataConfig->popup_psb }}">
+                        </div>
                     </div>
                     <hr>
                     <p class="lead">B. Informasi Biaya Dan Rekening</p>
@@ -54,14 +96,14 @@
                         <label for="nama_bank_rekening_psb">Nama Bank Rekening PSB</label>
                         <select name="nama_bank_rekening_psb" id="nama_bank_rekening_psb" class="form-control" required>
                             <option value="">-- Pilih Bank --</option>
-                            <option value="Bank BSI">Bank BSI</option>
-                            <option value="Bank Aceh Syariah">Bank Aceh Syariah</option>
-                            <option value="Bank Bukopin">Bank Bukopin</option>
-                            <option value="Bank Danamon">Bank Danamon</option>
-                            <option value="Bank Mandiri">Bank Mandiri</option>
-                            <option value="Bank BRI">Bank BRI</option>
-                            <option value="Bank BNI">Bank BNI</option>
-                            <option value="Bank BCA">Bank BCA</option>
+                            <option value="Bank BSI" @if($dataConfig->nama_bank_rekening_psb == "Bank BSI") selected @endif>Bank BSI</option>
+                            <option value="Bank Aceh Syariah" @if($dataConfig->nama_bank_rekening_psb == "Bank Aceh Syariah") selected @endif>Bank Aceh Syariah</option>
+                            <option value="Bank Bukopin" @if($dataConfig->nama_bank_rekening_psb == "Bank Bukopin") selected @endif>Bank Bukopin</option>
+                            <option value="Bank Danamon" @if($dataConfig->nama_bank_rekening_psb == "Bank Danamon") selected @endif>Bank Danamon</option>
+                            <option value="Bank Mandiri" @if($dataConfig->nama_bank_rekening_psb == "Bank Mandiri") selected @endif>Bank Mandiri</option>
+                            <option value="Bank BRI" @if($dataConfig->nama_bank_rekening_psb == "Bank BRI") selected @endif>Bank BRI</option>
+                            <option value="Bank BNI" @if($dataConfig->nama_bank_rekening_psb == "Bank BNI") selected @endif>Bank BNI</option>
+                            <option value="Bank BCA" @if($dataConfig->nama_bank_rekening_psb == "Bank BCA") selected @endif>Bank BCA</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -153,14 +195,6 @@
                         <input type="date" class="form-control" name="tutup_daftar_reguler" id="tutup_daftar_reguler" value="{{ $dataConfig->tutup_daftar_reguler }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="buka_cetak_berkas">Buka Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="buka_cetak_berkas" id="buka_cetak_berkas" value="{{ $dataConfig->buka_cetak_berkas }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tutup_cetak_berkas">Tutup Cetak Berkas Reguler</label>
-                        <input type="date" class="form-control" name="tutup_cetak_berkas" id="tutup_cetak_berkas" value="{{ $dataConfig->tutup_cetak_berkas }}" required>
-                    </div>
-                    <div class="form-group">
                         <label for="buka_tes_reguler">Buka Tes Reguler</label>
                         <input type="date" class="form-control" name="buka_tes_reguler" id="buka_tes_reguler" value="{{ $dataConfig->buka_tes_reguler }}" required>
                     </div>
@@ -222,6 +256,14 @@
                     <div class="form-group">
                         <label for="kapasitas_ruang_interview_orangtua">Kapasitas Peserta Per Ruangan Interview Wali</label>
                         <input type="number" class="form-control" name="kapasitas_ruang_interview_orangtua" id="kapasitas_ruang_interview_orangtua" value="{{ $dataConfig->kapasitas_ruang_interview_orangtua }}" required>
+                    </div>
+                    <p class="lead">G. Konfigurasi Settingan</p>
+                    <div class="form-group">
+                        <label for="is_active">Status?</label>
+                        <select name="is_active" id="is_active" class="form-control" required>
+                            <option value="1" @if($dataConfig->is_active == 1) selected @endif>Aktif</option>
+                            <option value="0" @if($dataConfig->is_active == 0) selected @endif>Tidak</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-12">

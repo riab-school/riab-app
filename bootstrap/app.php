@@ -51,7 +51,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 health: '/up',
         )
         ->withMiddleware(function (Middleware $middleware) {
-                //
+                $middleware->alias([
+                        'psb.schedule' => \App\Http\Middleware\CheckPsbSchedule::class,
+                ]);
         })
         ->withExceptions(function (Exceptions $exceptions) {
                 //
