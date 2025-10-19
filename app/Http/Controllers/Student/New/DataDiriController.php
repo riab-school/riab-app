@@ -445,6 +445,16 @@ class DataDiriController extends Controller
                         Storage::disk('s3')->delete($StudentDocument->getOriginal($field));
                     }
                 }
+
+                // check if any on rejected file for this field, if yes set to resolved
+                $rejectedFile = PsbDocumentRejection::where('user_id', auth()->id())
+                    ->where('document_field_key', $field)
+                    ->where('status', 'rejected')
+                    ->first();
+                if ($rejectedFile) {
+                    $rejectedFile->status = 'resolved';
+                    $rejectedFile->save();
+                }
             }
             $StudentDocument->save();
 

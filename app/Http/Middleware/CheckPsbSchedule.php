@@ -20,7 +20,6 @@ class CheckPsbSchedule
         }
 
         $regMethod = $request->registration_method ?? 'reguler';
-        $history = $request->registration_history;
         $now = Carbon::now();
 
         $map = [

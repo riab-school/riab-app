@@ -97,7 +97,7 @@
                         <div class="text-success fs-4">
                             Selamat! Anda dinyatakan lulus jalur undangan.
                             <p>Silahkan melakukan pendaftaran ulang untuk melanjutkan ke tahap berikutnya.</p>
-                            <a href="#" class="btn btn-primary btn-sm mt-2">Daftar Ulang</a>
+                            <a href="{{ route('student.new.daftar-ulang.upload-bukti') }}" class="btn btn-primary btn-sm mt-2">Daftar Ulang</a>
                         </div>
                         @endif
                     @endif
@@ -140,7 +140,7 @@
                         <div class="text-success fs-4">
                             Selamat! Anda dinyatakan lulus jalur reguler.
                             <p>Silahkan melakukan pendaftaran ulang untuk melanjutkan ke tahap berikutnya.</p>
-                            <a href="#" class="btn btn-primary btn-sm mt-2">Daftar Ulang</a>
+                            <a href="{{ route('student.new.daftar-ulang.upload-bukti') }}" class="btn btn-primary btn-sm mt-2">Daftar Ulang</a>
                         </div>
                         @endif
                     @endif

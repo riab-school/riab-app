@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\PsbConfig;
 use App\Models\PsbHistory;
+use App\Models\PsbReRegisterHistory;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,16 +46,21 @@ class EnsureNewStudentAccess
             default => null,
         };
 
+        $historyPaymentReRegister = PsbReRegisterHistory::where('user_id', $user->id)->first();
+
+
+
         // Ambil konfigurasi PSB dari session atau database
         $psbConfig = PsbConfig::where('is_active', true)->first();
 
         // Tambahkan data ke request
         $request->merge([
-            'registration_history' => $history,
-            'registration_method' => $registrationMethod,
-            'psb_config' => $psbConfig,
-            'home_url' => route('student.home.new'),
-            'counter' => getCounter($history),
+            'registration_history'  => $history,
+            'registration_method'   => $registrationMethod,
+            'psb_config'            => $psbConfig,
+            'home_url'              => route('student.home.new'),
+            'counter'               => getCounter($history),
+            'psb_reregister'        => $historyPaymentReRegister,
         ]);
 
         return $next($request);

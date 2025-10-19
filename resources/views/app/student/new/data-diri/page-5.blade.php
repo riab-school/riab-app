@@ -55,7 +55,7 @@
                                             <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusPhoto->rejection_reason }}</small>
                                             <div class="small">Silakan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->photo !== NULL && !$documents->is_completed)
+                                        @elseif(auth()->user()->myDetail->studentDocument->photo && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -64,18 +64,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="photo" 
-                                                class="form-control mt-2"
-                                                accept="image/*"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusPhoto) && 
-                                                    (auth()->user()->myDetail->studentDocument->photo == NULL || $statusPhoto) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusPhoto)
+                                            <input type="file" name="photo" class="form-control mt-2" accept="image/*"
+                                                {{ (!auth()->user()->myDetail->studentDocument->photo || $statusPhoto) ? 'required' : '' }}>
                                             <small>Format: JPG, JPEG, PNG | Max: 1 MB</small>
                                         @endif
                                     </td>
@@ -85,19 +76,18 @@
                                         @endif
                                     </td>
                                 </tr>
+
                                 {{-- SURAT KESEHATAN --}}
                                 <tr>
                                     <td>Surat Keterangan Sehat
-                                        <div class="small">
-                                            <a href="#">Lihat Contoh</a>
-                                        </div>
+                                        <div class="small"><a href="#">Lihat Contoh</a></div>
                                     </td>
                                     <td class="text-danger">
                                         @if($statusCertificateOfHealth)
                                             <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusCertificateOfHealth->rejection_reason }}</small>
                                             <div class="small">Silakan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->certificate_of_health !== NULL && !$documents->is_completed)
+                                        @elseif(auth()->user()->myDetail->studentDocument->certificate_of_health && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -106,18 +96,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="certificate_of_health" 
-                                                class="form-control mt-2"
-                                                accept="application/pdf"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusCertificateOfHealth) && 
-                                                    (auth()->user()->myDetail->studentDocument->certificate_of_health == NULL || $statusCertificateOfHealth) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusCertificateOfHealth)
+                                            <input type="file" name="certificate_of_health" class="form-control mt-2" accept="application/pdf"
+                                                {{ (!auth()->user()->myDetail->studentDocument->certificate_of_health || $statusCertificateOfHealth) ? 'required' : '' }}>
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
                                     </td>
@@ -127,19 +108,18 @@
                                         @endif
                                     </td>
                                 </tr>
+
                                 {{-- SURAT REKOMENDASI --}}
                                 <tr>
                                     <td>Surat Rekomendasi Kepala Sekolah
-                                        <div class="small">
-                                            <a href="#">Lihat Contoh</a>
-                                        </div>
+                                        <div class="small"><a href="#">Lihat Contoh</a></div>
                                     </td>
                                     <td class="text-danger">
                                         @if($statusOriginHeadRecommendation)
                                             <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusOriginHeadRecommendation->rejection_reason }}</small>
-                                            <div class="small">Silahkan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->origin_head_recommendation !== NULL && !$documents->is_completed)
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->origin_head_recommendation && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -148,18 +128,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="origin_head_recommendation" 
-                                                class="form-control mt-2"
-                                                accept="application/pdf"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusOriginHeadRecommendation) && 
-                                                    (auth()->user()->myDetail->studentDocument->origin_head_recommendation == NULL || $statusOriginHeadRecommendation) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusOriginHeadRecommendation)
+                                            <input type="file" name="origin_head_recommendation" class="form-control mt-2" accept="application/pdf"
+                                                {{ (!auth()->user()->myDetail->studentDocument->origin_head_recommendation || $statusOriginHeadRecommendation) ? 'required' : '' }}>
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
                                     </td>
@@ -169,19 +140,18 @@
                                         @endif
                                     </td>
                                 </tr>
+
                                 {{-- SURAT KETERANGAN RANGKING --}}
                                 <tr>
                                     <td>Surat Keterangan Rangking
-                                        <div class="small">
-                                            <a href="#">Lihat Contoh</a>
-                                        </div>
+                                        <div class="small"><a href="#">Lihat Contoh</a></div>
                                     </td>
                                     <td class="text-danger">
                                         @if($statusCertificateOfLetter)
                                             <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusCertificateOfLetter->rejection_reason }}</small>
-                                            <div class="small">Silahkan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->certificate_of_letter !== NULL && !$documents->is_completed)
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->certificate_of_letter && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -190,7 +160,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
+                                        @if(!$documents || !$documents->is_completed || $statusCertificateOfLetter)
                                             <input type="file" name="certificate_of_letter" class="form-control mt-2" accept="application/pdf">
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
@@ -201,16 +171,16 @@
                                         @endif
                                     </td>
                                 </tr>
-                                {{-- RAPOR / NILAI --}}
+
+                                {{-- RAPOR KELAS 7 SEMESTER 1 --}}
                                 <tr>
-                                    <td>Rapor Kelas 7 (Semeseter 1)</td>
+                                    <td>Rapor Kelas 7 (Semester 1)</td>
                                     <td class="text-danger">
                                         @if($statusReport11)
-                                            <span class="badge bg-danger">Ditolak</span>
-                                            <br>
+                                            <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusReport11->rejection_reason }}</small>
-                                            <div class="small">Silahkan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->report_1_1 !== NULL && !$documents->is_completed)
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_1_1 && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -219,18 +189,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="report_1_1" 
-                                                class="form-control mt-2"
-                                                accept="application/pdf"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusReport11) && 
-                                                    (auth()->user()->myDetail->studentDocument->report_1_1 == NULL || $statusReport11) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusReport11)
+                                            <input type="file" name="report_1_1" class="form-control mt-2" accept="application/pdf"
+                                                {{ (!auth()->user()->myDetail->studentDocument->report_1_1 || $statusReport11) ? 'required' : '' }}>
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
                                     </td>
@@ -240,15 +201,16 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                {{-- RAPOR KELAS 7 SEMESTER 2 --}}
                                 <tr>
-                                    <td>Rapor Kelas 7 (Semeseter 2)</td>
+                                    <td>Rapor Kelas 7 (Semester 2)</td>
                                     <td class="text-danger">
                                         @if($statusReport12)
-                                            <span class="badge bg-danger">Ditolak</span>
-                                            <br>
+                                            <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusReport12->rejection_reason }}</small>
-                                            <div class="small">Silahkan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->report_1_2 !== NULL && !$documents->is_completed)
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_1_2 && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -257,18 +219,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="report_1_2" 
-                                                class="form-control mt-2"
-                                                accept="application/pdf"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusReport12) && 
-                                                    (auth()->user()->myDetail->studentDocument->report_1_2 == NULL || $statusReport12) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusReport12)
+                                            <input type="file" name="report_1_2" class="form-control mt-2" accept="application/pdf"
+                                                {{ (!auth()->user()->myDetail->studentDocument->report_1_2 || $statusReport12) ? 'required' : '' }}>
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
                                     </td>
@@ -278,15 +231,16 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                {{-- RAPOR KELAS 8 SEMESTER 1 --}}
                                 <tr>
-                                    <td>Rapor Kelas 8 (Semeseter 1)</td>
+                                    <td>Rapor Kelas 8 (Semester 1)</td>
                                     <td class="text-danger">
                                         @if($statusReport21)
-                                            <span class="badge bg-danger">Ditolak</span>
-                                            <br>
+                                            <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusReport21->rejection_reason }}</small>
-                                            <div class="small">Silahkan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->report_2_1 !== NULL && !$documents->is_completed)
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_2_1 && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -295,18 +249,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="report_2_1" 
-                                                class="form-control mt-2"
-                                                accept="application/pdf"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusReport21) && 
-                                                    (auth()->user()->myDetail->studentDocument->report_2_1 == NULL || $statusReport21) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusReport21)
+                                            <input type="file" name="report_2_1" class="form-control mt-2" accept="application/pdf"
+                                                {{ (!auth()->user()->myDetail->studentDocument->report_2_1 || $statusReport21) ? 'required' : '' }}>
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
                                     </td>
@@ -316,15 +261,16 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                {{-- RAPOR KELAS 8 SEMESTER 2 --}}
                                 <tr>
-                                    <td>Rapor Kelas 8 (Semeseter 2)</td>
+                                    <td>Rapor Kelas 8 (Semester 2)</td>
                                     <td class="text-danger">
                                         @if($statusReport22)
-                                            <span class="badge bg-danger">Ditolak</span>
-                                            <br>
+                                            <span class="badge bg-danger">Ditolak</span><br>
                                             <small>{{ $statusReport22->rejection_reason }}</small>
-                                            <div class="small">Silahkan upload ulang</div>
-                                        @elseif(auth()->user()->myDetail->studentDocument->report_2_1 !== NULL && !$documents->is_completed)
+                                            <div class="small">Silakan upload ulang</div>
+                                        @elseif(auth()->user()->myDetail->studentDocument->report_2_2 && !$documents->is_completed)
                                             <span class="badge bg-info">Menunggu Verifikasi</span>
                                         @elseif($documents->is_completed)
                                             <span class="badge bg-success">Terverifikasi</span>
@@ -333,18 +279,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$documents || !$documents->is_completed)
-                                            <input 
-                                                type="file" 
-                                                name="report_2_2" 
-                                                class="form-control mt-2"
-                                                accept="application/pdf"
-                                                {{ 
-                                                    (!$documents || !$documents->is_completed || $statusReport22) && 
-                                                    (auth()->user()->myDetail->studentDocument->report_2_2 == NULL || $statusReport22) 
-                                                        ? 'required' 
-                                                        : '' 
-                                            }}>
+                                        @if(!$documents || !$documents->is_completed || $statusReport22)
+                                            <input type="file" name="report_2_2" class="form-control mt-2" accept="application/pdf"
+                                                {{ (!auth()->user()->myDetail->studentDocument->report_2_2 || $statusReport22) ? 'required' : '' }}>
                                             <small>Format: PDF | Max: 2 MB</small>
                                         @endif
                                     </td>
@@ -354,6 +291,7 @@
                                         @endif
                                     </td>
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>

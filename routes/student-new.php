@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Student\New\AnnouncementController;
 use App\Http\Controllers\Student\New\CetakBerkasController;
+use App\Http\Controllers\Student\New\DaftarUlangController;
 use App\Http\Controllers\Student\New\DashboardController;
 use App\Http\Controllers\Student\New\DataDiriController;
 use App\Http\Controllers\Student\New\PaymentController;
@@ -19,46 +20,54 @@ Route::post('payment', [PaymentController::class, 'handleVerification'])->name('
 // 🔐 Setelah Bayar
 // =============================
 Route::group(['middleware' => EnsurePsbPaid::class], function () {
-
     // 🧾 DATA DIRI — dibuka setelah masa pendaftaran dimulai
     Route::prefix('data-diri')
-        ->middleware('psb.schedule:register')
-        ->group(function () {
-            Route::get('/', [DataDiriController::class, 'index'])->name('student.new.data-diri');
-            Route::post('page-1', [DataDiriController::class, 'handleStorePage1'])->name('student.new.data-diri.store-page-1');
-            Route::post('page-2', [DataDiriController::class, 'handleStorePage2'])->name('student.new.data-diri.store-page-2');
-            Route::post('page-3', [DataDiriController::class, 'handleStorePage3'])->name('student.new.data-diri.store-page-3');
-            Route::post('page-4', [DataDiriController::class, 'handleStorePage4'])->name('student.new.data-diri.store-page-4');
-            Route::post('page-5', [DataDiriController::class, 'handleStorePage5'])->name('student.new.data-diri.store-page-5');
-            Route::post('page-6', [DataDiriController::class, 'handleStorePage6'])->name('student.new.data-diri.store-page-6');
-            Route::post('delete-certificate', [DataDiriController::class, 'handleDeleteCertificate'])->name('student.new.data-diri.delete-certificate');
-        });
+    ->middleware('psb.schedule:register')
+    ->group(function () {
+        Route::get('/', [DataDiriController::class, 'index'])->name('student.new.data-diri');
+        Route::post('page-1', [DataDiriController::class, 'handleStorePage1'])->name('student.new.data-diri.store-page-1');
+        Route::post('page-2', [DataDiriController::class, 'handleStorePage2'])->name('student.new.data-diri.store-page-2');
+        Route::post('page-3', [DataDiriController::class, 'handleStorePage3'])->name('student.new.data-diri.store-page-3');
+        Route::post('page-4', [DataDiriController::class, 'handleStorePage4'])->name('student.new.data-diri.store-page-4');
+        Route::post('page-5', [DataDiriController::class, 'handleStorePage5'])->name('student.new.data-diri.store-page-5');
+        Route::post('page-6', [DataDiriController::class, 'handleStorePage6'])->name('student.new.data-diri.store-page-6');
+        Route::post('delete-certificate', [DataDiriController::class, 'handleDeleteCertificate'])->name('student.new.data-diri.delete-certificate');
+    });
 
     // 📢 PENGUMUMAN — dibuka setelah jadwal pengumuman
     Route::prefix('pengumuman')
-        ->middleware('psb.schedule:pengumuman')
-        ->group(function () {
-            Route::get('/', [AnnouncementController::class, 'index'])->name('student.new.announcement');
-            Route::post('pindah-reguler', [AnnouncementController::class, 'handlePindahReguler'])->name('student.new.announcement.pindah-reguler');
-        });
+    ->middleware('psb.schedule:pengumuman')
+    ->group(function () {
+        Route::get('/', [AnnouncementController::class, 'index'])->name('student.new.announcement');
+        Route::post('pindah-reguler', [AnnouncementController::class, 'handlePindahReguler'])->name('student.new.announcement.pindah-reguler');
+    });
 
     // 🪪 CETAK KARTU & PILIH JADWAL
     Route::group(['middleware' => EnsurePsbAdmChecingkIsPassed::class], function () {
 
         // Cetak kartu — dibuka jika siswa lulus administrasi & punya exam_number
         Route::prefix('cetak-kartu')
-            ->group(function () {
-                Route::get('/', [CetakBerkasController::class, 'index'])->name('student.new.cetak-berkas');
-            });
+        ->group(function () {
+            Route::get('/', [CetakBerkasController::class, 'index'])->name('student.new.cetak-berkas');
+        });
 
         // Pilih jadwal — dibuka setelah masa ujian dimulai dan masih diizinkan mengubah jadwal
         Route::prefix('pilih-jadwal')
-            ->group(function () {
-                Route::get('/', [CetakBerkasController::class, 'getAvailabilitySchedule'])->name('student.new.get-availability-schedule');
-                Route::post('/', [CetakBerkasController::class, 'handlePilihJadwal'])->name('student.new.set-schedule');
-                Route::post('cetak', [CetakBerkasController::class, 'handleCetak'])->name('student.new.handle.cetak-berkas');
-            });
+        ->group(function () {
+            Route::get('/', [CetakBerkasController::class, 'getAvailabilitySchedule'])->name('student.new.get-availability-schedule');
+            Route::post('/', [CetakBerkasController::class, 'handlePilihJadwal'])->name('student.new.set-schedule');
+            Route::post('cetak', [CetakBerkasController::class, 'handleCetak'])->name('student.new.handle.cetak-berkas');
+        });
     });
+});
+
+
+// 📝 Daftar Ulang — dibuka setelah jadwal daftar ulang
+Route::prefix('daftar-ulang')
+    ->middleware('psb.schedule:daftar_ulang')
+    ->group(function () {
+        Route::get('upload-bukti', [DaftarUlangController::class, 'uploadBuktiBayarPage'])->name('student.new.daftar-ulang.upload-bukti');
+        Route::post('upload-bukti', [DaftarUlangController::class, 'handleUploadSlip'])->name('student.new.daftar-ulang.upload-bukti.action');
 });
 
 // =============================
@@ -71,6 +80,7 @@ Route::get('test', function () {
         'psb_config' => request()->psb_config,
         'home_url' => request()->home_url,
         'id' => auth()->user()->id,
+        'reregistration' => request()->psb_reregister
     ]);
 });
 
