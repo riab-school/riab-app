@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\PsbConfig;
 use Illuminate\Http\Request;
+USE Storage;
 
 class PsbInfo extends Controller
 {
@@ -41,6 +42,10 @@ class PsbInfo extends Controller
                 $statusUndangan = 'closed';
                 $statusReguler = 'open';
             }
+
+            $psbConfig->brosur_link = Storage::disk('s3')->url($psbConfig->brosur_link);
+            $psbConfig->booklet_link = Storage::disk('s3')->url($psbConfig->booklet_link);
+
             $psbStatus = true;
         } else {
             $psbStatus = false;
