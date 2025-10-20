@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\PsbConfig;
 use Illuminate\Http\Request;
-USE Storage;
+Use Storage;
 
 class PsbInfo extends Controller
 {
