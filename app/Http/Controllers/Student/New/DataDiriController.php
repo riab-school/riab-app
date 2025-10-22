@@ -33,7 +33,8 @@ class DataDiriController extends Controller
                 return view('app.student.new.data-diri.page-4');
                 break;
             case '5':
-                return view('app.student.new.data-diri.page-5');
+                $documents = StudentsDocument::where('user_id', auth()->user()->id)->first();
+                return view('app.student.new.data-diri.page-5', compact('documents'));
                 break;
             case '6':
                 return view('app.student.new.data-diri.page-6');
@@ -352,61 +353,61 @@ class DataDiriController extends Controller
         try {
             $request->validate([
                 'photo' => [
-                    getRejectedFile('photo') || auth()->user()->myDetail->studentDocument->photo == NULL
+                    getRejectedFile('photo') || !$StudentDocument || $StudentDocument->photo == null
                         ? 'required'
                         : 'nullable',
                     'image',
                     'mimes:jpeg,png,jpg',
                     'max:1024',
                 ],
-                'certificate_of_letter' => [
+                'certificate_of_health' => [
+                    getRejectedFile('certificate_of_health') || !$StudentDocument || $StudentDocument->certificate_of_health == null
+                        ? 'required'
+                        : 'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
                 'origin_head_recommendation' => [
-                    getRejectedFile('origin_head_recommendation') || auth()->user()->myDetail->studentDocument->origin_head_recommendation == NULL
+                    getRejectedFile('origin_head_recommendation') || !$StudentDocument || $StudentDocument->origin_head_recommendation == null
                         ? 'required'
                         : 'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
-                'certificate_of_health' => [
-                    getRejectedFile('certificate_of_health') || auth()->user()->myDetail->studentDocument->certificate_of_health == NULL
-                        ? 'required'
-                        : 'nullable',
+                'certificate_of_letter' => [
+                    'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
                 'report_1_1' => [
-                    getRejectedFile('report_1_1') || auth()->user()->myDetail->studentDocument->report_1_1 == NULL
+                    getRejectedFile('report_1_1') || !$StudentDocument || $StudentDocument->report_1_1 == null
                         ? 'required'
                         : 'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
                 'report_1_2' => [
-                    getRejectedFile('report_1_2') || auth()->user()->myDetail->studentDocument->report_1_2 == NULL
+                    getRejectedFile('report_1_2') || !$StudentDocument || $StudentDocument->report_1_2 == null
                         ? 'required'
                         : 'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
                 'report_2_1' => [
-                    getRejectedFile('report_2_1') || auth()->user()->myDetail->studentDocument->report_2_1 == NULL
+                    getRejectedFile('report_2_1') || !$StudentDocument || $StudentDocument->report_2_1 == null
                         ? 'required'
                         : 'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
                 'report_2_2' => [
-                    getRejectedFile('report_2_2') || auth()->user()->myDetail->studentDocument->report_2_2 == NULL
+                    getRejectedFile('report_2_2') || !$StudentDocument || $StudentDocument->report_2_2 == null
                         ? 'required'
                         : 'nullable',
                     'mimes:pdf',
                     'max:2048',
                 ],
             ]);
-
 
             $fileFields = [
                 'photo', 'certificate_of_letter', 'origin_head_recommendation', 'certificate_of_health',
@@ -415,8 +416,9 @@ class DataDiriController extends Controller
 
             // kalau StudentDocument belum ada, buat baru
             if (!$StudentDocument) {
-                $StudentDocument = new StudentsDocument();
-                $StudentDocument->user_id = auth()->id();
+                $StudentDocument = StudentsDocument::create([
+                    'user_id' => auth()->user()->id,
+                ]);
             }
 
             // Kalau ada $StudentDocumentRejected maka update semuanya berdasarkan user_id itu menjadi resolved
@@ -430,8 +432,8 @@ class DataDiriController extends Controller
             foreach ($fileFields as $field) {
                 if ($request->hasFile($field)) {
                     $file     = $request->file($field);
-                    $folder   = "student/" . auth()->id() . "/" . $field;
-                    $filename = auth()->id() . "." . $file->getClientOriginalExtension();
+                    $folder   = "student/" . auth()->user()->id . "/" . $field;
+                    $filename = auth()->user()->id . "." . $file->getClientOriginalExtension();
                     $fullPath = $folder . '/' . $filename;
 
                     // simpan ke s3
@@ -447,7 +449,7 @@ class DataDiriController extends Controller
                 }
 
                 // check if any on rejected file for this field, if yes set to resolved
-                $rejectedFile = PsbDocumentRejection::where('user_id', auth()->id())
+                $rejectedFile = PsbDocumentRejection::where('user_id', auth()->user()->id)
                     ->where('document_field_key', $field)
                     ->where('status', 'rejected')
                     ->first();
@@ -458,7 +460,7 @@ class DataDiriController extends Controller
             }
             $StudentDocument->save();
 
-            appLog(auth()->id(), 'success', 'Berhasil upload dokumen atau berkas');
+            appLog(auth()->user()->id, 'success', 'Berhasil upload dokumen atau berkas');
             return redirect()->back()->with([
                 'status'  => 'success',
                 'message' => 'Data dokumen atau berkas berhasil diperbarui',
