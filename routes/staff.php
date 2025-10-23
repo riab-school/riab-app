@@ -71,8 +71,14 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::get('edit', [PsbConfigController::class, 'editConfigPage'])->name('staff.master-psb.edit-config');
             Route::post('update', [PsbConfigController::class, 'handleUpdateConfig'])->name('staff.master-psb.add-config.update');
         });
+
         Route::get('dashboard', [PsbDashboardController::class, 'showDashboardPage'])->name('staff.master-psb.dashboard');
-        Route::get('payment', [PsbPaymentController::class, 'showPaymentPage'])->name('staff.master-psb.payment');
+
+        Route::prefix('payment')->group(function() {
+            Route::get('/', [PsbPaymentController::class, 'showPaymentPage'])->name('staff.master-psb.payment');
+            Route::post('handle', [PsbPaymentController::class, 'handleVerification'])->name('staff.master-psb.payment.handle');
+        });
+
         Route::get('student-list', [PsbStudentListController::class, 'showStudentListPage'])->name('staff.master-psb.student-list');
         
         Route::prefix('interview')->group(function() {
