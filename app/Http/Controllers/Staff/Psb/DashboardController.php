@@ -72,7 +72,10 @@ class DashboardController extends Controller
             'undangan_mak_wanita'                   => $undangan_mak_wanita,
             'undangan_ipa'                          => $undangan_mipa_pria + $undangan_mipa_wanita,
             'undangan_mak'                          => $undangan_mak_pria + $undangan_mak_wanita,
-            'undangan'                              => $undangan_mipa_pria + $undangan_mipa_wanita + $undangan_mak_pria + $undangan_mak_wanita,
+            'undangan'                              =>  PsbHistory::where([
+                                                            'registration_method'       => 'invited',
+                                                            'is_moved_to_non_invited'   => false,
+                                                        ])->count(),
             'undangan_pindah'                       => PsbHistory::where([
                                                             'registration_method'       => 'invited',
                                                             'is_moved_to_non_invited'   => 1,
