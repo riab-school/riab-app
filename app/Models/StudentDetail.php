@@ -101,4 +101,9 @@ class StudentDetail extends Model
     {
         return $this->hasMany(PsbDocumentRejection::class, 'user_id', 'user_id');
     }
+
+    public function cityDetail()
+    {
+        return $this->hasOne(City::class, 'id', 'city_id');
+    }
 }
