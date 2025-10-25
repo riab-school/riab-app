@@ -312,40 +312,40 @@
                 <div class="table-responsive">
                     <table class="table table-sm" width="100%">
                         <tr>
-                            <td class="fw-bold">Kelas X (Semester 1)</td>
+                            <td class="fw-bold">Kelas VII (Semester 1)</td>
                             <td class="text-end">
-                                @if($detail->studentDocument && $detail->studentDocument->report_4_1 !== NULL)
-                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_4_1) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @if($detail->studentDocument && $detail->studentDocument->report_1_1 !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_1_1) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
                                 @else
                                     <span class="text-danger">Tidak Upload File</span>
                                 @endif
                             </td>
                         </tr>
                         <tr>
-                            <td class="fw-bold">Kelas X (Semester 2)</td>
+                            <td class="fw-bold">Kelas VII (Semester 2)</td>
                             <td class="text-end">
-                                @if($detail->studentDocument && $detail->studentDocument->report_4_2 !== NULL)
-                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_4_2) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @if($detail->studentDocument && $detail->studentDocument->report_1_2 !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_1_2) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
                                 @else
                                     <span class="text-danger">Tidak Upload File</span>
                                 @endif
                             </td>
                         </tr>
                         <tr>
-                            <td class="fw-bold">Kelas XI (Semester 1)</td>
+                            <td class="fw-bold">Kelas VIII (Semester 1)</td>
                             <td class="text-end">
-                                @if($detail->studentDocument && $detail->studentDocument->report_5_1 !== NULL)
-                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_5_1) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @if($detail->studentDocument && $detail->studentDocument->report_2_1 !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_2_1) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
                                 @else
                                     <span class="text-danger">Tidak Upload File</span>
                                 @endif
                             </td>
                         </tr>
                         <tr>
-                            <td class="fw-bold">Kelas XI (Semester 2)</td>
+                            <td class="fw-bold">Kelas VIII (Semester 2)</td>
                             <td class="text-end">
-                                @if($detail->studentDocument && $detail->studentDocument->report_5_2 !== NULL)
-                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_5_2) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @if($detail->studentDocument && $detail->studentDocument->report_2_2 !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->report_2_2) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
                                 @else
                                     <span class="text-danger">Tidak Upload File</span>
                                 @endif
@@ -355,8 +355,57 @@
                 </div>
             </div>
         </div>
-        {{-- Berkas Kelengkapan --}}
         <div class="card">
+            <div class="card-header">
+                <h5>Berkas Pendukung Siswa</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm" width="100%">
+                        <tr>
+                            <td class="fw-bold">Rekomendasi Kepala Sekolah</td>
+                            <td class="text-end">
+                                @if($detail->studentDocument && $detail->studentDocument->origin_head_recommendation !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->origin_head_recommendation) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @else
+                                    <span class="text-danger">Tidak Upload File</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Keterangan Rangking</td>
+                            <td class="text-end">
+                                @if($detail->studentDocument && $detail->studentDocument->certificate_of_letter !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->certificate_of_letter) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @else
+                                    <span class="text-danger">Tidak Upload File</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Surat Keterangan Sehat</td>
+                            <td class="text-end">
+                                @if($detail->studentDocument && $detail->studentDocument->certificate_of_health !== NULL)
+                                    <a href="{{ Storage::disk('s3')->url($detail->studentDocument->certificate_of_health) }}" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>
+                                @else
+                                    <span class="text-danger">Tidak Upload File</span>
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="button-group text-center">
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-check"></i> Approve & Verifikasi
+            </a>
+            <a href="#" class="btn btn-danger">
+                <i class="fas fa-times"></i> Tolak Berkas
+            </a>
+        </div>
+        {{-- Berkas Kelengkapan --}}
+        {{-- <div class="card">
             <div class="card-header">
                 <h5>Berkas Lainnya</h5>
             </div>
@@ -506,7 +555,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
 </div>
