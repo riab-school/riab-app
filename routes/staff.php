@@ -79,8 +79,11 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
             Route::post('handle', [PsbPaymentController::class, 'handleVerification'])->name('staff.master-psb.payment.handle');
         });
 
-        Route::get('student-list', [PsbStudentListController::class, 'showStudentListPage'])->name('staff.master-psb.student-list');
-        
+        Route::prefix('student-list')->group(function() {
+            Route::get('/', [PsbStudentListController::class, 'showStudentListPage'])->name('staff.master-psb.student-list');
+            Route::get('/{id}', [PsbStudentListController::class, 'studentDetail'])->name('staff.master-psb.student-detail');
+        });
+
         Route::prefix('interview')->group(function() {
             Route::get('/', [PsbInterviewController::class, 'showInterviewIndex'])->name('staff.master-psb.interview');
             Route::get('bacaan', [PsbInterviewController::class, 'showInterviewBacaan'])->name('staff.master-psb.interview.bacaan');

@@ -4,34 +4,65 @@
 <div class="card">
     <div class="card-header">
         <h5>Student List</h5>
-        <div class="card-header-right">
-            <div class="btn-group card-option">
-                <button type="button" class="btn dropdown-toggle btn-icon"
-                    data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="feather icon-more-horizontal"></i>
-                </button>
-                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-end">
-                    <li class="dropdown-item full-card"><a href="#!"><span><i
-                                    class="feather icon-maximize"></i>
-                                maximize</span><span style="display:none"><i
-                                    class="feather icon-minimize"></i>
-                                Restore</span></a></li>
-                    <li class="dropdown-item minimize-card"><a href="#!"><span><i
-                                    class="feather icon-minus"></i> collapse</span><span
-                                style="display:none"><i class="feather icon-plus"></i>
-                                expand</span></a></li>
-                    <li class="dropdown-item reload-card"><a href="#!"><i
-                                class="feather icon-refresh-cw"></i> reload</a></li>
-                    <li class="dropdown-item close-card"><a href="#!"><i
-                                class="feather icon-trash"></i> remove</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
     <div class="card-body">
-        <p>Test Content</p>
+        <div class="table-responsive">
+            <table id="dataTable" class="table table-sm table-hover" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Aksi</th>
+                        <th>Nama</th>
+                        <th>NIS</th>
+                        <th>Asal Sekolah</th>
+                        <th>Asal Daerah</th>
+                        <th>Status Berkas</th>
+                    </tr>
+                </thead>                
+                <tbody>
+                    @forelse ($dataStudent as $item)
+                    <tr>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ route('staff.master-psb.student-detail', $item->id) }}" 
+                                    class="btn btn-outline-info btn-verifikasi">
+                                    <i class="fas fa-edit"></i> Detail
+                                </a>
+                            </div>
+                        </td>
+                        <td>{{ $item->name ?? NULL }}</td>
+                        <td>{{ $item->nis ?? NULL }}</td>
+                        <td>{{ $item->studentOriginDetail->origin_school ?? NULL }}</td>
+                        <td>{{ $item->cityDetail->name ?? NULL }}</td>
+                        <td>
+                            {!! 
+                                $item->studentDocument
+                                ? ($item->studentDocument->is_completed
+                                    ? '<span class="badge bg-success">Sudah Diverifikasi</span>'
+                                    : '<span class="badge bg-warning">Menunggu Verifikasi</span>')
+                                : '<span class="badge bg-danger">Belum Diupload</span>'
+                            !!}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Tidak ada data.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                processing: true,
+                serverSide: false
+            });
+        });
+    </script>
+@endpush
