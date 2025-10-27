@@ -21,6 +21,8 @@ class StudentsGuardianDetail extends Model
         'village_id',
         'postal_code',
         'relation_detail',
+        'is_rejected',
+        'rejection_reason',
         'is_completed'
     ];
 }

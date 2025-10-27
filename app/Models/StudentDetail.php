@@ -32,6 +32,9 @@ class StudentDetail extends Model
         'from_child_order',
         'hobby',
         'ambition',
+        'is_biological',
+        'is_rejected',
+        'rejection_reason',
         'is_completed',
         'generation_id',
         'status'
@@ -105,5 +108,10 @@ class StudentDetail extends Model
     public function cityDetail()
     {
         return $this->hasOne(City::class, 'id', 'city_id');
+    }
+
+    public function psbHistory()
+    {
+        return $this->hasOne(PsbHistory::class, 'user_id', 'user_id');
     }
 }

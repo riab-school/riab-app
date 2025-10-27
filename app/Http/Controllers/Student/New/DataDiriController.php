@@ -103,6 +103,8 @@ class DataDiriController extends Controller
                     'from_child_order'  => $request->from_child_order,
                     'hobby'             => $request->hobby,
                     'ambition'          => $request->ambition,
+                    'is_rejected'       => null,
+                    'rejection_reason'  => null,
                 ]
             );
     
@@ -150,6 +152,8 @@ class DataDiriController extends Controller
                     'origin_school_category'=> $request->origin_school_category,
                     'origin_school_npsn'    => $request->origin_school_npsn,
                     'origin_school_graduate'=> $request->origin_school_graduate,
+                    'is_rejected'           => null,
+                    'rejection_reason'      => null,
                 ]
             );
             appLog(auth()->user()->id, 'success', 'Berhasil update data asal sekolah');
@@ -261,6 +265,8 @@ class DataDiriController extends Controller
 
                     // Status keluarga
                     'marital_status'        => $request->marital_status,
+                    'is_rejected'           => null,
+                    'rejection_reason'      => null,
                 ]
             );
 
@@ -320,6 +326,8 @@ class DataDiriController extends Controller
                     'village_id'    => $request->village_id,
                     'postal_code'   => $request->postal_code,
                     'relation_detail'=> $request->relation_detail,
+                    'is_rejected'   => null,
+                    'rejection_reason'=> null,
                 ]
             );
 

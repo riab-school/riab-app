@@ -12,6 +12,8 @@
     $statusReport22 = getRejectedFile('report_2_2');
 @endphp
 
+{{ getRejectedFile(NULL) }}
+
 @section('content')
 @include('app.student.new.data-diri.running-text')
 <div class="row">

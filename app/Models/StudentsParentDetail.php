@@ -42,6 +42,8 @@ class StudentsParentDetail extends Model
         'mom_is_alive',
         'status_with_mom',
         'marital_status',
+        'is_rejected',
+        'rejection_reason',
         'is_completed'
     ];
 

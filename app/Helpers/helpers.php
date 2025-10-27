@@ -510,15 +510,21 @@ if (!function_exists('getRejectedFile')) {
     function getRejectedFile($field)
     {
         $myDetail = auth()->user()->myDetail ?? null;
-
-        if (!$myDetail || !method_exists($myDetail, 'studentDocumentRejection')) {
-            return null;
+        if($field == null){
+            return $myDetail->studentDocumentRejection()
+                ->where('status', 'rejected')
+                ->get();
+        } else {
+    
+            if (!$myDetail || !method_exists($myDetail, 'studentDocumentRejection')) {
+                return null;
+            }
+    
+            return $myDetail->studentDocumentRejection()
+                ->where('document_field_key', $field)
+                ->where('status', 'rejected')
+                ->first();
         }
-
-        return $myDetail->studentDocumentRejection()
-            ->where('document_field_key', $field)
-            ->where('status', 'rejected')
-            ->first();
     }
 }
 

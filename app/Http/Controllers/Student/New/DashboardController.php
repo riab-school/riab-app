@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $eventsUndangan = [
             [
                 'order' => 1,
-                'title' => 'Pendaftaran',
+                'title' => 'Pendaftaran Dan Verifikasi',
                 'date'  => $config->buka_daftar_undangan .' s/d '. $config->tutup_daftar_undangan,
                 'color' => 'bg-c-green',
                 'desc'  => 'Calon santri harus mendaftarkan akun, dan mengisi form yang telah disediakan',
@@ -37,7 +37,7 @@ class DashboardController extends Controller
 
             [
                 'order' => 2,
-                'title' => 'Verifikasi Berkas',
+                'title' => 'Seleksi Masuk Berdasarkan Prestasi',
                 'date'  => $config->buka_verifikasi_berkas_undangan .' s/d '. $config->tutup_verifikasi_berkas_undangan,
                 'color' => 'bg-c-blue',
                 'desc'  => 'Berkas calon santri akan diverifikasi oleh panitia dan akan di umumkan pada jadwal yang telah ditentukan',

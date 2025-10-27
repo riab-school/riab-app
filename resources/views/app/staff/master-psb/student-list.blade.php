@@ -16,6 +16,7 @@
                         <th>Asal Sekolah</th>
                         <th>Asal Daerah</th>
                         <th>Status Berkas</th>
+                        <th>Status Kelulusan ADM</th>
                     </tr>
                 </thead>                
                 <tbody>
@@ -41,6 +42,15 @@
                                     : '<span class="badge bg-warning">Menunggu Verifikasi</span>')
                                 : '<span class="badge bg-danger">Belum Diupload</span>'
                             !!}
+                        </td>
+                        <td>
+                            @if($item->psbHistory->is_administration_pass === null)
+                                <span class="badge bg-warning">Menunggu Verifikasi</span>
+                            @elseif($item->psbHistory->is_administration_pass)
+                                <span class="badge bg-success">Lulus</span>
+                            @elseif($item->psbHistory->is_administration_pass === false)
+                                <span class="badge bg-danger">Tidak Lulus</span>
+                            @endif
                         </td>
                     </tr>
                     @empty
