@@ -25,6 +25,7 @@
                 <div class="d-md-flex gap-4">
                     <div class="text-center my-2 h-50">
                         <img src="{{ $detail->studentDocument && $detail->studentDocument->photo !== NULL ? Storage::disk('s3')->url($detail->studentDocument->photo) : asset('assets/images/blank_person.jpg') }}" class="img-fluid img-thumbnail" alt="User-Profile-Image" width="180px" loading="lazy">
+                        <a href="{{ route('staff.master-psb.student-detail.login-as') }}?user_id={{ $detail->user_id }}" onclick="confirm('Apakaha anda ingin login sebagai {{ $detail->name }} ?')" class="btn btn-primary btn-sm mt-2">Login Sebagai Siswa</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-xs" width="100%">

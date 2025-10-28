@@ -8,6 +8,7 @@ use App\Models\PsbDocumentRejection;
 use App\Models\PsbHistory;
 use App\Models\StudentDetail;
 use App\Models\StudentsDocument;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentListController extends Controller
@@ -26,6 +27,16 @@ class StudentListController extends Controller
             'detail' => StudentDetail::with('studentOriginDetail', 'cityDetail', 'studentDocument')->findOrFail($id),
         ];
         return view('app.staff.master-psb.student-detail', $data);
+    }
+
+    public function loginAsStudent(Request $request)
+    {
+        $student = User::findOrFail($request->user_id);
+        auth()->login($student);
+        return redirect()->route('student.home.new')->with([
+            'status'    => 'success',
+            'message'   => 'Berhasil login sebagai siswa.'
+        ]);
     }
 
     public function handleAcceptAndRejectData(Request $request)
