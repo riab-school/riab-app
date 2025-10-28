@@ -16,7 +16,7 @@
                         <th>Asal Sekolah</th>
                         <th>Asal Daerah</th>
                         <th>Status Berkas</th>
-                        <th>Status Kelulusan ADM</th>
+                        <th>Status Kelulusan SMBP</th>
                     </tr>
                 </thead>                
                 <tbody>
