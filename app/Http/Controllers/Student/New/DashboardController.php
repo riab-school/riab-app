@@ -66,7 +66,8 @@ class DashboardController extends Controller
                 'desc'  => 'Calon santri yang lolos verifikasi berkas dapat mengikuti test wawancara',
                 'button'=> [
                     'text' => 'Pilih Jadwal dan Cetak Berkas',
-                    'url'  => route('student.new.cetak-berkas'),
+                    'url'  => '#',
+                    // 'url'  => route('student.new.cetak-berkas'),
                 ],
                 'button_2' => [],
             ] + eventStatus($config->buka_tes_undangan, $config->tutup_tes_undangan),
