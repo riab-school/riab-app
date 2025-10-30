@@ -46,7 +46,7 @@
                     <select class="form-control w-100" id="user_id" name="user_id" required>
                         <option selected="">Pilih User...</option>
                         @foreach ($userList as $item)
-                        <option value="{{ $item->id }}">{{ $item->username }} - {{ $item->user_level == 'staff' ? $item->staffDetail->name : $item->adminDetail->name }}</option>    
+                        <option value="{{ $item->id }}">{{ $item->user_level == 'staff' ? $item->staffDetail->name : $item->adminDetail->name }} - {{ $item->username }}</option>    
                         @endforeach
                     </select>
                 </div>
