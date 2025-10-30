@@ -45,7 +45,7 @@
                         @elseif($history->is_administration_confirmed && !$history->is_administration_pass)
                             <div class="text-danger">
                                 <div class="fs-4">Mohon Maaf!!</div>
-                                <div class="fs-5">Anda dinyatakan Tidak Lulus Verifikasi Berkas, silahkan pindah jalur pendaftaran menjadi Reguler</div>
+                                <div class="fs-5">Anda dinyatakan Tidak Lulus Seleksi Berkas Prestasi, silahkan pindah jalur pendaftaran menjadi Reguler</div>
                                 <form action="{{ route('student.new.announcement.pindah-reguler') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-primary btn-sm mt-2">Pindah Ke Reguler</button>
