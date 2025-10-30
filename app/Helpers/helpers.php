@@ -659,6 +659,29 @@ if (!function_exists('getCounter')) {
     }
 }
 
+if (!function_exists('convertSesiToJam')) {
+    /**
+     * Ganti teks "Sesi X" menjadi rentang waktu.
+     *
+     * @param  string  $text
+     * @return string
+     */
+    function convertSesiToJam($text)
+    {
+        $mapping = [
+            'Sesi 1' => '08:00 s/d 09:30',
+            'Sesi 2' => '09:30 s/d 11:00',
+            'Sesi 3' => '11:00 s/d 12:30',
+            'Sesi 4' => '13:00 s/d 14:30',
+            'Sesi 5' => '14:30 s/d 16:00',
+            'Sesi 6' => '16:00 s/d 17:30',
+        ];
+
+        return $mapping[$text] ?? $text;
+    }
+}
+
+
 
 
 
