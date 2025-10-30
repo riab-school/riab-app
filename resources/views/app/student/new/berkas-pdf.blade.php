@@ -152,6 +152,12 @@
                 <tr>
                     <td>Wawancara Orang Tua</td>
                     <td>:</td>
+                    <td><b>Tidak ada wawancara dengan wali santri</b></td>
+                </tr>
+                @else
+                <tr>
+                    <td>Wawancara Orang Tua</td>
+                    <td>:</td>
                     <td><b>{{ $psbHistory->parent_interview_room }} | {{ $psbHistory->parent_interview_session }}</b></td>
                 </tr>
                 @endif
