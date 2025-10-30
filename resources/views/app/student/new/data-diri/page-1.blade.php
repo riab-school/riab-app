@@ -10,7 +10,7 @@
         @include('app.student.new.data-diri.switcher')
     </div>
     <div class="col-md-10">
-        @if(auth()->user()->myDetail && auth()->user()->myDetail->is_rejected)
+        @if(auth()->user()->myDetail && auth()->user()->myDetail->is_rejected !== NULL && auth()->user()->myDetail->is_rejected)
         <div class="alert alert-danger" role="alert">
             <strong>Data anda ditolak karena : "{{ auth()->user()->myDetail->rejection_reason }}"</strong>
         </div>

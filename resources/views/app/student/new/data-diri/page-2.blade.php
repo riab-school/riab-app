@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-md-10">
-        @if(auth()->user()->myDetail && $origin->is_rejected)
+        @if(auth()->user()->myDetail && $origin->is_rejected !== NULL && $origin->is_rejected)
         <div class="alert alert-danger" role="alert">
             <strong>Data anda ditolak karena : "{{ $origin->rejection_reason }}"</strong>
         </div>
