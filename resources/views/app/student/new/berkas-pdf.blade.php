@@ -148,11 +148,13 @@
                     <td>:</td>
                     <td><b>{{ $psbHistory->interview_room }} | {{ $psbHistory->interview_session }}</b></td>
                 </tr>
+                @if(request()->registration_method !== "invited")
                 <tr>
                     <td>Wawancara Orang Tua</td>
                     <td>:</td>
                     <td><b>{{ $psbHistory->parent_interview_room }} | {{ $psbHistory->parent_interview_session }}</b></td>
                 </tr>
+                @endif
             </tbody>
         </table>
         <br />
