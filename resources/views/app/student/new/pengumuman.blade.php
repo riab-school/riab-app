@@ -37,6 +37,11 @@
                                 </div>
                                 <a href="{{ route('student.new.cetak-berkas') }}" class="btn btn-primary btn-sm mt-2">Cetak Berkas dan Kartu</a>
                             </div>
+                            <hr>
+                            <p>Silahkan bergabung ke grup whatsapp khusus peserta yang lulus</p>
+                            <a href="https://chat.whatsapp.com/EDyFzjJKya67hlFQdsoqoV?mode=wwt" target="_blank" class="btn btn-success btn-sm mt-2">
+                                <i class="fab fa-whatsapp"></i> Gabung Grup WhatsApp
+                            </a>
                         @elseif($history->is_administration_confirmed && !$history->is_administration_pass)
                             <div class="text-danger">
                                 <div class="fs-4">Mohon Maaf!!</div>
