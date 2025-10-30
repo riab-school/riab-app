@@ -115,13 +115,6 @@
                                     <td>:</td>
                                     <td><b>{{ request()->registration_history->class_focus == 'mipa' ? "A-" : "G-" }}{{ request()->registration_history->exam_number }}</b></td>
                                 </tr>
-                                @if(request()->registration_method == "invited")
-                                <tr>
-                                    <td>Metode Ujian</td>
-                                    <td>:</td>
-                                    <td><b>{{ request()->registration_history->is_exam_offline ? "Offline / Di Sekolah" : "Zoom / GoogleMeet" }}</b></td>
-                                </tr>
-                                @endif
                                 <tr>
                                     <td colspan="3">
                                         <hr>
