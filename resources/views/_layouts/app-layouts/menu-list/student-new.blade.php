@@ -28,14 +28,14 @@
         </a>
     </li>
 
-    {{-- <li data-username="animations" class="nav-item">
+    <li data-username="animations" class="nav-item">
         <a href="{{ route('student.new.cetak-berkas') }}" class="nav-link">
             <span class="pcoded-micon">
                 <i class="feather icon-printer"></i>
             </span>
             <span class="pcoded-mtext">Cetak Berkas dan Kartu</span>
         </a>
-    </li> --}}
+    </li>
 
     <li data-username="animations" class="nav-item">
         <a href="{{ route('student.new.announcement') }}" class="nav-link">
