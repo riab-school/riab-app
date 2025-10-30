@@ -158,6 +158,7 @@
                                         <hr>
                                     </td>
                                 </tr>
+                                @if(request()->registration_method == "reguler" || request()->registration_method == "invited-reguler")
                                 <tr>
                                     <td>Tanggal Wawancara Orang Tua</td>
                                     <td>:</td>
@@ -168,6 +169,13 @@
                                     <td>:</td>
                                     <td><b>Ruang : {{ request()->registration_history->parentInterviewRoom->room_name }} | Sesi : {{ convertSesiToJam(request()->registration_history->parentInterviewRoom->room_session) }}</b></td>
                                 </tr>
+                                @else
+                                <tr>
+                                    <td>Tanggal Wawancara Orang Tua</td>
+                                    <td>:</td>
+                                    <td><b>Tidak ada wawancara dengan wali santri</b></td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
                         <center>
