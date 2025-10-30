@@ -85,41 +85,53 @@ class StudentListController extends Controller
     public function handleKelulusanAdm(Request $request)
     {
         // Check All Required to be verified
-
         $check0 = StudentDetail::where('user_id', $request->user_id)->where('is_completed', true)->first();
         $check1 = StudentsDocument::where('user_id', $request->user_id)->where('is_completed', true)->first();
         $check2 = \DB::table('students_origin_schools')->where('user_id', $request->user_id)->where('is_completed', true)->first();
         $check3 = \DB::table('students_parent_details')->where('user_id', $request->user_id)->where('is_completed', true)->first();
         $check4 = \DB::table('students_guardian_details')->where('user_id', $request->user_id)->where('is_completed', true)->first();
 
-        if(!$check0 || !$check1 || !$check2 || !$check3 || !$check4) {
-            PsbHistory::where('user_id', $request->user_id)
-            ->update([
-                'is_administration_confirmed'   => NULL,
-                'is_administration_pass'        => NULL,
-                'administration_summary'        => NULL,
-            ]);
-            return redirect()->back()->with([
-                'status'    => 'error',
-                'message'   => 'Semua data siswa belum lengkap atau ada yang ditolak. Tidak dapat memproses kelulusan administrasi.'
-            ]);
-        }
-
         if($request->action == 'approve') {
-            // 
+            if(!$check0 || !$check1 || !$check2 || !$check3 || !$check4) {
+                PsbHistory::where('user_id', $request->user_id)
+                ->update([
+                    'is_administration_confirmed'   => NULL,
+                    'is_administration_pass'        => NULL,
+                    'administration_summary'        => NULL,
+                ]);
+                return redirect()->back()->with([
+                    'status'    => 'error',
+                    'message'   => 'Semua data siswa belum lengkap atau ada yang ditolak. Tidak dapat memproses kelulusan administrasi.'
+                ]);
+            } else {
+                PsbHistory::where('user_id', $request->user_id)
+                    ->update([
+                        'is_administration_confirmed'   => 1,
+                        'is_administration_pass'        => 1,
+                        'is_paid'                       => 1,
+                        'administration_summary'        => NULL,
+                    ]);
+                
+                return redirect()->route('staff.master-psb.student-list')->with([
+                    'status'    => 'success',
+                    'message'   => 'Berhasil memperbarui status kelulusan administrasi siswa.'
+                ]);
+            }
         }
 
-        PsbHistory::where('user_id', $request->user_id)
-            ->update([
-                'is_administration_confirmed'   => 1,
-                'is_administration_pass'        => $request->action == 'approve' ? 1 : 0,
-                'is_paid'                       => $request->action == 'approve' ? 1 : 0,
-                'administration_summary'        => NULL,
+        if($request->action == 'reject'){
+            PsbHistory::where('user_id', $request->user_id)
+                    ->update([
+                    'is_administration_confirmed'   => 1,
+                    'is_administration_pass'        => 0,
+                    'is_paid'                       => 0,
+                    'administration_summary'        => 'Tidak Lulus Seleksi Berkas',
+                ]);
+            
+            return redirect()->route('staff.master-psb.student-list')->with([
+                'status'    => 'success',
+                'message'   => 'Berhasil memperbarui status kelulusan administrasi siswa.'
             ]);
-        
-        return redirect()->route('staff.master-psb.student-list')->with([
-            'status'    => 'success',
-            'message'   => 'Berhasil memperbarui status kelulusan administrasi siswa.'
-        ]);
+        }
     }
 }
