@@ -46,9 +46,11 @@
                         <td>
                             @if($item->psbHistory->is_administration_pass === null)
                                 <span class="badge bg-warning">Menunggu Verifikasi</span>
-                            @elseif($item->psbHistory->is_administration_pass)
+                            @elseif($item->psbHistory->is_administration_pass == NULL)
+                                <span class="badge bg-success">Kelulusan belum di tetapkan</span>
+                            @elseif($item->psbHistory->is_administration_pass == 1)
                                 <span class="badge bg-success">Lulus</span>
-                            @elseif($item->psbHistory->is_administration_pass === false)
+                            @elseif($item->psbHistory->is_administration_pass == 0)
                                 <span class="badge bg-danger">Tidak Lulus</span>
                             @endif
                         </td>
