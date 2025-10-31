@@ -105,9 +105,24 @@ class StudentDetail extends Model
         return $this->hasMany(PsbDocumentRejection::class, 'user_id', 'user_id');
     }
 
+    public function provinceDetail()
+    {
+        return $this->hasOne(Province::class, 'id', 'province_id');
+    }
+
     public function cityDetail()
     {
         return $this->hasOne(City::class, 'id', 'city_id');
+    }
+
+    public function districtDetail()
+    {
+        return $this->hasOne(District::class, 'id', 'district_id');
+    }
+
+    public function villageDetail()
+    {
+        return $this->hasOne(Village::class, 'id', 'village_id');
     }
 
     public function psbHistory()

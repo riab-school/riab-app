@@ -17,6 +17,26 @@
                         <th>Asal Daerah</th>
                         <th>Status Berkas</th>
                         <th>Status Kelulusan SMBP</th>
+                        <th>NIK KTP</th>
+                        <th>NIK KK</th>
+                        <th>No. Akte</th>
+                        <th>NISN</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Jenis Kelamin</th>
+                        <th>No. Telepon</th>
+                        <th>Negara</th>
+                        <th>Alamat</th>
+                        <th>Provinsi</th>
+                        <th>Kabupaten/Kota</th>
+                        <th>Kecamatan</th>
+                        <th>Desa/Kelurahan</th>
+                        <th>Kode Pos</th>
+                        <th>Anak Ke-</th>
+                        <th>Dari Anak Ke-</th>
+                        <th>Hobi</th>
+                        <th>Cita-cita</th>
+                        <th>Anak Kandung ?</th>
                     </tr>
                 </thead>                
                 <tbody>
@@ -54,6 +74,26 @@
                                 <span class="badge bg-danger">Tidak Lulus</span>
                             @endif
                         </td>
+                        <td>{{ $item->nik_ktp ?? NULL }}</td>
+                        <td>{{ $item->nik_kk ?? NULL }}</td>
+                        <td>{{ $item->akte_number ?? NULL }}</td>
+                        <td>{{ $item->nisn ?? NULL }}</td>
+                        <td>{{ $item->place_of_birth ?? NULL }}</td>
+                        <td>{{ $item->date_of_birth ?? NULL }}</td>
+                        <td>{{ $item->gender ?? NULL }}</td>
+                        <td>{{ $item->phone ?? NULL }}</td>
+                        <td>{{ $item->country ?? NULL }}</td>
+                        <td>{{ $item->address ?? NULL }}</td>
+                        <td>{{ $item->provinceDetail->name ?? NULL }}</td>
+                        <td>{{ $item->cityDetail->name ?? NULL }}</td>
+                        <td>{{ $item->districtDetail->name ?? NULL }}</td>
+                        <td>{{ $item->villageDetail->name ?? NULL }}</td>
+                        <td>{{ $item->postal_code ?? NULL }}</td>
+                        <td>{{ $item->child_order ?? NULL }}</td>
+                        <td>{{ $item->from_child_order ?? NULL }}</td>
+                        <td>{{ $item->hobby ?? NULL }}</td>
+                        <td>{{ $item->ambition ?? NULL }}</td>
+                        <td>{{ $item->is_biological ? 'Ya' : 'Tidak' }}</td>
                     </tr>
                     @empty
                     <tr>
