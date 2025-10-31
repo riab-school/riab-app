@@ -134,4 +134,34 @@ class StudentListController extends Controller
             ]);
         }
     }
+
+    public function downloadReport()
+    {
+        $users = User::whereRelation('studentDetail', 'status', 'new')->get();
+
+        $result = $users->map(function ($user) {
+            $psbData = PsbHistory::where('user_id', $user->id)->first();
+
+            if ($psbData !== null && $psbData->is_moved_to_non_invited == false) {
+                $status = 'Undangan';
+            } elseif ($psbData !== null && $psbData->is_moved_to_non_invited == true) {
+                $status = 'Undangan Pindah Reguler';
+            } else {
+                $status = 'Reguler';
+            }
+
+            return [
+                'user' => $user,
+                'is_paid' => $status,
+                'psb_data' => $psbData,
+            ];
+        });
+
+        $data = [
+            'title' => 'Laporan Pendaftaran',
+            'data' => $result, // Use the correct variable here
+        ];
+
+        return view('app.staff.master-psb.all-excel-data', $data);
+    }
 }

@@ -81,6 +81,7 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
 
         Route::prefix('student-list')->group(function() {
             Route::get('/', [PsbStudentListController::class, 'showStudentListPage'])->name('staff.master-psb.student-list');
+            Route::get('/download', [PsbStudentListController::class, 'downloadReport'])->name('staff.master-psb.student-list.download');
             Route::get('/login-as', [PsbStudentListController::class, 'loginAsStudent'])->name('staff.master-psb.student-detail.login-as'); // <-- pindah ke atas
             Route::get('/{id}', [PsbStudentListController::class, 'studentDetail'])->name('staff.master-psb.student-detail');
             Route::post('/handle', [PsbStudentListController::class, 'handleAcceptAndRejectData'])->name('staff.master-psb.student-detail.handle');
