@@ -659,14 +659,14 @@ if (!function_exists('getCounter')) {
     }
 }
 
-if (!function_exists('convertSesiToJam')) {
+if (!function_exists('convertSesiCatToJam')) {
     /**
      * Ganti teks "Sesi X" menjadi rentang waktu.
      *
      * @param  string  $text
      * @return string
      */
-    function convertSesiToJam($text)
+    function convertSesiCatToJam($text)
     {
         $mapping = [
             'Sesi 1' => '08:00 s/d 09:30',
@@ -675,6 +675,28 @@ if (!function_exists('convertSesiToJam')) {
             'Sesi 4' => '13:00 s/d 14:30',
             'Sesi 5' => '14:30 s/d 16:00',
             'Sesi 6' => '16:00 s/d 17:30',
+        ];
+
+        return $mapping[$text] ?? $text;
+    }
+}
+
+if (!function_exists('convertSesiInterviewToJam')) {
+    /**
+     * Ganti teks "Sesi X" menjadi rentang waktu.
+     *
+     * @param  string  $text
+     * @return string
+     */
+    function convertSesiInterviewToJam($text)
+    {
+        $mapping = [
+            'Sesi 1' => '09:30 s/d 11:00',
+            'Sesi 2' => '11:00 s/d 12:30',
+            'Sesi 3' => '13:00 s/d 14:30',
+            'Sesi 4' => '14:30 s/d 16:00',
+            'Sesi 5' => '16:00 s/d 17:30',
+            'Sesi 6' => '17:30 s/d 19:00',
         ];
 
         return $mapping[$text] ?? $text;

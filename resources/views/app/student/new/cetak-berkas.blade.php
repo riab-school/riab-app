@@ -135,7 +135,7 @@
                                     @if(request()->registration_method == "invited")
                                     <td>Tidak ada ujian Komputer / CAT</td>
                                     @else
-                                    <td><b>{{ request()->registration_history->studentCatRoom->room_name }} | {{ convertSesiToJam(request()->registration_history->studentCatRoom->room_session) }}</b></td>
+                                    <td><b>{{ request()->registration_history->studentCatRoom->room_name }} | {{ convertSesiCatToJam(request()->registration_history->studentCatRoom->room_session) }}</b></td>
                                     @endif
                                 </tr>
                                 <tr>
@@ -151,7 +151,7 @@
                                 <tr>
                                     <td>Lokasi Ujian Wawancara / Interview</td>
                                     <td>:</td>
-                                    <td><b>Ruang : {{ request()->registration_history->studentInterviewRoom->room_name }} | Sesi : {{ convertSesiToJam(request()->registration_history->studentInterviewRoom->room_session) }}</b></td>
+                                    <td><b>Ruang : {{ request()->registration_history->studentInterviewRoom->room_name }} | Sesi : {{ convertSesiInterviewToJam(request()->registration_history->studentInterviewRoom->room_session) }}</b></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
@@ -167,7 +167,7 @@
                                 <tr>
                                     <td>Lokasi Wawancara Orang Tua</td>
                                     <td>:</td>
-                                    <td><b>Ruang : {{ request()->registration_history->parentInterviewRoom->room_name }} | Sesi : {{ convertSesiToJam(request()->registration_history->parentInterviewRoom->room_session) }}</b></td>
+                                    <td><b>Ruang : {{ request()->registration_history->parentInterviewRoom->room_name }} | Sesi : {{ convertSesiInterviewToJam(request()->registration_history->parentInterviewRoom->room_session) }}</b></td>
                                 </tr>
                                 @else
                                 <tr>

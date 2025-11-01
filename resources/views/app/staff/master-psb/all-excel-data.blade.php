@@ -245,11 +245,11 @@ tr:nth-child(even) {
                 <td>||</td>
                 <td>{{ $item['psb_data']->studentInterviewRoom !== NULL ? $item['psb_data']->studentInterviewRoom->exam_date : '-'}}</td>
                 <td>{{ $item['psb_data']->studentCatRoom !== NULL ? $item['psb_data']->studentCatRoom->room_name : '-'}}</td>
-                <td>{{ $item['psb_data']->studentCatRoom !== NULL ? convertSesiToJam($item['psb_data']->studentCatRoom->room_session) : '-'}}</td>
+                <td>{{ $item['psb_data']->studentCatRoom !== NULL ? convertSesiCatToJam($item['psb_data']->studentCatRoom->room_session) : '-'}}</td>
                 <td>{{ $item['psb_data']->studentInterviewRoom !== NULL ? $item['psb_data']->studentInterviewRoom->room_name : '-'}}</td>
-                <td>{{ $item['psb_data']->studentInterviewRoom !== NULL ? convertSesiToJam($item['psb_data']->studentInterviewRoom->room_session) : '-'}}</td>
+                <td>{{ $item['psb_data']->studentInterviewRoom !== NULL ? convertSesiInterviewToJam($item['psb_data']->studentInterviewRoom->room_session) : '-'}}</td>
                 <td>{{ $item['psb_data']->parentInterviewRoom !== NULL ? $item['psb_data']->parentInterviewRoom->room_name : '-'}}</td>
-                <td>{{ $item['psb_data']->parentInterviewRoom !== NULL ? convertSesiToJam($item['psb_data']->parentInterviewRoom->room_session) : '-'}}</td>
+                <td>{{ $item['psb_data']->parentInterviewRoom !== NULL ? convertSesiInterviewToJam($item['psb_data']->parentInterviewRoom->room_session) : '-'}}</td>
 
             </tr>
             <?php $i++ ?>

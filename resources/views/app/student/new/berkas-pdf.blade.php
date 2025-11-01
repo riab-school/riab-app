@@ -140,19 +140,19 @@
                     @if(request()->registration_method == 'invited')
                     <td>Tidak ada ujian Komputer / CAT</td>
                     @else
-                    <td><b>{{ $psbHistory->cat_room }} | {{ convertSesiToJam($psbHistory->cat_session) }}</b></td>
+                    <td><b>{{ $psbHistory->cat_room }} | {{ convertSesiCatToJam($psbHistory->cat_session) }}</b></td>
                     @endif
                 </tr>
                 <tr>
                     <td>Wawancara Santri</td>
                     <td>:</td>
-                    <td><b>{{ $psbHistory->interview_room }} | {{ convertSesiToJam($psbHistory->interview_session) }}</b></td>
+                    <td><b>{{ $psbHistory->interview_room }} | {{ convertSesiInterviewToJam($psbHistory->interview_session) }}</b></td>
                 </tr>
                 @if(request()->registration_method !== "invited")
                 <tr>
                     <td>Wawancara Orang Tua</td>
                     <td>:</td>
-                    <td><b>{{ $psbHistory->parent_interview_room }} | {{ convertSesiToJam($psbHistory->parent_interview_session) }}</b></td>
+                    <td><b>{{ $psbHistory->parent_interview_room }} | {{ convertSesiInterviewToJam($psbHistory->parent_interview_session) }}</b></td>
                 </tr>
                 @else
                 <tr>
