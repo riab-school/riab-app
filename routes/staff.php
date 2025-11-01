@@ -90,10 +90,11 @@ Route::middleware([EnsureCanAccessMenu::class])->group(function() {
 
         Route::prefix('interview')->group(function() {
             Route::get('/', [PsbInterviewController::class, 'showInterviewIndex'])->name('staff.master-psb.interview');
-            Route::get('bacaan', [PsbInterviewController::class, 'showInterviewBacaan'])->name('staff.master-psb.interview.bacaan');
-            Route::get('ibadah', [PsbInterviewController::class, 'showInterviewIbadah'])->name('staff.master-psb.interview.ibadah');
-            Route::get('qa', [PsbInterviewController::class, 'showInterviewQA'])->name('staff.master-psb.interview.qa');
-            Route::get('parent', [PsbInterviewController::class, 'showInterviewParent'])->name('staff.master-psb.interview.parent');
+            Route::get('detail', [PsbInterviewController::class, 'showInterviewDetail'])->name('staff.master-psb.interview.detail');
+            Route::post('store-1', [PsbInterviewController::class, 'storeExam1'])->name('staff.master-psb.interview.store-1');
+            Route::post('store-2', [PsbInterviewController::class, 'storeExam2'])->name('staff.master-psb.interview.store-2');
+            Route::post('store-3', [PsbInterviewController::class, 'storeExam3'])->name('staff.master-psb.interview.store-3');
+            Route::post('store-4', [PsbInterviewController::class, 'storeExam4'])->name('staff.master-psb.interview.store-4');
         });
 
         Route::prefix('exam-result')->group(function() {

@@ -129,4 +129,24 @@ class StudentDetail extends Model
     {
         return $this->hasOne(PsbHistory::class, 'user_id', 'user_id');
     }
+
+    public function studentInterview()
+    {
+        return $this->hasOne(PsbExamStudentInterviewHistory::class, 'user_id', 'user_id');
+    }
+
+    public function studentBacaan()
+    {
+        return $this->hasOne(PsbExamAlquranHistory::class, 'user_id', 'user_id');
+    }
+
+    public function studentIbadah()
+    {
+        return $this->hasOne(PsbExamPrayHistory::class, 'user_id', 'user_id');
+    }
+
+    public function studentParentInterview()
+    {
+        return $this->hasOne(PsbExamParentInterviewHistory::class, 'user_id', 'user_id');
+    }
 }
