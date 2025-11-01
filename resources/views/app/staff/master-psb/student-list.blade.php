@@ -20,6 +20,10 @@
                         <th>Asal Daerah</th>
                         <th>Status Berkas</th>
                         <th>Status Kelulusan SMBP</th>
+                        <th>Jadwal Test</th>
+                        <th>CAT</th>
+                        <th>Interview</th>
+                        <th>Wali</th>
                     </tr>
                 </thead>                
                 <tbody>
@@ -57,6 +61,9 @@
                                 <span class="badge bg-danger">Tidak Lulus</span>
                             @endif
                         </td>
+                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentInterviewRoom->exam_date : NULL }}</td>
+                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentInterviewRoom->room_name . "-" . $item->psbHistory->studentInterviewRoom->room_session : NULL }}</td>
+                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->parentInterviewRoom->room_name . "-" . $item->psbHistory->parentInterviewRoom->room_session : NULL }}</td>
                     </tr>
                     @empty
                     <tr>

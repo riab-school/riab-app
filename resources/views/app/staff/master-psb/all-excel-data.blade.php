@@ -179,21 +179,22 @@ tr:nth-child(even) {
                 
                 <td>||</td>
 
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_is_alive ? "Masih" : "Meningggal"}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_name}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_phone}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_latest_education}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_occupation}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_income}}</td>
+                <td>{{$item['user']->studentParentDetail ? ($item['user']->studentParentDetail->dad_is_alive ? "Masih" : "-") : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_name ? $item['user']->studentParentDetail->dad_name : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_phone ? $item['user']->studentParentDetail->dad_phone : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_latest_education ? $item['user']->studentParentDetail->dad_latest_education : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_occupation ? $item['user']->studentParentDetail->dad_occupation : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->dad_income ? $item['user']->studentParentDetail->dad_income : "-"}}</td>
                 
                 <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->marital_status == 'married' ? "Menikah" : ($item['user']->studentParentDetail && $item['user']->studentParentDetail->marital_status == 'divorce' ? "Cerai Hidup" : "Cerai Mati")}}</td>
                 
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_is_alive == true ? "Masih" : "Meningggal"}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_name}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_phone}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_latest_education}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_occupation}}</td>
-                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_income}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_is_alive == true ? "Masih" : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_name ? $item['user']->studentParentDetail->mom_name : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_phone ? $item['user']->studentParentDetail->mom_phone : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_latest_education ? $item['user']->studentParentDetail->mom_latest_education : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_occupation ? $item['user']->studentParentDetail->mom_occupation : "-"}}</td>
+                <td>{{$item['user']->studentParentDetail && $item['user']->studentParentDetail->mom_income ? $item['user']->studentParentDetail->mom_income : "-"}}</td>
+
                 
                 <td>||</td>
                 
