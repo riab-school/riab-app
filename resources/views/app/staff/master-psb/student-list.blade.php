@@ -62,9 +62,9 @@
                             @endif
                         </td>
                         <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentInterviewRoom->exam_date : NULL }}</td>
-                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentCatRoom->room_name . " - " . convertSesiToJam($item->psbHistory->studentCatRoom->room_session) : NULL }}</td>
-                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentInterviewRoom->room_name . " - " . convertSesiToJam($item->psbHistory->studentInterviewRoom->room_session) : NULL }}</td>
-                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->parentInterviewRoom->room_name . " - " . convertSesiToJam($item->psbHistory->parentInterviewRoom->room_session) : NULL }}</td>
+                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentCatRoom->room_name . " - " . (convertSesiToJam($item->psbHistory->studentCatRoom->room_session) ?? NULL) : NULL }}</td>
+                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->studentInterviewRoom->room_name . " - " . (convertSesiToJam($item->psbHistory->studentInterviewRoom->room_session) ?? NULL) : NULL }}</td>
+                        <td>{{ $item->psbHistory->studentInterviewRoom ? $item->psbHistory->parentInterviewRoom->room_name . " - " . (convertSesiToJam($item->psbHistory->parentInterviewRoom->room_session) ?? NULL) : NULL }}</td>
                     </tr>
                     @empty
                     <tr>
