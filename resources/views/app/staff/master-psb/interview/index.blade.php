@@ -11,6 +11,7 @@
                 <form action="{{ route('staff.master-psb.interview.detail') }}" method="GET" onsubmit="return processData(this)">
                     @csrf
                     <div class="form-row">
+                        <h5 class="text-warning">Jika cari berdasarkan "No Ujian" cukup ketik angka saja, tanpa huruf A/G dan tanda "-"</h5>
                         <div class="form-group col-md-12">
                             <label for="value">Cari Data Peserta Berdasarkan</label>
                             <div class="input-group">
